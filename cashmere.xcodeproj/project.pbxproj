@@ -16,6 +16,7 @@
 		245227F525761A7700B90ED7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 245227F325761A7700B90ED7 /* LaunchScreen.storyboard */; };
 		2452280025761A7800B90ED7 /* cashmereTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227FF25761A7800B90ED7 /* cashmereTests.swift */; };
 		2452280B25761A7800B90ED7 /* cashmereUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452280A25761A7800B90ED7 /* cashmereUITests.swift */; };
+		245228222576255700B90ED7 /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228212576255700B90ED7 /* MapService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		2452280625761A7800B90ED7 /* cashmereUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cashmereUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2452280A25761A7800B90ED7 /* cashmereUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashmereUITests.swift; sourceTree = "<group>"; };
 		2452280C25761A7800B90ED7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		245228212576255700B90ED7 /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				245227F625761A7700B90ED7 /* Info.plist */,
 				245227F025761A7700B90ED7 /* Preview Content */,
 				05F0545E25761F5100ABE658 /* MapView.swift */,
+				245228212576255700B90ED7 /* MapService.swift */,
 			);
 			path = cashmere;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				245228222576255700B90ED7 /* MapService.swift in Sources */,
 				245227E925761A7300B90ED7 /* AppDelegate.swift in Sources */,
 				05F0545F25761F5100ABE658 /* MapView.swift in Sources */,
 				245227EB25761A7300B90ED7 /* SceneDelegate.swift in Sources */,
@@ -442,6 +446,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"cashmere/Preview Content\"";
+				DEVELOPMENT_TEAM = EDST8U6VYT;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = cashmere/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -462,6 +467,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"cashmere/Preview Content\"";
+				DEVELOPMENT_TEAM = EDST8U6VYT;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = cashmere/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
