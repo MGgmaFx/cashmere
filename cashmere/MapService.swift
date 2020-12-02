@@ -25,7 +25,7 @@ struct mapView : UIViewRepresentable {
     func  makeUIView(context: UIViewRepresentableContext<mapView>) -> MKMapView {
         // Tokyo 35.6804° N, 139.7690° E
         let center = CLLocationCoordinate2D(latitude: 35.6804, longitude: 139.7690)
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: 10000, longitudinalMeters: 10000)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
         map.region = region
 
         manager.delegate = context.coordinator
@@ -79,7 +79,7 @@ struct mapView : UIViewRepresentable {
                 self.parent.map.removeAnnotations(self.parent.map.annotations)
                 self.parent.map.addAnnotation(point)
 
-                let region = MKCoordinateRegion(center: location!.coordinate, latitudinalMeters: 10000, longitudinalMeters: 100000)
+                let region = MKCoordinateRegion(center: location!.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
                 print(region)
                 self.parent.map.region = region
 
