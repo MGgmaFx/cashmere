@@ -12,7 +12,7 @@ struct GameView: View {
         TabView {
             MapView()
                 .tabItem {
-                    Image(systemName: "1.square.fill")
+                    Image(systemName: "map")
                     Text("マップ")
                 }
             Image(systemName: "faceid")
@@ -21,7 +21,7 @@ struct GameView: View {
                 .frame(width: 200.0, height: 200.0)
                 .foregroundColor(.blue)
                 .tabItem {
-                    Image(systemName: "2.square.fill")
+                    Image(systemName: "cube")
                     Text("アイテム")
                 }
             Image(systemName: "faceid")
@@ -31,7 +31,7 @@ struct GameView: View {
                 .frame(width: 200.0, height: 200.0)
                 .foregroundColor(.blue)
                 .tabItem {
-                    Image(systemName: "3.square.fill")
+                    Image(systemName: "person")
                     Text("プレイヤー")
                 }
         }
