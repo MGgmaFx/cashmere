@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct GameView: View {
-    @EnvironmentObject var model: Model
     var body: some View {
-        VStack {
-            MapView()
-        }
+        MapView()
     }
 }
-

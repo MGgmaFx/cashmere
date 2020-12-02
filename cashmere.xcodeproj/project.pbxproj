@@ -17,6 +17,9 @@
 		2452280025761A7800B90ED7 /* cashmereTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227FF25761A7800B90ED7 /* cashmereTests.swift */; };
 		2452280B25761A7800B90ED7 /* cashmereUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452280A25761A7800B90ED7 /* cashmereUITests.swift */; };
 		245228222576255700B90ED7 /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228212576255700B90ED7 /* MapService.swift */; };
+		24522844257731EF00B90ED7 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24522843257731EF00B90ED7 /* MainMenuView.swift */; };
+		24522849257731F700B90ED7 /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24522848257731F700B90ED7 /* CreateRoomView.swift */; };
+		245228512577320B00B90ED7 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228502577320B00B90ED7 /* GameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,9 @@
 		2452280A25761A7800B90ED7 /* cashmereUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashmereUITests.swift; sourceTree = "<group>"; };
 		2452280C25761A7800B90ED7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		245228212576255700B90ED7 /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
+		24522843257731EF00B90ED7 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
+		24522848257731F700B90ED7 /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
+		245228502577320B00B90ED7 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,15 +109,18 @@
 		245227E725761A7300B90ED7 /* cashmere */ = {
 			isa = PBXGroup;
 			children = (
-				245227F625761A7700B90ED7 /* Info.plist */,
 				245227E825761A7300B90ED7 /* AppDelegate.swift */,
-				245227EC25761A7300B90ED7 /* ContentView.swift */,
-				245228212576255700B90ED7 /* MapService.swift */,
-				05F0545E25761F5100ABE658 /* MapView.swift */,
 				245227EA25761A7300B90ED7 /* SceneDelegate.swift */,
+				245227EC25761A7300B90ED7 /* ContentView.swift */,
+				24522843257731EF00B90ED7 /* MainMenuView.swift */,
+				24522848257731F700B90ED7 /* CreateRoomView.swift */,
+				245228502577320B00B90ED7 /* GameView.swift */,
 				245227EE25761A7700B90ED7 /* Assets.xcassets */,
 				245227F325761A7700B90ED7 /* LaunchScreen.storyboard */,
+				245227F625761A7700B90ED7 /* Info.plist */,
 				245227F025761A7700B90ED7 /* Preview Content */,
+				05F0545E25761F5100ABE658 /* MapView.swift */,
+				245228212576255700B90ED7 /* MapService.swift */,
 			);
 			path = cashmere;
 			sourceTree = "<group>";
@@ -272,11 +281,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24522844257731EF00B90ED7 /* MainMenuView.swift in Sources */,
 				245228222576255700B90ED7 /* MapService.swift in Sources */,
 				245227E925761A7300B90ED7 /* AppDelegate.swift in Sources */,
 				05F0545F25761F5100ABE658 /* MapView.swift in Sources */,
 				245227EB25761A7300B90ED7 /* SceneDelegate.swift in Sources */,
 				245227ED25761A7300B90ED7 /* ContentView.swift in Sources */,
+				245228512577320B00B90ED7 /* GameView.swift in Sources */,
+				24522849257731F700B90ED7 /* CreateRoomView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

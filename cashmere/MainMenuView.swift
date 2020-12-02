@@ -8,20 +8,9 @@
 import SwiftUI
 
 struct MainMenuView: View {
-    @EnvironmentObject var model: Model
-
-    var body: some View {
-        NavigationView {
-            VStack {
-                Text("MainMenu View")
-                NavigationLink(destination: CreateRoomView(), isActive: self.$model.createRoomViewPushed) {
-                    Button(action: {
-                        self.model.createRoomViewPushed = true
-                    }) {
-                        Text("次へ")
-                    }
-                }
-            }
-        }
+   var body: some View {
+    VStack {
+        Text("MainMenu View")
     }
+   }
 }
