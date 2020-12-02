@@ -103,15 +103,15 @@
 		245227E725761A7300B90ED7 /* cashmere */ = {
 			isa = PBXGroup;
 			children = (
+				245227F625761A7700B90ED7 /* Info.plist */,
 				245227E825761A7300B90ED7 /* AppDelegate.swift */,
-				245227EA25761A7300B90ED7 /* SceneDelegate.swift */,
 				245227EC25761A7300B90ED7 /* ContentView.swift */,
+				245228212576255700B90ED7 /* MapService.swift */,
+				05F0545E25761F5100ABE658 /* MapView.swift */,
+				245227EA25761A7300B90ED7 /* SceneDelegate.swift */,
 				245227EE25761A7700B90ED7 /* Assets.xcassets */,
 				245227F325761A7700B90ED7 /* LaunchScreen.storyboard */,
-				245227F625761A7700B90ED7 /* Info.plist */,
 				245227F025761A7700B90ED7 /* Preview Content */,
-				05F0545E25761F5100ABE658 /* MapView.swift */,
-				245228212576255700B90ED7 /* MapService.swift */,
 			);
 			path = cashmere;
 			sourceTree = "<group>";
