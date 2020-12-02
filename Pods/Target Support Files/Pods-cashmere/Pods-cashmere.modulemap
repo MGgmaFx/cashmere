@@ -1,0 +1,6 @@
+framework module Pods_cashmere {
+  umbrella header "Pods-cashmere-umbrella.h"
+
+  export *
+  module * { export * }
+}
