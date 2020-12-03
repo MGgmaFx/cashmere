@@ -9,16 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack{
-            if isPresent {
-                GameView().transition(<#AnyTransition#>)
-            }
-            Button(action: {
-                withAnimation{
-                    isPresent.toggle()
-                }
-            }
-        }
         GameView()
     }
 }
