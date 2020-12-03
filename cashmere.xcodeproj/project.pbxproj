@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05A43AB1257778AA008B03DD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 05A43AB0257778A9008B03DD /* GoogleService-Info.plist */; };
 		05F0545F25761F5100ABE658 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0545E25761F5100ABE658 /* MapView.swift */; };
 		245227E925761A7300B90ED7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227E825761A7300B90ED7 /* AppDelegate.swift */; };
 		245227EB25761A7300B90ED7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227EA25761A7300B90ED7 /* SceneDelegate.swift */; };
@@ -20,7 +21,6 @@
 		24522844257731EF00B90ED7 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24522843257731EF00B90ED7 /* MainMenuView.swift */; };
 		24522849257731F700B90ED7 /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24522848257731F700B90ED7 /* CreateRoomView.swift */; };
 		245228512577320B00B90ED7 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228502577320B00B90ED7 /* GameView.swift */; };
-		245228562577427000B90ED7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 245228552577427000B90ED7 /* GoogleService-Info.plist */; };
 		4A538ACB74F2570FAF4D5C2A /* Pods_cashmere_cashmereUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B978F57396957BB528811F85 /* Pods_cashmere_cashmereUITests.framework */; };
 		6C3837FFA9DED59893BE0752 /* Pods_cashmereTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748503290558B2B13B49EEEE /* Pods_cashmereTests.framework */; };
 		AA1E508A3A9345CCC02BB948 /* Pods_cashmere.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE32DA295FEC37F04A0E6C1F /* Pods_cashmere.framework */; };
@@ -44,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05A43AB0257778A9008B03DD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		05F0545E25761F5100ABE658 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		245227E525761A7300B90ED7 /* cashmere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cashmere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		245227E825761A7300B90ED7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,7 +64,6 @@
 		24522843257731EF00B90ED7 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 		24522848257731F700B90ED7 /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
 		245228502577320B00B90ED7 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		245228552577427000B90ED7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3734E116E6263DD8E5F956D4 /* Pods-cashmere-cashmereUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cashmere-cashmereUITests.debug.xcconfig"; path = "Target Support Files/Pods-cashmere-cashmereUITests/Pods-cashmere-cashmereUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		57187BFF4836C0B0CFBC9649 /* Pods-cashmere.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cashmere.debug.xcconfig"; path = "Target Support Files/Pods-cashmere/Pods-cashmere.debug.xcconfig"; sourceTree = "<group>"; };
 		5998795B6D9E96219FF9DEB1 /* Pods-cashmereTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cashmereTests.release.xcconfig"; path = "Target Support Files/Pods-cashmereTests/Pods-cashmereTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 				24522848257731F700B90ED7 /* CreateRoomView.swift */,
 				245228502577320B00B90ED7 /* GameView.swift */,
 				245227EE25761A7700B90ED7 /* Assets.xcassets */,
-				245228552577427000B90ED7 /* GoogleService-Info.plist */,
+				05A43AB0257778A9008B03DD /* GoogleService-Info.plist */,
 				245227F325761A7700B90ED7 /* LaunchScreen.storyboard */,
 				245227F625761A7700B90ED7 /* Info.plist */,
 				245227F025761A7700B90ED7 /* Preview Content */,
@@ -191,7 +191,6 @@
 				79EE3B1A9A8802EE8BD27118 /* Pods-cashmereTests.debug.xcconfig */,
 				5998795B6D9E96219FF9DEB1 /* Pods-cashmereTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -304,7 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				245227F525761A7700B90ED7 /* LaunchScreen.storyboard in Resources */,
-				245228562577427000B90ED7 /* GoogleService-Info.plist in Resources */,
+				05A43AB1257778AA008B03DD /* GoogleService-Info.plist in Resources */,
 				245227F225761A7700B90ED7 /* Preview Assets.xcassets in Resources */,
 				245227EF25761A7700B90ED7 /* Assets.xcassets in Resources */,
 			);
