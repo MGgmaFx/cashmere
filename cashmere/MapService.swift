@@ -31,7 +31,7 @@ struct mapView : UIViewRepresentable {
         manager.delegate = context.coordinator
         manager.startUpdatingLocation()
         map.showsUserLocation = true
-        map.isZoomEnabled = true
+        // map.isZoomEnabled = true
         // map.isScrollEnabled = true
         manager.requestWhenInUseAuthorization()
         return map
@@ -80,10 +80,11 @@ struct mapView : UIViewRepresentable {
                 point.coordinate = location!.coordinate
                 self.parent.map.removeAnnotations(self.parent.map.annotations)
                 self.parent.map.addAnnotation(point)
-
+                /*
                 let region = MKCoordinateRegion(center: location!.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
                 print(region)
                 self.parent.map.region = region
+                */
 
             }
         }
