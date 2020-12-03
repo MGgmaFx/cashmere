@@ -31,10 +31,12 @@ struct mapView : UIViewRepresentable {
         manager.delegate = context.coordinator
         manager.startUpdatingLocation()
         map.showsUserLocation = true
+        map.isZoomEnabled = true
+        // map.isScrollEnabled = true
         manager.requestWhenInUseAuthorization()
         return map
     }
-
+    // ラベルが自明と同じ場合アンスコで省略できる
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<mapView>) {
 
     }
