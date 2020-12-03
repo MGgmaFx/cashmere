@@ -6,11 +6,19 @@
 //
 
 import SwiftUI
-import Firebase
 
 struct ContentView: View {
-    @State var isPresent = false
     var body: some View {
+        VStack{
+            if isPresent {
+                GameView().transition(<#AnyTransition#>)
+            }
+            Button(action: {
+                withAnimation{
+                    isPresent.toggle()
+                }
+            }
+        }
         GameView()
     }
 }
