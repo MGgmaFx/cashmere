@@ -15,21 +15,12 @@ struct GameView: View {
                     Image(systemName: "map")
                     Text("マップ")
                 }
-            Image(systemName: "faceid")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200.0, height: 200.0)
-                .foregroundColor(.blue)
+            ItemView()
                 .tabItem {
                     Image(systemName: "case.fill")
                     Text("アイテム")
                 }
-            Image(systemName: "faceid")
-                .resizable()
-                .scaledToFit()
-                .font(.system(size: 18, weight: .ultraLight, design: .serif))
-                .frame(width: 200.0, height: 200.0)
-                .foregroundColor(.blue)
+            PlayerView()
                 .tabItem {
                     Image(systemName: "figure.walk")
                     Text("プレイヤー")

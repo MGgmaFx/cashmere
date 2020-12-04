@@ -31,7 +31,7 @@ struct MainMenuView: View {
                         Text("ルームに参加する")
                     }
                     .frame(width: 240, height: 60, alignment: .center)
-                    .background(Color.blue)
+                    .background(Color.gray)
                     .cornerRadius(20)
                     .padding()
                     .foregroundColor(Color.white)

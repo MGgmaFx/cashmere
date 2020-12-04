@@ -5,4 +5,23 @@
 //  Created by 志村豪気 on 2020/12/04.
 //
 
-import Foundation
+import SwiftUI
+
+struct PlayerView: View {
+    @EnvironmentObject var model: Model
+    var body: some View {
+        List {
+            PlayerListRow()
+            PlayerListRow()
+            PlayerListRow()
+            PlayerListRow()
+            PlayerListRow()
+        }
+    }
+}
+
+struct PlayerView_Previews: PreviewProvider {
+    static var previews: some View {
+        PlayerView()
+    }
+}
