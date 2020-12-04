@@ -24,6 +24,7 @@ struct mapView : UIViewRepresentable {
 
     func  makeUIView(context: UIViewRepresentableContext<mapView>) -> MKMapView {
         // Tokyo 35.6804° N, 139.7690° E
+        
         let center = CLLocationCoordinate2D(latitude: 35.6804, longitude: 139.7690)
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
         map.region = region
