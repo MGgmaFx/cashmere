@@ -21,7 +21,7 @@ struct GameView: View {
                 .frame(width: 200.0, height: 200.0)
                 .foregroundColor(.blue)
                 .tabItem {
-                    Image(systemName: "cube")
+                    Image(systemName: "case.fill")
                     Text("アイテム")
                 }
             Image(systemName: "faceid")
@@ -31,7 +31,7 @@ struct GameView: View {
                 .frame(width: 200.0, height: 200.0)
                 .foregroundColor(.blue)
                 .tabItem {
-                    Image(systemName: "person")
+                    Image(systemName: "figure.walk")
                     Text("プレイヤー")
                 }
         }

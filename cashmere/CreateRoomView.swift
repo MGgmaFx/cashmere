@@ -12,14 +12,26 @@ struct CreateRoomView: View {
     @EnvironmentObject var model: Model
     var body: some View {
         VStack {
-            Text("CreateRoom View")
-            Button("戻る") {
+            Spacer()
+            Text("CreateRoom View").font(.title)
+            Spacer()
+            Button("もどる") {
                 self.model.createRoomViewPushed = false
             }
+            .frame(width: 240, height: 60, alignment: .center)
+            .background(Color.gray)
+            .cornerRadius(20)
+            .padding()
+            .foregroundColor(Color.white)
             Button("ゲーム開始") {
                 self.isPresented.toggle()
             }
             .fullScreenCover(isPresented: $isPresented, content: GameView.init)
+            .frame(width: 240, height: 60, alignment: .center)
+            .background(Color.blue)
+            .cornerRadius(20)
+            .padding()
+            .foregroundColor(Color.white)
         }.navigationBarBackButtonHidden(true)
     }
 }

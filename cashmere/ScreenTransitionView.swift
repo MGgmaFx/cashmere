@@ -9,4 +9,5 @@ import SwiftUI
 
 class Model: ObservableObject {
     @Published var createRoomViewPushed = false
+    @Published var joinRoomViewPushed = false
 }
