@@ -33,8 +33,8 @@ struct MainMenuView: View {
                     .frame(width: 240, height: 60, alignment: .center)
                     .background(Color.gray)
                     .cornerRadius(20)
-                    .padding()
                     .foregroundColor(Color.white)
+                    .padding()
                 }
                 NavigationLink(destination: CreateRoomView(), isActive: self.$model.createRoomViewPushed) {
                     Button(action: {
@@ -45,8 +45,8 @@ struct MainMenuView: View {
                     .frame(width: 240, height: 60, alignment: .center)
                     .background(Color.blue)
                     .cornerRadius(20)
-                    .padding(.bottom, 40)
                     .foregroundColor(Color.white)
+                    .padding(.bottom, 40)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

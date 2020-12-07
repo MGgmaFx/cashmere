@@ -15,23 +15,28 @@ struct CreateRoomView: View {
             Spacer()
             Text("CreateRoom View").font(.title)
             Spacer()
-            Button("もどる") {
+            Button(action: {
                 self.model.createRoomViewPushed = false
+            }) {
+                Text("もどる")
+                    .frame(width: 240, height: 60, alignment: .center)
             }
-            .frame(width: 240, height: 60, alignment: .center)
             .background(Color.gray)
             .cornerRadius(20)
-            .padding()
             .foregroundColor(Color.white)
-            Button("ゲーム開始") {
+            .padding()
+            Button(action: {
                 self.isPresented.toggle()
+            }) {
+                Text("ゲーム開始")
+                    .frame(width: 240, height: 60, alignment: .center)
             }
             .fullScreenCover(isPresented: $isPresented, content: GameView.init)
-            .frame(width: 240, height: 60, alignment: .center)
             .background(Color.blue)
             .cornerRadius(20)
-            .padding()
             .foregroundColor(Color.white)
-        }.navigationBarBackButtonHidden(true)
+            .padding()
+        }
+        .navigationBarBackButtonHidden(true)
     }
 }

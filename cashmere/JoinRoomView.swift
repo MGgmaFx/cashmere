@@ -14,15 +14,18 @@ struct JoinRoomView: View {
             Spacer()
             Text("JoinRoom View").font(.title)
             Spacer()
-            Button("もどる") {
+            Button(action: {
                 self.model.joinRoomViewPushed = false
+            }) {
+                Text("もどる")
+                .frame(width: 240, height: 60, alignment: .center)
             }
-            .frame(width: 240, height: 60, alignment: .center)
+            
             .background(Color.gray)
             .cornerRadius(20)
-            .padding()
             .foregroundColor(Color.white)
-            .navigationBarHidden(true)
+            .padding()
         }
+        .navigationBarHidden(true)
     }
 }
