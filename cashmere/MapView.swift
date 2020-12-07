@@ -2,7 +2,7 @@ import SwiftUI
 import CoreLocation
 
 struct MapView: View {
-    var toDate = Calendar.current.date(byAdding:.hour,value:1,to:Date())
+    var toDate = Calendar.current.date(byAdding:.hour,value:56,to:Date())
     @State var manager = CLLocationManager()
     @State var alert = false
     var body: some View {
@@ -12,14 +12,16 @@ struct MapView: View {
               Alert(title: Text("Please Enable Location Access In Setting Panel!!!"))
             }
             TimerView(setDate: toDate!)
-                .frame(width: 200, height: 60)
+                .frame(width: 320, height: 60)
                 .background(Color.gray)
                 .foregroundColor(Color.white)
                 .cornerRadius(20)
-                .padding(.horizontal, 20)
-                .padding(.top, 20)
+                .padding(.top, 40)
+                .opacity(0.8)
                 
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
