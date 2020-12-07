@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct CreateRoomView: View {
     @State var isPresented = false
     @EnvironmentObject var model: Model
+    var ref = Database.database().reference()
     var body: some View {
         VStack {
             Spacer()
@@ -33,6 +35,16 @@ struct CreateRoomView: View {
             }
             .fullScreenCover(isPresented: $isPresented, content: GameView.init)
             .background(Color.blue)
+            .cornerRadius(20)
+            .foregroundColor(Color.white)
+            .padding()
+            Button(action: {
+                self.ref.child("users").child("0001").setValue(["username": "testuser"])
+                }) {
+                    Text("FireBaseに書き込み")
+            }
+            .frame(width: 240, height: 60, alignment: .center)
+            .background(Color.red)
             .cornerRadius(20)
             .foregroundColor(Color.white)
             .padding()
