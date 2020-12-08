@@ -2,10 +2,11 @@ import SwiftUI
 import CoreLocation
 
 struct MapView: View {
-    var toDate = Calendar.current.date(byAdding:.hour,value:56,to:Date())
+    @Binding var time: Int
     @State var manager = CLLocationManager()
     @State var alert = false
     var body: some View {
+        let toDate = Calendar.current.date(byAdding:.minute,value: time,to:Date())
         // ContentViewに地図を表示
         ZStack(alignment: .top) {
             mapView(manager: $manager, alert: $alert).alert(isPresented: $alert) {
@@ -22,11 +23,5 @@ struct MapView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .edgesIgnoringSafeArea(.all)
-    }
-}
-
-struct MapView_Previews: PreviewProvider {
-    static var previews: some View {
-        MapView()
     }
 }

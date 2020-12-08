@@ -31,7 +31,9 @@ struct TimerView : View {
 
         let timeVal = cal.dateComponents([.day,.hour,.minute,.second], from: nowD,to: setDate)
     
-        if timeVal.hour == 0 {
+    if timeVal.day == 0 && timeVal.hour == 0 && Int(timeVal.minute!) >= 15 {
+            timeColor = Color.yellow
+        } else if timeVal.day == 0 && timeVal.hour == 0 {
             timeColor = Color.red
         }
 
