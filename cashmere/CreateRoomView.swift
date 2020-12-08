@@ -26,6 +26,7 @@ struct CreateRoomView: View {
                     Text("ルーム名")
                         .padding()
                     TextField("ルーム名を入力", text: self.$roomName)
+                        
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
                 }
@@ -83,6 +84,7 @@ struct CreateRoomView: View {
                 let room = Room(name: self.roomName)
                 guard let key = ref.child(room.id).key else { return }
                 let post = ["roomname": room.name,
+                            "timelimit": String(self.hour * 60 + self.minute),
                             "username": "testuser"]
                 let childUpdates = ["/\(key)": post]
                 ref.updateChildValues(childUpdates)
@@ -96,8 +98,19 @@ struct CreateRoomView: View {
             .padding()
         }
         .navigationBarBackButtonHidden(true)
+        .onTapGesture {
+            UIApplication.shared.closeKeyboard()
+        }
+    }
+    
+}
+
+extension UIApplication {
+    func closeKeyboard() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
+
 struct CreateRoomView_Previews: PreviewProvider {
     static var previews: some View {
         CreateRoomView()
