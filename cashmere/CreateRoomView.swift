@@ -39,7 +39,8 @@ struct CreateRoomView: View {
             .foregroundColor(Color.white)
             .padding()
             Button(action: {
-                self.ref.child("users").child("0001").setValue(["username": "testuser"])
+                var room = Room(name: "testRoom")
+                self.ref.child("rooms").child(room.id).setValue(["username": "testuser"])
                 }) {
                     Text("FireBaseに書き込み")
             }
