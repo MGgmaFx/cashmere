@@ -8,5 +8,5 @@ import SwiftUI
 
 struct Room {
     let id = UUID().uuidString
-    let name: String
+    var name: String
 }

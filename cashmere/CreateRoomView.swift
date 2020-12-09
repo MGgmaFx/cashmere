@@ -9,12 +9,13 @@ import SwiftUI
 import Firebase
 
 struct CreateRoomView: View {
+    @EnvironmentObject var model: Model
     @State var hour = 1
     @State var minute = 0
-    @State var time = 0
-    @State var isPresented = false
-    @EnvironmentObject var model: Model
-    @State var roomName = "鬼ごっこルーム"
+    @State var time = 60
+    @State var isPresentedGameView = false
+    @State var isPresentedQRCodeView = false
+    @State var room = Room(name: "鬼ごっこルーム")
     var ref = Database.database().reference()
     var body: some View {
         VStack {
@@ -25,7 +26,7 @@ struct CreateRoomView: View {
                 HStack {
                     Text("ルーム名")
                         .padding()
-                    TextField("ルーム名を入力", text: self.$roomName)
+                    TextField("ルーム名を入力", text: self.$room.name)
                         
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
@@ -68,12 +69,12 @@ struct CreateRoomView: View {
             .padding()
             Button(action: {
                 self.time = self.hour * 60 + self.minute
-                self.isPresented.toggle()
+                self.isPresentedGameView.toggle()
             }) {
                 Text("ゲーム開始")
                     .frame(width: 240, height: 60, alignment: .center)
             }
-            .fullScreenCover(isPresented: $isPresented) {
+            .fullScreenCover(isPresented: $isPresentedGameView) {
                 GameView(time: $time)
             }
             .background(Color.blue)
@@ -81,13 +82,10 @@ struct CreateRoomView: View {
             .foregroundColor(Color.white)
             .padding()
             Button(action: {
-                let room = Room(name: self.roomName)
-                guard let key = ref.child(room.id).key else { return }
-                let post = ["roomname": room.name,
+                let data = ["roomname": room.name,
                             "timelimit": String(self.hour * 60 + self.minute),
                             "username": "testuser"]
-                let childUpdates = ["/\(key)": post]
-                ref.updateChildValues(childUpdates)
+                self.ref.child(room.id).updateChildValues(data)
                 }) {
                     Text("FireBaseに書き込み")
             }
@@ -96,13 +94,32 @@ struct CreateRoomView: View {
             .cornerRadius(20)
             .foregroundColor(Color.white)
             .padding()
+            Button(action: {
+                self.time = self.hour * 60 + self.minute
+                self.isPresentedQRCodeView.toggle()
+            }) {
+                Text("QRCode表示")
+                    .frame(width: 240, height: 60, alignment: .center)
+            }
+            .sheet(isPresented: $isPresentedQRCodeView) {
+                QRCodeView(room: $room)
+            }
+            .background(Color.green)
+            .cornerRadius(20)
+            .foregroundColor(Color.white)
+            .padding()
+        }
+        .onAppear{
+            roomInit(room: self.room)
         }
         .navigationBarBackButtonHidden(true)
         .onTapGesture {
             UIApplication.shared.closeKeyboard()
         }
     }
-    
+    private func roomInit(room: Room) {
+        self.ref.child(room.id).setValue(["status": "wating"])
+    }
 }
 
 extension UIApplication {
