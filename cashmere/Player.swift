@@ -8,5 +8,6 @@
 import SwiftUI
 
 struct Player {
-    let name: String
+    let id = UUID().uuidString
+    var name: String = "Player"
 }

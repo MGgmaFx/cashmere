@@ -7,10 +7,13 @@
 
 import SwiftUI
 import CodeScanner
+import Firebase
 
 struct JoinRoomView: View {
     @EnvironmentObject var model: Model
+    @Binding var player: Player
     @State private var isShowingScanner = false
+    var ref = Database.database().reference()
     var body: some View {
         VStack {
             Spacer()
@@ -47,9 +50,12 @@ struct JoinRoomView: View {
         self.isShowingScanner = false
         switch result {
         case .success(let code):
+            let data = ["playername": player.name]
+            self.ref.child(code).child("players").child(player.id).updateChildValues(data)
             print(code)
         case .failure(let error):
             print("Scanning failed")
+            print(error)
         }
     }
 }

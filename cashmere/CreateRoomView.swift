@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 
 struct CreateRoomView: View {
+    @Binding var player: Player
     @EnvironmentObject var model: Model
     @State var hour = 1
     @State var minute = 0
@@ -16,6 +17,7 @@ struct CreateRoomView: View {
     @State var isPresentedGameView = false
     @State var isPresentedQRCodeView = false
     @State var room = Room(name: "鬼ごっこルーム")
+    @State var playerList: [String] = []
     var ref = Database.database().reference()
     var body: some View {
         VStack {
@@ -51,6 +53,21 @@ struct CreateRoomView: View {
                     .labelsHidden()
                     .compositingGroup()
                     .clipped()
+                }
+                
+                Text("プレイヤー一覧").padding()
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(playerList, id: \.self) { value in
+                            VStack {
+                                Image(systemName: "face.smiling.fill")
+                                    .resizable()
+                                    .frame(width: 80, height: 80, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                    .foregroundColor(.blue)
+                                Text(value)
+                            }.padding()
+                        }
+                    }
                 }
             }
             .background(Color(red: 0.95, green: 0.95, blue: 1.0))
@@ -111,6 +128,20 @@ struct CreateRoomView: View {
         }
         .onAppear{
             roomInit(room: self.room)
+            ref.child(room.id).child("players").observe(DataEventType.value, with: { (snapshot) in
+                let postDict = snapshot.value as? [String : AnyObject] ?? [:]
+                playerList = []
+                for (_, value) in postDict {
+                    if let followingUsers = value as? [String : String] {
+                        for (_, user) in followingUsers {
+                            playerList.append(user)
+                        }
+                    }
+                }
+            })
+        }
+        .onDisappear{
+            roomDel(room: self.room)
         }
         .navigationBarBackButtonHidden(true)
         .onTapGesture {
@@ -119,6 +150,11 @@ struct CreateRoomView: View {
     }
     private func roomInit(room: Room) {
         self.ref.child(room.id).setValue(["status": "wating"])
+        self.ref.child(room.id).child("players").child(player.id).setValue(["playername": player.name])
+    }
+    
+    private func roomDel(room: Room) {
+        self.ref.child(room.id).removeValue()
     }
 }
 
@@ -128,9 +164,9 @@ extension UIApplication {
     }
 }
 
-struct CreateRoomView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateRoomView()
-    }
-}
+//struct CreateRoomView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CreateRoomView(player: Player(name: ""))
+//    }
+//}
 

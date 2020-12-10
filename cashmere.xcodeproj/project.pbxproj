@@ -34,6 +34,7 @@
 		245229102580507300B90ED7 /* QRCodeMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452290F2580507300B90ED7 /* QRCodeMaker.swift */; };
 		24522915258051E800B90ED7 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24522914258051E800B90ED7 /* QRCodeView.swift */; };
 		2452291B25806B3C00B90ED7 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 2452291A25806B3C00B90ED7 /* CodeScanner */; };
+		2452292B2581E3B600B90ED7 /* ProfileSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452292A2581E3B600B90ED7 /* ProfileSettingsView.swift */; };
 		4A538ACB74F2570FAF4D5C2A /* Pods_cashmere_cashmereUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B978F57396957BB528811F85 /* Pods_cashmere_cashmereUITests.framework */; };
 		6C3837FFA9DED59893BE0752 /* Pods_cashmereTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748503290558B2B13B49EEEE /* Pods_cashmereTests.framework */; };
 		AA1E508A3A9345CCC02BB948 /* Pods_cashmere.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE32DA295FEC37F04A0E6C1F /* Pods_cashmere.framework */; };
@@ -89,6 +90,7 @@
 		245228FE257F04DE00B90ED7 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		2452290F2580507300B90ED7 /* QRCodeMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeMaker.swift; sourceTree = "<group>"; };
 		24522914258051E800B90ED7 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
+		2452292A2581E3B600B90ED7 /* ProfileSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsView.swift; sourceTree = "<group>"; };
 		3734E116E6263DD8E5F956D4 /* Pods-cashmere-cashmereUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cashmere-cashmereUITests.debug.xcconfig"; path = "Target Support Files/Pods-cashmere-cashmereUITests/Pods-cashmere-cashmereUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		57187BFF4836C0B0CFBC9649 /* Pods-cashmere.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cashmere.debug.xcconfig"; path = "Target Support Files/Pods-cashmere/Pods-cashmere.debug.xcconfig"; sourceTree = "<group>"; };
 		5998795B6D9E96219FF9DEB1 /* Pods-cashmereTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cashmereTests.release.xcconfig"; path = "Target Support Files/Pods-cashmereTests/Pods-cashmereTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				245227EA25761A7300B90ED7 /* SceneDelegate.swift */,
 				245227EC25761A7300B90ED7 /* ContentView.swift */,
 				24522843257731EF00B90ED7 /* MainMenuView.swift */,
+				2452292A2581E3B600B90ED7 /* ProfileSettingsView.swift */,
 				245228BE2579B82400B90ED7 /* JoinRoomView.swift */,
 				24522848257731F700B90ED7 /* CreateRoomView.swift */,
 				2452290F2580507300B90ED7 /* QRCodeMaker.swift */,
@@ -483,6 +486,7 @@
 				245228FA257F03B300B90ED7 /* Room.swift in Sources */,
 				245227E925761A7300B90ED7 /* AppDelegate.swift in Sources */,
 				245228D32579F78D00B90ED7 /* PlayerListRow.swift in Sources */,
+				2452292B2581E3B600B90ED7 /* ProfileSettingsView.swift in Sources */,
 				245229102580507300B90ED7 /* QRCodeMaker.swift in Sources */,
 				245228E0257A1E0300B90ED7 /* File.swift in Sources */,
 				245228C92579D23900B90ED7 /* PlayerView.swift in Sources */,
@@ -671,6 +675,7 @@
 				DEVELOPMENT_TEAM = EDST8U6VYT;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = cashmere/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -695,6 +700,7 @@
 				DEVELOPMENT_TEAM = EDST8U6VYT;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = cashmere/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
