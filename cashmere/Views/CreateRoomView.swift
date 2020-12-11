@@ -86,6 +86,8 @@ struct CreateRoomView: View {
             .padding()
             Button(action: {
                 self.time = self.hour * 60 + self.minute
+                let data = ["status": "playing"]
+                self.ref.child(room.id).updateChildValues(data)
                 self.isPresentedGameView.toggle()
             }) {
                 Text("ゲーム開始")

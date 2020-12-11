@@ -13,6 +13,9 @@ struct JoinRoomView: View {
     @EnvironmentObject var model: Model
     @Binding var player: Player
     @State private var isShowingScanner = false
+    @State var roomId: String!
+    @State var isGameStarted = false
+    @State var time = 60
     var ref = Database.database().reference()
     var body: some View {
         VStack {
@@ -43,6 +46,10 @@ struct JoinRoomView: View {
                 CodeScannerView(codeTypes: [.qr], completion: self.handleScan)
             }
         }
+        .background(EmptyView()
+        .fullScreenCover(isPresented: $isGameStarted) {
+            GameView(time: $time)
+        })
         .navigationBarHidden(true)
     }
     
@@ -50,9 +57,23 @@ struct JoinRoomView: View {
         self.isShowingScanner = false
         switch result {
         case .success(let code):
+            roomId = code
             let data = ["playername": player.name]
-            self.ref.child(code).child("players").child(player.id).updateChildValues(data)
-            print(code)
+            self.ref.child(roomId!).child("players").child(player.id).updateChildValues(data)
+            ref.child(roomId!).observe(DataEventType.value, with: { (snapshot) in
+                let postDict = snapshot.value as? [String : AnyObject] ?? [:]
+                print(postDict)
+                for (_, value) in postDict {
+                    if let status = value as? [String : String] {
+                        for (_, state) in status {
+                            print("state= \(state)")
+                            if state == "playing" {
+                                isGameStarted = true
+                            }
+                        }
+                    }
+                }
+            })
         case .failure(let error):
             print("Scanning failed")
             print(error)

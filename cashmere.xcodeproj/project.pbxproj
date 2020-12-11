@@ -28,13 +28,13 @@
 		245228CE2579DC3A00B90ED7 /* ItemListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228CD2579DC3A00B90ED7 /* ItemListRow.swift */; };
 		245228D32579F78D00B90ED7 /* PlayerListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228D22579F78D00B90ED7 /* PlayerListRow.swift */; };
 		245228D8257A060100B90ED7 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228D7257A060100B90ED7 /* TimerView.swift */; };
-		245228E0257A1E0300B90ED7 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228DF257A1E0300B90ED7 /* File.swift */; };
 		245228FA257F03B300B90ED7 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228F9257F03B300B90ED7 /* Room.swift */; };
 		245228FF257F04DE00B90ED7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228FE257F04DE00B90ED7 /* Player.swift */; };
 		245229102580507300B90ED7 /* QRCodeMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452290F2580507300B90ED7 /* QRCodeMaker.swift */; };
 		24522915258051E800B90ED7 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24522914258051E800B90ED7 /* QRCodeView.swift */; };
 		2452291B25806B3C00B90ED7 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 2452291A25806B3C00B90ED7 /* CodeScanner */; };
 		2452292B2581E3B600B90ED7 /* ProfileSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452292A2581E3B600B90ED7 /* ProfileSettingsView.swift */; };
+		24522930258347E400B90ED7 /* RealtimeDatabeseDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452292F258347E400B90ED7 /* RealtimeDatabeseDAO.swift */; };
 		4A538ACB74F2570FAF4D5C2A /* Pods_cashmere_cashmereUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B978F57396957BB528811F85 /* Pods_cashmere_cashmereUITests.framework */; };
 		6C3837FFA9DED59893BE0752 /* Pods_cashmereTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748503290558B2B13B49EEEE /* Pods_cashmereTests.framework */; };
 		AA1E508A3A9345CCC02BB948 /* Pods_cashmere.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE32DA295FEC37F04A0E6C1F /* Pods_cashmere.framework */; };
@@ -85,12 +85,12 @@
 		245228CD2579DC3A00B90ED7 /* ItemListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListRow.swift; sourceTree = "<group>"; };
 		245228D22579F78D00B90ED7 /* PlayerListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListRow.swift; sourceTree = "<group>"; };
 		245228D7257A060100B90ED7 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
-		245228DF257A1E0300B90ED7 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		245228F9257F03B300B90ED7 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		245228FE257F04DE00B90ED7 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		2452290F2580507300B90ED7 /* QRCodeMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeMaker.swift; sourceTree = "<group>"; };
 		24522914258051E800B90ED7 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		2452292A2581E3B600B90ED7 /* ProfileSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsView.swift; sourceTree = "<group>"; };
+		2452292F258347E400B90ED7 /* RealtimeDatabeseDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeDatabeseDAO.swift; sourceTree = "<group>"; };
 		3734E116E6263DD8E5F956D4 /* Pods-cashmere-cashmereUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cashmere-cashmereUITests.debug.xcconfig"; path = "Target Support Files/Pods-cashmere-cashmereUITests/Pods-cashmere-cashmereUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		57187BFF4836C0B0CFBC9649 /* Pods-cashmere.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cashmere.debug.xcconfig"; path = "Target Support Files/Pods-cashmere/Pods-cashmere.debug.xcconfig"; sourceTree = "<group>"; };
 		5998795B6D9E96219FF9DEB1 /* Pods-cashmereTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cashmereTests.release.xcconfig"; path = "Target Support Files/Pods-cashmereTests/Pods-cashmereTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -156,32 +156,18 @@
 		245227E725761A7300B90ED7 /* cashmere */ = {
 			isa = PBXGroup;
 			children = (
+				24522939258348CE00B90ED7 /* Service */,
+				24522938258348B600B90ED7 /* DAO */,
+				245229342583483800B90ED7 /* Views */,
 				245227E825761A7300B90ED7 /* AppDelegate.swift */,
 				245227EA25761A7300B90ED7 /* SceneDelegate.swift */,
-				245227EC25761A7300B90ED7 /* ContentView.swift */,
-				24522843257731EF00B90ED7 /* MainMenuView.swift */,
-				2452292A2581E3B600B90ED7 /* ProfileSettingsView.swift */,
-				245228BE2579B82400B90ED7 /* JoinRoomView.swift */,
-				24522848257731F700B90ED7 /* CreateRoomView.swift */,
-				2452290F2580507300B90ED7 /* QRCodeMaker.swift */,
-				24522914258051E800B90ED7 /* QRCodeView.swift */,
 				245228F9257F03B300B90ED7 /* Room.swift */,
 				245228FE257F04DE00B90ED7 /* Player.swift */,
-				245228B12578731C00B90ED7 /* ScreenTransitionView.swift */,
-				245228502577320B00B90ED7 /* GameView.swift */,
-				245228C32579D22300B90ED7 /* ItemView.swift */,
-				245228D22579F78D00B90ED7 /* PlayerListRow.swift */,
-				245228CD2579DC3A00B90ED7 /* ItemListRow.swift */,
-				245228C82579D23900B90ED7 /* PlayerView.swift */,
 				245228A925786FB700B90ED7 /* GoogleService-Info.plist */,
-				245228DF257A1E0300B90ED7 /* File.swift */,
 				245227EE25761A7700B90ED7 /* Assets.xcassets */,
 				245227F325761A7700B90ED7 /* LaunchScreen.storyboard */,
 				245227F625761A7700B90ED7 /* Info.plist */,
 				245227F025761A7700B90ED7 /* Preview Content */,
-				05F0545E25761F5100ABE658 /* MapView.swift */,
-				245228D7257A060100B90ED7 /* TimerView.swift */,
-				245228212576255700B90ED7 /* MapService.swift */,
 			);
 			path = cashmere;
 			sourceTree = "<group>";
@@ -210,6 +196,44 @@
 				2452280C25761A7800B90ED7 /* Info.plist */,
 			);
 			path = cashmereUITests;
+			sourceTree = "<group>";
+		};
+		245229342583483800B90ED7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				245228D22579F78D00B90ED7 /* PlayerListRow.swift */,
+				245228CD2579DC3A00B90ED7 /* ItemListRow.swift */,
+				24522914258051E800B90ED7 /* QRCodeView.swift */,
+				245228B12578731C00B90ED7 /* ScreenTransitionView.swift */,
+				245228502577320B00B90ED7 /* GameView.swift */,
+				245228C32579D22300B90ED7 /* ItemView.swift */,
+				245228C82579D23900B90ED7 /* PlayerView.swift */,
+				05F0545E25761F5100ABE658 /* MapView.swift */,
+				245228D7257A060100B90ED7 /* TimerView.swift */,
+				24522848257731F700B90ED7 /* CreateRoomView.swift */,
+				2452292A2581E3B600B90ED7 /* ProfileSettingsView.swift */,
+				245228BE2579B82400B90ED7 /* JoinRoomView.swift */,
+				24522843257731EF00B90ED7 /* MainMenuView.swift */,
+				245227EC25761A7300B90ED7 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		24522938258348B600B90ED7 /* DAO */ = {
+			isa = PBXGroup;
+			children = (
+				2452292F258347E400B90ED7 /* RealtimeDatabeseDAO.swift */,
+			);
+			path = DAO;
+			sourceTree = "<group>";
+		};
+		24522939258348CE00B90ED7 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				2452290F2580507300B90ED7 /* QRCodeMaker.swift */,
+				245228212576255700B90ED7 /* MapService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		8B8373CC9E1EBBBE61F11FDC /* Frameworks */ = {
@@ -488,7 +512,6 @@
 				245228D32579F78D00B90ED7 /* PlayerListRow.swift in Sources */,
 				2452292B2581E3B600B90ED7 /* ProfileSettingsView.swift in Sources */,
 				245229102580507300B90ED7 /* QRCodeMaker.swift in Sources */,
-				245228E0257A1E0300B90ED7 /* File.swift in Sources */,
 				245228C92579D23900B90ED7 /* PlayerView.swift in Sources */,
 				05F0545F25761F5100ABE658 /* MapView.swift in Sources */,
 				245227EB25761A7300B90ED7 /* SceneDelegate.swift in Sources */,
@@ -500,6 +523,7 @@
 				245228FF257F04DE00B90ED7 /* Player.swift in Sources */,
 				245228B22578731C00B90ED7 /* ScreenTransitionView.swift in Sources */,
 				24522849257731F700B90ED7 /* CreateRoomView.swift in Sources */,
+				24522930258347E400B90ED7 /* RealtimeDatabeseDAO.swift in Sources */,
 				245228CE2579DC3A00B90ED7 /* ItemListRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

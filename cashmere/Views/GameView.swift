@@ -9,9 +9,10 @@ import SwiftUI
 
 struct GameView: View {
     @Binding var time: Int
+    @State var isGameOver = false
     var body: some View {
         TabView {
-            MapView(time: $time)
+            MapView(time: $time, isGameOver: $isGameOver)
                 .tabItem {
                     Image(systemName: "map")
                     Text("マップ")
@@ -26,6 +27,9 @@ struct GameView: View {
                     Image(systemName: "figure.walk")
                     Text("プレイヤー")
                 }
+        }
+        .alert(isPresented: $isGameOver) {
+            Alert(title: Text("ゲーム終了"))
         }
     }
 }
