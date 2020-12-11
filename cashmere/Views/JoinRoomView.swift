@@ -62,15 +62,11 @@ struct JoinRoomView: View {
             self.ref.child(roomId!).child("players").child(player.id).updateChildValues(data)
             ref.child(roomId!).observe(DataEventType.value, with: { (snapshot) in
                 let postDict = snapshot.value as? [String : AnyObject] ?? [:]
-                print(postDict)
                 for (_, value) in postDict {
-                    if let status = value as? [String : String] {
-                        for (_, state) in status {
-                            print("state= \(state)")
-                            if state == "playing" {
-                                isGameStarted = true
-                            }
-                        }
+                    var state = ""
+                    state = value as? String ?? ""
+                    if state == "playing" {
+                        isGameStarted = true
                     }
                 }
             })
