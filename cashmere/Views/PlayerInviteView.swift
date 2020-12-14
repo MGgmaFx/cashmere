@@ -23,9 +23,9 @@ struct PlayerInviteView: View {
                 HStack {
                     ForEach(playerList, id: \.self) { value in
                         VStack {
-                            Image(systemName: "face.smiling.fill")
+                            Image(systemName: "figure.walk")
                                 .resizable()
-                                .frame(width: 80, height: 80, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                .frame(width: 40, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 .foregroundColor(.blue)
                             Text(value)
                                 .foregroundColor(.primary)

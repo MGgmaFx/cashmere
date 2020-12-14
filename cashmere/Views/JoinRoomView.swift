@@ -33,7 +33,7 @@ struct JoinRoomView: View {
             .cornerRadius(20)
             .foregroundColor(Color.white)
             .padding()
-            .sheet(isPresented: $isShowingScanner) {
+            .fullScreenCover(isPresented: $isShowingScanner) {
                 CodeScannerView(codeTypes: [.qr], completion: self.handleScan)
             }
             
@@ -51,15 +51,8 @@ struct JoinRoomView: View {
             VStack {
                 
             }
-            .background(EmptyView()
-            .fullScreenCover(isPresented: $isGameStarted) {
-                GameView(time: $time)
-            })
-            VStack {
-                
-            }
             .fullScreenCover(isPresented: $model.isGameWating) {
-                GameWatingView(roomId: $roomId)
+                GameWatingView(roomId: $roomId, isGameStarted: $isGameStarted)
             }
             .navigationBarHidden(true)
             

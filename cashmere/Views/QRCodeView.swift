@@ -15,11 +15,10 @@ struct QRCodeView: View {
     var body: some View {
         VStack {
             Spacer()
-            Text("QRコードを読み込んでください")
-                .font(.title)
-                .foregroundColor(.orange)
-            Spacer()
             Image(uiImage: self._QRCodeMaker.make(message: self.room.id)!)
+            Spacer()
+            Text("QRコードを読み込んでください")
+                .foregroundColor(.orange)
             Spacer()
         }
     }
