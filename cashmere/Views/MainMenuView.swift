@@ -14,7 +14,8 @@ struct MainMenuView: View {
         NavigationView {
             VStack {
                 Spacer()
-                Text("Blue Cat").font(.title)
+                Text("鬼ごっこオンライン").font(.title)
+                Image()
                 Spacer()
                 NavigationLink(destination: JoinRoomView(player: $player), isActive: self.$model.joinRoomViewPushed) {
                     Button(action: {
@@ -22,34 +23,23 @@ struct MainMenuView: View {
                     }) {
                         Text("ルームに参加する")
                     }
-                    .frame(width: 240, height: 60, alignment: .center)
-                    .background(Color.blue)
-                    .cornerRadius(20)
-                    .foregroundColor(Color.white)
-                    .padding()
+                    .buttonStyle(CustomButtomStyle(color: Color.blue))
                 }
-                NavigationLink(destination: CreateRoomView(player: $player), isActive: self.$model.createRoomViewPushed) {
+                NavigationLink(destination: CreateRoomView(player: $player), isActive: $model.createRoomViewPushed) {
                     Button(action: {
                         self.model.createRoomViewPushed = true
                     }) {
                         Text("ルームをつくる")
                     }
-                    .frame(width: 240, height: 60, alignment: .center)
-                    .background(Color.blue)
-                    .cornerRadius(20)
-                    .foregroundColor(Color.white)
-                    .padding(.bottom, 40)
+                    .buttonStyle(CustomButtomStyle(color: Color.blue))
                 }
-                NavigationLink(destination: ProfileSettingsView(player: $player)) {
+                NavigationLink(destination: ProfileSettingsView(player: $player), isActive: $model.profileSettingsViewPushed) {
                     Button(action: {
+                        model.profileSettingsViewPushed = true
                     }) {
                         Text("設定")
                     }
-                    .frame(width: 240, height: 60, alignment: .center)
-                    .background(Color.gray)
-                    .cornerRadius(20)
-                    .foregroundColor(Color.white)
-                    .padding(.bottom, 40)
+                    .buttonStyle(CustomButtomStyle(color: Color.gray))
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

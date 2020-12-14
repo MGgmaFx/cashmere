@@ -9,20 +9,14 @@ import SwiftUI
 
 struct GameWatingView: View {
     @Binding var roomId: String
-    @State var time: Int = 60
-    @Binding var isGameStarted: Bool
+    @State var playerList: [String] = []
     var RDDAO = RealtimeDatabeseDAO()
     var body: some View {
-        VStack {
-            Text("GameWating View")
-            
-            VStack {
-                
+            InvitedPlayerListView(playerList: $playerList)
+                .onAppear {
+                    RDDAO.getPlayerNameList(roomId: roomId) { result in
+                    playerList = result
             }
-            .background(EmptyView()
-            .fullScreenCover(isPresented: $isGameStarted) {
-                GameView(time: $time)
-            })
         }
     }
 }

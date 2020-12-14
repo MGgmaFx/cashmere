@@ -14,4 +14,5 @@ class Model: ObservableObject {
     @Published var isPresentedQRCodeView = false
     @Published var playerInvitePushed = false
     @Published var isGameWating = false
+    @Published var profileSettingsViewPushed = false
 }

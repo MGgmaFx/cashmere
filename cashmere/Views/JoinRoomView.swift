@@ -22,6 +22,10 @@ struct JoinRoomView: View {
             Spacer()
             Text("JoinRoom View").font(.title)
             Spacer()
+            if model.isGameWating {
+                GameWatingView(roomId: $roomId)
+            }
+            Spacer()
             
             Button(action: {
                 isShowingScanner = true
@@ -47,16 +51,17 @@ struct JoinRoomView: View {
             .cornerRadius(20)
             .foregroundColor(Color.white)
             .padding()
+            .navigationBarHidden(true)
             
             VStack {
                 
             }
-            .fullScreenCover(isPresented: $model.isGameWating) {
-                GameWatingView(roomId: $roomId, isGameStarted: $isGameStarted)
-            }
-            .navigationBarHidden(true)
+            .background(EmptyView().fullScreenCover(isPresented: $isGameStarted) {
+                GameView(time: $time, roomId: $roomId)
+            })
             
         }
+        
     }
     
     func handleScan(result: Result<String, CodeScannerView.ScanError>) {
@@ -66,7 +71,18 @@ struct JoinRoomView: View {
             roomId = code
             let data = ["playername": player.name]
             ref.child(roomId).child("players").child(player.id).updateChildValues(data)
+            ref.child(roomId).observe(DataEventType.value, with: { (snapshot) in
+                let postDict = snapshot.value as? [String : AnyObject] ?? [:]
+                for (_, value) in postDict {
+                    var state = ""
+                    state = value as? String ?? ""
+                    if state == "playing" {
+                        isGameStarted = true
+                    }
+                }
+            })
             model.isGameWating = true
+            
             
         case .failure(let error):
             print("Scanning failed")

@@ -16,24 +16,7 @@ struct PlayerInviteView: View {
     var body: some View {
         VStack {
             
-            Text("プレイヤー一覧")
-                .foregroundColor(.primary)
-                .padding()
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(playerList, id: \.self) { value in
-                        VStack {
-                            Image(systemName: "figure.walk")
-                                .resizable()
-                                .frame(width: 40, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                .foregroundColor(.blue)
-                            Text(value)
-                                .foregroundColor(.primary)
-                        }
-                        .padding()
-                    }
-                }
-            }
+            InvitedPlayerListView(playerList: $playerList)
             
             QRCodeView(room: $room)
                 .padding()
@@ -47,7 +30,7 @@ struct PlayerInviteView: View {
                     .frame(width: 240, height: 60, alignment: .center)
             }
             .fullScreenCover(isPresented: $model.isPresentedGameView) {
-                GameView(time: $time)
+                GameView(time: $time roomId: $room.id)
             }
             .background(Color.blue)
             .cornerRadius(20)
