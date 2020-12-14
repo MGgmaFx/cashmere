@@ -9,37 +9,37 @@ import SwiftUI
 import CoreLocation
 import MapKit
 import Foundation
+import Firebase
+
 
 struct mapView : UIViewRepresentable {
     
     @Binding var manager : CLLocationManager
     @Binding var alert : Bool
-    // static var latitude = 43.056046
-    // static var longitude = 141.378373
+    @Binding var roomId: String
+    @Binding var player : Player
 
     let map = MKMapView()
-    
-   
     
     func makeCoordinator() -> Coordinator {
         return Coordinator(parent1: self)
     }
     
-    
     func makeUIView(context: Context) -> MKMapView {
-        let center = CLLocationCoordinate2D(latitude: 43.056046, longitude: 141.378373)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
-
-        map.region = region
         manager.requestWhenInUseAuthorization()
         manager.delegate = context.coordinator
         // 現在地の表示（青ピン）
         map.showsUserLocation = true
         map.showsCompass = true
         map.showsScale = true
+        
         // 測位の精度を指定(最高精度
-        manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        // 位置情報取得間隔を指定(5m移動したら、位置情報を通知)
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        // 測位の精度 10メートル
+        // manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        
+        // 位置情報取得間隔を指定(2m移動したら、位置情報を通知)
         manager.distanceFilter = 2
         
        
@@ -63,6 +63,8 @@ struct mapView : UIViewRepresentable {
 }
 
 class Coordinator : NSObject,CLLocationManagerDelegate{
+    let RDDAO = RealtimeDatabeseDAO()
+    var ref = Database.database().reference()
     static let startDate = Date().addingTimeInterval(-180071.3325)
     
     var parent : mapView
@@ -85,20 +87,27 @@ class Coordinator : NSObject,CLLocationManagerDelegate{
         
         let location = locations.last
         
-        // let latitude = 43.056046
-        // let longitude = 141.378373
+        /**DBに現在地を追加*/
+        
+        var latitude = location?.coordinate.latitude
+        var longitude = location?.coordinate.longitude
+        var playerId = player.id
+        
+        if latitude != nil && longitude != nil {
+            RDDAO.addPlayerLocation(roomId: roomId, playerId: playerId, latitude: latitude!, longitude: longitude!)
+        }
+        
         
         /*var playerLocations = [Double]()
         playerLocations.append(latitude)
         playerLocations.append(longitude)*/
 
         /**
-         DBにアクセス プレイヤーの位置情報を取得
+         DBからプレイヤーの位置情報を取得
+         43.057427,141.373615
+         43.051846,141.385889
+         43.052747,141.377778
          */
-        // 43.057427,141.373615
-        // 43.051846,141.385889
-        // 43.052747,141.377778
-        
         
         let playerTime = 30
         let timeInterval = Date().timeIntervalSince(Coordinator.startDate)
@@ -107,15 +116,11 @@ class Coordinator : NSObject,CLLocationManagerDelegate{
         elTime = elTime % 60
         
         if elTime > playerTime {
+            // addAnnotation(latitude, longitude)
+            // addAnnotation(mapView.latitude, mapView.longitude)
             addAnnotation(43.051846, 141.385889)
             addAnnotation(43.052747, 141.377778)
         }
-        
-        
-        
-        // addAnnotation(latitude, longitude)
-        // addAnnotation(mapView.latitude, mapView.longitude)
-        
         
         /* 方向ボタン
         let button = MKUserTrackingButton()
@@ -132,20 +137,6 @@ class Coordinator : NSObject,CLLocationManagerDelegate{
                 print((err?.localizedDescription)!)
                 return
             }
-            // self.parent.map.removeAnnotations(self.parent.map.annotations)
-            // span = 描画する領域
-            // let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-            // 位置情報と描画する領域
-            // let region = MKCoordinateRegion(center: location!.coordinate, span: span)
-            
-            // let centerCoordinate = CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!)
-            // self.parent.map.setCenter(centerCoordinate, animated: true)
-            
-            // self.parent.map.region = region
-            
-            // 方向設定
-            // self.parent.map.setUserTrackingMode(MKUserTrackingMode.followWithHeading, animated: false)
-
         }
     }
     

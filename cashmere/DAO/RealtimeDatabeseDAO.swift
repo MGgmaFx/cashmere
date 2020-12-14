@@ -4,7 +4,7 @@
 //
 //  Created by 志村豪気 on 2020/12/11.
 //
-
+import CoreLocation
 import Firebase
 
 struct RealtimeDatabeseDAO {
@@ -42,6 +42,11 @@ struct RealtimeDatabeseDAO {
     
     func deleteRoom(roomId: String) {
         self.ref.child(roomId).removeValue()
+    }
+    
+    func addPlayerLocation(roomId: String, playerId: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees){
+        ref.child(roomId).child("players").child(playerId).setValue(["playerLatitude": latitude])
+        ref.child(roomId).child("players").child(playerId).setValue(["playerLongitude": longitude])
     }
     
 }

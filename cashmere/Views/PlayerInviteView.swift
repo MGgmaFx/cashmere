@@ -11,6 +11,7 @@ struct PlayerInviteView: View {
     @EnvironmentObject var model: Model
     @Binding var room: Room
     @Binding var time: Int
+    @Binding var player: Player
     @State var playerList: [String] = []
     var RDDAO = RealtimeDatabeseDAO()
     var body: some View {
@@ -30,7 +31,7 @@ struct PlayerInviteView: View {
                     .frame(width: 240, height: 60, alignment: .center)
             }
             .fullScreenCover(isPresented: $model.isPresentedGameView) {
-                GameView(time: $time roomId: $room.id)
+                GameView(time: $time, roomId: $room.id, player: $player)
             }
             .background(Color.blue)
             .cornerRadius(20)

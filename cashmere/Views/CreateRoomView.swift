@@ -70,7 +70,7 @@ struct CreateRoomView: View {
                     .frame(width: 240, height: 60, alignment: .center)
             }
             .sheet(isPresented: $model.playerInvitePushed) {
-                PlayerInviteView(room: $room, time: $time)
+                PlayerInviteView(room: $room, time: $time, player: $player)
             }
             .background(Color.green)
             .cornerRadius(20)

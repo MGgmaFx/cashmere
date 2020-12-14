@@ -57,7 +57,7 @@ struct JoinRoomView: View {
                 
             }
             .background(EmptyView().fullScreenCover(isPresented: $isGameStarted) {
-                GameView(time: $time, roomId: $roomId)
+                GameView(time: $time, roomId: $roomId, player: $player)
             })
             
         }

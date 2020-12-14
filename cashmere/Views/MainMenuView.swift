@@ -15,7 +15,6 @@ struct MainMenuView: View {
             VStack {
                 Spacer()
                 Text("鬼ごっこオンライン").font(.title)
-                Image()
                 Spacer()
                 NavigationLink(destination: JoinRoomView(player: $player), isActive: self.$model.joinRoomViewPushed) {
                     Button(action: {

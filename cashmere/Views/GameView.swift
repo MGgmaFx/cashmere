@@ -9,10 +9,12 @@ import SwiftUI
 
 struct GameView: View {
     @Binding var time: Int
+    @Binding var roomId: String
+    @Binding var player: Player
     @State var isGameOver = false
     var body: some View {
         TabView {
-            MapView(time: $time, isGameOver: $isGameOver)
+            MapView(time: $time, isGameOver: $isGameOver, roomId: $roomId, player: $player)
                 .tabItem {
                     Image(systemName: "map")
                     Text("マップ")

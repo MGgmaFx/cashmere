@@ -7,6 +7,6 @@
 import SwiftUI
 
 struct Room {
-    let id = UUID().uuidString
+    var id = UUID().uuidString
     var name: String
 }
