@@ -13,7 +13,7 @@ struct JoinRoomView: View {
     @EnvironmentObject var model: Model
     @Binding var player: Player
     @State private var isShowingScanner = false
-    @State var roomId: String!
+    @State var roomId: String = ""
     @State var isGameStarted = false
     @State var time = 60
     var ref = Database.database().reference()
@@ -48,23 +48,22 @@ struct JoinRoomView: View {
             .foregroundColor(Color.white)
             .padding()
             
-        }
-        
-        VStack {
+            VStack {
+                
+            }
+            .background(EmptyView()
+            .fullScreenCover(isPresented: $isGameStarted) {
+                GameView(time: $time)
+            })
+            VStack {
+                
+            }
+            .fullScreenCover(isPresented: $model.isGameWating) {
+                GameWatingView(roomId: $roomId)
+            }
+            .navigationBarHidden(true)
             
         }
-        .background(EmptyView()
-        .fullScreenCover(isPresented: $isGameStarted) {
-            GameView(time: $time)
-        })
-        VStack {
-            
-        }
-        .background(EmptyView()
-        .fullScreenCover(isPresented: $model.isGameWating)) {
-            GameWatingView(roomId: $roomId)
-        }
-        .navigationBarHidden(true)
     }
     
     func handleScan(result: Result<String, CodeScannerView.ScanError>) {
@@ -73,7 +72,7 @@ struct JoinRoomView: View {
         case .success(let code):
             roomId = code
             let data = ["playername": player.name]
-            ref.child(roomId!).child("players").child(player.id).updateChildValues(data)
+            ref.child(roomId).child("players").child(player.id).updateChildValues(data)
             model.isGameWating = true
             
         case .failure(let error):

@@ -12,7 +12,7 @@ struct GameWatingView: View {
     var RDDAO = RealtimeDatabeseDAO()
     var body: some View {
         VStack {
-            
+            Text("GameWating View")
         }
     }
 }
