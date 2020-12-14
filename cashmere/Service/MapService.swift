@@ -73,11 +73,11 @@ class Coordinator : NSObject,CLLocationManagerDelegate{
     // 追跡モードが変更された(位置情報の承認)
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 
-        status == .denied{
-            parent.alert.toggle()
-            print("denied")
-        }
-        
+//        status == .denied {
+//            parent.alert.toggle()
+//            print("denied")
+//        }
+
     }
     
     // ユーザの場所が変更された

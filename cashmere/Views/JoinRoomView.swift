@@ -22,16 +22,7 @@ struct JoinRoomView: View {
             Spacer()
             Text("JoinRoom View").font(.title)
             Spacer()
-            Button(action: {
-                self.model.joinRoomViewPushed = false
-            }) {
-                Text("もどる")
-                .frame(width: 240, height: 60, alignment: .center)
-            }
-            .background(Color.gray)
-            .cornerRadius(20)
-            .foregroundColor(Color.white)
-            .padding()
+            
             Button(action: {
                 isShowingScanner = true
             }) {
@@ -45,11 +36,34 @@ struct JoinRoomView: View {
             .sheet(isPresented: $isShowingScanner) {
                 CodeScannerView(codeTypes: [.qr], completion: self.handleScan)
             }
+            
+            Button(action: {
+                self.model.joinRoomViewPushed = false
+            }) {
+                Text("もどる")
+                .frame(width: 240, height: 60, alignment: .center)
+            }
+            .background(Color.gray)
+            .cornerRadius(20)
+            .foregroundColor(Color.white)
+            .padding()
+            
+        }
+        
+        VStack {
+            
         }
         .background(EmptyView()
         .fullScreenCover(isPresented: $isGameStarted) {
             GameView(time: $time)
         })
+        VStack {
+            
+        }
+        .background(EmptyView()
+        .fullScreenCover(isPresented: $model.isGameWating)) {
+            GameWatingView(roomId: $roomId)
+        }
         .navigationBarHidden(true)
     }
     
@@ -59,17 +73,9 @@ struct JoinRoomView: View {
         case .success(let code):
             roomId = code
             let data = ["playername": player.name]
-            self.ref.child(roomId!).child("players").child(player.id).updateChildValues(data)
-            ref.child(roomId!).observe(DataEventType.value, with: { (snapshot) in
-                let postDict = snapshot.value as? [String : AnyObject] ?? [:]
-                for (_, value) in postDict {
-                    var state = ""
-                    state = value as? String ?? ""
-                    if state == "playing" {
-                        isGameStarted = true
-                    }
-                }
-            })
+            ref.child(roomId!).child("players").child(player.id).updateChildValues(data)
+            model.isGameWating = true
+            
         case .failure(let error):
             print("Scanning failed")
             print(error)

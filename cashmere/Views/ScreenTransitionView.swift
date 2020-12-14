@@ -10,4 +10,8 @@ import SwiftUI
 class Model: ObservableObject {
     @Published var createRoomViewPushed = false
     @Published var joinRoomViewPushed = false
+    @Published var isPresentedGameView = false
+    @Published var isPresentedQRCodeView = false
+    @Published var playerInvitePushed = false
+    @Published var isGameWating = false
 }
