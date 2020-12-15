@@ -11,12 +11,12 @@ import Firebase
 
 struct JoinRoomView: View {
     @EnvironmentObject var model: Model
+    @EnvironmentObject var eventFlag: GameEventFlag
     @Binding var player: Player
     @State private var isShowingScanner = false
     @State var roomId: String = ""
-    @State var isGameStarted = false
     @State var time = 60
-    var ref = Database.database().reference()
+    var RDDAO = RealtimeDatabeseDAO()
     var body: some View {
         VStack {
             Spacer()
@@ -31,13 +31,9 @@ struct JoinRoomView: View {
                 isShowingScanner = true
             }) {
                 Text("ルームに参加する")
-                .frame(width: 240, height: 60, alignment: .center)
             }
-            .background(Color.blue)
-            .cornerRadius(20)
-            .foregroundColor(Color.white)
-            .padding()
-            .fullScreenCover(isPresented: $isShowingScanner) {
+            .buttonStyle(CustomButtomStyle(color: Color.green))
+            .sheet(isPresented: $isShowingScanner) {
                 CodeScannerView(codeTypes: [.qr], completion: self.handleScan)
             }
             
@@ -45,18 +41,14 @@ struct JoinRoomView: View {
                 self.model.joinRoomViewPushed = false
             }) {
                 Text("もどる")
-                .frame(width: 240, height: 60, alignment: .center)
             }
-            .background(Color.gray)
-            .cornerRadius(20)
-            .foregroundColor(Color.white)
-            .padding()
+            .buttonStyle(CustomButtomStyle(color: Color.gray))
             .navigationBarHidden(true)
             
+            
             VStack {
-                
             }
-            .background(EmptyView().fullScreenCover(isPresented: $isGameStarted) {
+            .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isGameStarted) {
                 GameView(time: $time, roomId: $roomId, player: $player)
             })
             
@@ -69,18 +61,10 @@ struct JoinRoomView: View {
         switch result {
         case .success(let code):
             roomId = code
-            let data = ["playername": player.name]
-            ref.child(roomId).child("players").child(player.id).updateChildValues(data)
-            ref.child(roomId).observe(DataEventType.value, with: { (snapshot) in
-                let postDict = snapshot.value as? [String : AnyObject] ?? [:]
-                for (_, value) in postDict {
-                    var state = ""
-                    state = value as? String ?? ""
-                    if state == "playing" {
-                        isGameStarted = true
-                    }
-                }
-            })
+            RDDAO.addPlayer(roomId: roomId, playerId: player.id, playerName: player.name)
+            RDDAO.gameStartCheck(roomId: roomId){ result in
+                eventFlag.isGameStarted = result
+            }
             model.isGameWating = true
             
             

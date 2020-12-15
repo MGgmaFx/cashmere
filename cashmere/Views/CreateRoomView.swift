@@ -15,9 +15,9 @@ struct CreateRoomView: View {
     @State var minute = 0
     @State var time = 60
     @State var room = Room(name: "鬼ごっこルーム")
-    @State var playerList: [String] = []
+    @State var demonCaptureRange = 10
+    @State var survivorPositionTransmissionInterval = 1
     let RDDAO = RealtimeDatabeseDAO()
-    var ref = Database.database().reference()
     var body: some View {
         VStack {
             Spacer()
@@ -26,7 +26,9 @@ struct CreateRoomView: View {
             VStack {
                 HStack {
                     Text("ルーム名")
-                        .padding()
+                        .padding(20)
+                    
+                    Spacer()
                     
                     TextField("ルーム名を入力", text: self.$room.name)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -34,6 +36,9 @@ struct CreateRoomView: View {
                 }
                 HStack {
                     Text("制限時間")
+                        .padding(20)
+                    
+                    Spacer()
                     
                     Picker("", selection: $hour) {
                         ForEach(0 ..< 100) { num in
@@ -56,6 +61,39 @@ struct CreateRoomView: View {
                     .clipped()
                     
                 }
+                HStack {
+                    Text("鬼の捕獲範囲")
+                        .padding(20)
+                    
+                    Spacer()
+                    
+                    Picker("", selection: $demonCaptureRange) {
+                        ForEach(1 ..< 100) { num in
+                            Text(String(num - 1) + "m")
+                        }
+                    }
+                    .frame(width: 120, height: 60, alignment: .center)
+                    .labelsHidden()
+                    .compositingGroup()
+                    .clipped()
+                }
+                
+                HStack {
+                    Text("生存者の位置情報送信間隔")
+                        .padding(20)
+                    
+                    Spacer()
+                    
+                    Picker("", selection: $survivorPositionTransmissionInterval) {
+                        ForEach(1 ..< 100) { num in
+                            Text(String(num - 1) + "分")
+                        }
+                    }
+                    .frame(width: 120, height: 60, alignment: .center)
+                    .labelsHidden()
+                    .compositingGroup()
+                    .clipped()
+                }
             }
             .background(Color(red: 0.95, green: 0.95, blue: 1.0))
             .cornerRadius(10)
@@ -64,6 +102,7 @@ struct CreateRoomView: View {
             
             Button(action: {
                 time = hour * 60 + minute
+                RDDAO.updateGamerule(roomId: room.id, timelimit: time, demonCaptureRange: demonCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval)
                 model.playerInvitePushed.toggle()
             }) {
                 Text("プレイヤーを招待する")
@@ -72,10 +111,7 @@ struct CreateRoomView: View {
             .sheet(isPresented: $model.playerInvitePushed) {
                 PlayerInviteView(room: $room, time: $time, player: $player)
             }
-            .background(Color.green)
-            .cornerRadius(20)
-            .foregroundColor(Color.white)
-            .padding()
+            .buttonStyle(CustomButtomStyle(color: Color.green))
             
             Button(action: {
                 self.model.createRoomViewPushed = false
@@ -83,10 +119,7 @@ struct CreateRoomView: View {
                 Text("もどる")
                     .frame(width: 240, height: 60, alignment: .center)
             }
-            .background(Color.gray)
-            .cornerRadius(20)
-            .foregroundColor(Color.white)
-            .padding()
+            .buttonStyle(CustomButtomStyle(color: Color.gray))
             
         }
         .onAppear{

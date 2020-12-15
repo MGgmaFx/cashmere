@@ -17,12 +17,27 @@ struct RealtimeDatabeseDAO {
             playerList = []
             for (_, value) in postDict {
                 if let players = value as? [String : String] {
-                    for (_, player) in players {
-                        playerList.append(player)
+                    for (key, player) in players {
+                        if key == "playername" {
+                            playerList.append(player)
+                        }
                     }
                 }
             }
             completionHandler(playerList)
+        })
+    }
+    
+    func gameStartCheck(roomId: String, completionHandler: @escaping (Bool) -> Void) {
+        ref.child(roomId).observe(DataEventType.value, with: { (snapshot) in
+            let postDict = snapshot.value as? [String : AnyObject] ?? [:]
+            for (_, value) in postDict {
+                var state = ""
+                state = value as? String ?? ""
+                if state == "playing" {
+                    completionHandler(true)
+                }
+            }
         })
     }
     
@@ -31,13 +46,22 @@ struct RealtimeDatabeseDAO {
         ref.child(roomId).updateChildValues(data)
     }
     
-    func updateRoomTimelimit(roomId: String, timelimit: Int) {
-        let data = ["timelimit": String(timelimit)]
+    func updateGameStartTime(roomId: String, startTime: String) {
+        let data = ["startTime": startTime]
         ref.child(roomId).updateChildValues(data)
     }
     
+    func updateGamerule(roomId: String, timelimit: Int, demonCaptureRange: Int, survivorPositionTransmissionInterval: Int) {
+        let data = ["timelimit": timelimit,
+                    "demonCaptureRange": demonCaptureRange,
+                    "survivorPositionTransmissionInterval": survivorPositionTransmissionInterval]
+        ref.child(roomId).child("gamerule").updateChildValues(data)
+    }
+    
     func addPlayer(roomId: String, playerId: String, playerName: String) {
-        ref.child(roomId).child("players").child(playerId).setValue(["playername": playerName])
+        let data = ["playername": playerName,
+                    "onlinestatus": "online"]
+        ref.child(roomId).child("players").child(playerId).updateChildValues(data)
     }
     
     func deleteRoom(roomId: String) {

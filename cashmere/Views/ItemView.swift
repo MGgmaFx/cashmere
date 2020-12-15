@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ItemView: View {
-    @EnvironmentObject var model: Model
     var body: some View {
         List {
             ItemListRow()

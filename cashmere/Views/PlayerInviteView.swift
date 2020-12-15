@@ -23,8 +23,11 @@ struct PlayerInviteView: View {
                 .padding()
             
             Button(action: {
-                RDDAO.updateRoomTimelimit(roomId: room.id, timelimit: time)
+                let date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:mm:ss"
                 RDDAO.updateRoomStatus(roomId: room.id, state: "playing")
+                RDDAO.updateGameStartTime(roomId: room.id, startTime: dateFormatter.string(from: date))
                 self.model.isPresentedGameView.toggle()
             }) {
                 Text("ゲーム開始")
@@ -33,10 +36,7 @@ struct PlayerInviteView: View {
             .fullScreenCover(isPresented: $model.isPresentedGameView) {
                 GameView(time: $time, roomId: $room.id, player: $player)
             }
-            .background(Color.blue)
-            .cornerRadius(20)
-            .foregroundColor(Color.white)
-            .padding()
+            .buttonStyle(CustomButtomStyle(color: Color.blue))
 
             
         }
