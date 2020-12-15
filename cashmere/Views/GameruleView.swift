@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameruleView: View {
-    RDDAO = RealtimeDatabaseDAO()
+    var RDDAO = RealtimeDatabeseDAO()
     var body: some View {
         VStack {
             

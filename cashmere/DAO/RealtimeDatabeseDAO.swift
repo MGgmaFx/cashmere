@@ -69,8 +69,9 @@ struct RealtimeDatabeseDAO {
     }
     
     func addPlayerLocation(roomId: String, playerId: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees){
-        ref.child(roomId).child("players").child(playerId).setValue(["playerLatitude": latitude])
-        ref.child(roomId).child("players").child(playerId).setValue(["playerLongitude": longitude])
+        let data = ["playerLatitude": latitude,
+                    "playerLongitude": longitude]
+        ref.child(roomId).child("players").child(playerId).updateChildValues(data)
     }
     
 }
