@@ -52,9 +52,9 @@ struct RealtimeDatabeseDAO {
     }
     
     func updateGamerule(roomId: String, timelimit: Int, demonCaptureRange: Int, survivorPositionTransmissionInterval: Int) {
-        let data = ["timelimit": timelimit,
-                    "demonCaptureRange": demonCaptureRange,
-                    "survivorPositionTransmissionInterval": survivorPositionTransmissionInterval]
+        let data = ["timelimit": String(timelimit),
+                    "demonCaptureRange": String(demonCaptureRange),
+                    "survivorPositionTransmissionInterval": String(survivorPositionTransmissionInterval)]
         ref.child(roomId).child("gamerule").updateChildValues(data)
     }
     
@@ -69,8 +69,8 @@ struct RealtimeDatabeseDAO {
     }
     
     func addPlayerLocation(roomId: String, playerId: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees){
-        let data = ["playerLatitude": latitude,
-                    "playerLongitude": longitude]
+        let data = ["playerLatitude": String(latitude),
+                    "playerLongitude": String(longitude)]
         ref.child(roomId).child("players").child(playerId).updateChildValues(data)
     }
     
