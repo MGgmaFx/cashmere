@@ -28,6 +28,33 @@ struct RealtimeDatabeseDAO {
         })
     }
     
+    func getPlayers(roomId: String, completionHandler: @escaping ([Player]) -> Void) {
+        var players: [Player] = []
+        ref.child(roomId).child("players").observe(DataEventType.value, with: { (snapshot) in
+            let postDict = snapshot.value as? [String : AnyObject] ?? [:]
+            players = []
+            for (uuid, value) in postDict {
+                var temp = Player()
+                temp.id = uuid
+                if let player = value as? [String : String] {
+                    for (key, value) in player {
+                        if key == "playerLatitude" {
+                            temp.latitude = CLLocationDegrees(value)
+                        }
+                        if key == "playerLongitude" {
+                            temp.longitude = CLLocationDegrees(value)
+                        }
+                        if key == "playername" {
+                            temp.name = value
+                        }
+                    }
+                }
+                players.append(temp)
+            }
+            completionHandler(players)
+        })
+    }
+    
     func getGameRule(roomId: String, completionHandler: @escaping ([String : String]) -> Void) {
         var gamerule: [String : String] = [:]
         ref.child(roomId).child("gamerule").observe(DataEventType.value, with: { (snapshot) in

@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct Player {
-    let id = UUID().uuidString
-    var name: String = "Player"
+    var id = UUID().uuidString
+    var name: String = "プレイヤー"
+    var latitude: CLLocationDegrees?
+    var longitude: CLLocationDegrees?
+    
 }

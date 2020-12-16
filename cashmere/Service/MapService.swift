@@ -9,15 +9,23 @@ import CoreLocation
 import MapKit
 import Foundation
 import Firebase
+
+
 struct mapView : UIViewRepresentable {
-    @Binding var manager : CLLocationManager
-    @Binding var alert : Bool
+    @Binding var manager: CLLocationManager
+    @Binding var alert: Bool
     @Binding var roomId: String
-    @Binding var player : Player
+    @Binding var player: Player
+    
+    
     let map = MKMapView()
+    let RDDAO = RealtimeDatabeseDAO()
+    var ref = Database.database().reference()
+    
     func makeCoordinator() -> Coordinator {
         return Coordinator(parent1: self)
     }
+    
     func makeUIView(context: Context) -> MKMapView {
         manager.requestWhenInUseAuthorization()
         manager.delegate = context.coordinator
@@ -27,13 +35,8 @@ struct mapView : UIViewRepresentable {
         map.showsScale = true
         // 測位の精度を指定(最高精度
         manager.desiredAccuracy = kCLLocationAccuracyBest
-        // 測位の精度 10メートル
-        // manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         // 位置情報取得間隔を指定(2m移動したら、位置情報を通知)
         manager.distanceFilter = 2
-        /* 方向ボタンの作成
-        let button = MKUserTrackingButton()
-        map.addSubview(button)*/
         // 下のlocationManagerを呼び出している
         manager.startUpdatingLocation()
         return map
@@ -44,8 +47,8 @@ struct mapView : UIViewRepresentable {
     }
 }
 class Coordinator : NSObject,CLLocationManagerDelegate{
-    let RDDAO = RealtimeDatabeseDAO()
-    var ref = Database.database().reference()
+    
+    
     static let startDate = Date().addingTimeInterval(-180071.3325)
     var parent : mapView
     init(parent1 : mapView) {
@@ -62,38 +65,38 @@ class Coordinator : NSObject,CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         let location = locations.last
         /**DBに現在地を追加*/
-        var latitude = location?.coordinate.latitude
-        var longitude = location?.coordinate.longitude
-        var playerId = parent.player.id
-        var roomId = parent.roomId
+        let latitude = location?.coordinate.latitude
+        let longitude = location?.coordinate.longitude
+        let playerId = parent.player.id
+        let roomId = parent.roomId
         if latitude != nil && longitude != nil {
-          RDDAO.addPlayerLocation(roomId: roomId, playerId: playerId, latitude: latitude!, longitude: longitude!)
+            parent.RDDAO.addPlayerLocation(roomId: roomId, playerId: playerId, latitude: latitude!, longitude: longitude!)
         }
-        /*var playerLocations = [Double]()
-        playerLocations.append(latitude)
-        playerLocations.append(longitude)*/
+        
         /**
          DBからプレイヤーの位置情報を取得
          43.057427,141.373615
          43.051846,141.385889
          43.052747,141.377778
-          */
-        let playerTime = 30
-        let timeInterval = Date().timeIntervalSince(Coordinator.startDate)
-        var elTime = Int(timeInterval)
-        // 秒に変換
-        elTime = elTime % 60
-        if elTime > playerTime {
-          // addAnnotation(latitude, longitude)
-          // addAnnotation(mapView.latitude, mapView.longitude)
-          addAnnotation(43.051846, 141.385889)
-          addAnnotation(43.052747, 141.377778)
+         
+         42.958746,141.312503
+         42.982611,141.334991
+         43.020901,141.348724
+         43.078731,141.344261
+         */
+        
+        var players: [Player] = []
+        
+        parent.RDDAO.getPlayers(roomId: parent.roomId) { (result) in
+            print(result)
+            players = result
+            self.addAnnotations(players)
         }
-        /* 方向ボタン
-        let button = MKUserTrackingButton()
-        button.layer.backgroundColor = UIColor(white: 1, alpha: 0.7).cgColor
-        button.frame = CGRect(x:40, y:730, width:40, height:40)
-        self.parent.map.addSubview(button)*/
+        
+        
+        // parent.RDDAO.getPlayerLocation(roomId: roomId, playerId: playerId)
+        
+        
         let georeader = CLGeocoder()
         georeader.reverseGeocodeLocation(location!) {
           (places, err) in
@@ -104,9 +107,17 @@ class Coordinator : NSObject,CLLocationManagerDelegate{
         }
     }
     
-    func addAnnotation(_ latitude: CLLocationDegrees, _ longitude: CLLocationDegrees){
-        let playerLocation = MKPointAnnotation()
-        playerLocation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        self.parent.map.addAnnotation(playerLocation)
+    func addAnnotations(_ players: [Player]){
+        let pin = MKPointAnnotation()
+        for player in players {
+            print(player)
+            if player.latitude != nil && player.longitude != nil {
+                var latitude = player.latitude!
+                var longitude = player.longitude!
+                pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                self.parent.map.addAnnotation(pin)
+            }
+        }
+        
     }
 }
