@@ -12,10 +12,12 @@ struct GameWatingView: View {
     @State var playerList: [String] = []
     var RDDAO = RealtimeDatabeseDAO()
     var body: some View {
+        VStack {
             InvitedPlayerListView(playerList: $playerList)
-                .onAppear {
-                    RDDAO.getPlayerNameList(roomId: roomId) { result in
-                    playerList = result
+            GameruleView(roomId: $roomId)
+        }.onAppear {
+            RDDAO.getPlayerNameList(roomId: roomId) { result in
+            playerList = result
             }
         }
     }

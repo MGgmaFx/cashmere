@@ -28,6 +28,19 @@ struct RealtimeDatabeseDAO {
         })
     }
     
+    func getGameRule(roomId: String, completionHandler: @escaping ([String : String]) -> Void) {
+        var gamerule: [String : String] = [:]
+        ref.child(roomId).child("gamerule").observe(DataEventType.value, with: { (snapshot) in
+            let postDict = snapshot.value as? [String : String] ?? [:]
+            gamerule = [:]
+            for (key, value) in postDict {
+                gamerule.updateValue(value, forKey: key)
+            }
+            print(gamerule)
+            completionHandler(gamerule)
+        })
+    }
+    
     func gameStartCheck(roomId: String, completionHandler: @escaping (Bool) -> Void) {
         ref.child(roomId).observe(DataEventType.value, with: { (snapshot) in
             let postDict = snapshot.value as? [String : AnyObject] ?? [:]
