@@ -16,6 +16,7 @@ struct mapView : UIViewRepresentable {
     @Binding var alert: Bool
     @Binding var roomId: String
     @Binding var player: Player
+    @Binding var players: [Player]
     
     
     let map = MKMapView()
@@ -85,17 +86,12 @@ class Coordinator : NSObject,CLLocationManagerDelegate{
          43.078731,141.344261
          */
         
-        var players: [Player] = []
-        
         parent.RDDAO.getPlayers(roomId: parent.roomId) { (result) in
+            
             print(result)
-            players = result
-            self.addAnnotations(players)
+            self.parent.players = result
+            self.addAnnotations(self.parent.players)
         }
-        
-        
-        // parent.RDDAO.getPlayerLocation(roomId: roomId, playerId: playerId)
-        
         
         let georeader = CLGeocoder()
         georeader.reverseGeocodeLocation(location!) {
@@ -108,16 +104,18 @@ class Coordinator : NSObject,CLLocationManagerDelegate{
     }
     
     func addAnnotations(_ players: [Player]){
+        self.parent.map.removeAnnotations(self.parent.map.annotations)
         let pin = MKPointAnnotation()
         for player in players {
             print(player)
             if player.latitude != nil && player.longitude != nil {
-                var latitude = player.latitude!
-                var longitude = player.longitude!
+                let latitude = player.latitude!
+                let longitude = player.longitude!
+                pin.subtitle = player.id
                 pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 self.parent.map.addAnnotation(pin)
             }
         }
-        
+         
     }
 }
