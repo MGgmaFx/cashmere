@@ -13,6 +13,7 @@ struct GameView: View {
     @Binding var players: [Player]
     @Binding var roomId: String
     @Binding var player: Player
+    @Binding var gamerule: [String : String]
     let time: Int
     var body: some View {
         TabView {

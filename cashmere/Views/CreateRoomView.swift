@@ -35,6 +35,9 @@ struct CreateRoomView: View {
                 time = hour * 60 + minute
                 RDDAO.updateGamerule(roomId: room.id, timelimit: time, killerCaptureRange: killerCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval, escapeTime: escapeTime)
                 model.playerInvitePushed = true
+                RDDAO.getGameRule(roomId: room.id) { (result) in
+                    gamerule = result
+                }
             }) {
                 Text("プレイヤーを招待する")
                     .frame(width: 240, height: 60, alignment: .center)

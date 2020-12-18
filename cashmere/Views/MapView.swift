@@ -7,6 +7,7 @@ struct MapView: View {
     @Binding var roomId: String
     @Binding var player: Player
     @Binding var players: [Player]
+    @Binding var gamerule: [String : String]
     let time: Int
     var body: some View {
         let toDate = Calendar.current.date(byAdding:.minute, value: time, to:Date())

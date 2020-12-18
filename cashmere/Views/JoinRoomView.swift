@@ -53,7 +53,7 @@ struct JoinRoomView: View {
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isGameStarted) {
-                GameView(players: $players, roomId: $roomId, player: $player, time: Int(gamerule["timelimit"] ?? "837")!)
+                GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: Int(gamerule["timelimit"] ?? "837")!)
             })
             
             VStack {
