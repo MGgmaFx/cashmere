@@ -31,7 +31,7 @@ struct PlayerInviteView: View {
                 RDDAO.updateRoomStatus(roomId: room.id, state: "playing")
                 RDDAO.updatePlayerRole(roomId: room.id, playerId: player.id, role: "killer")
                 RDDAO.updateGameStartTime(roomId: room.id, startTime: dateFormatter.string(from: date))
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double(Int(gamerule["escapeTime"] ?? "99")! * 60)) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double((Int(gamerule["escapeTime"] ?? "99")! * 60))) {
                     eventFlag.isEscaping = false
                     eventFlag.isGameStarted = true
                 }
@@ -45,7 +45,7 @@ struct PlayerInviteView: View {
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isEscaping) {
-                EscapeTimeView(setDate: Calendar.current.date(byAdding: .minute, value: Int(gamerule["escapeTime"] ?? "99")!, to: Date())!)
+                EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: (Int(gamerule["escapeTime"] ?? "99")! * 60), to: Date())!)
             })
             
             VStack {

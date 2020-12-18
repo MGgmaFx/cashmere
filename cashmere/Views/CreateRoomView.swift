@@ -33,7 +33,7 @@ struct CreateRoomView: View {
             
             Button(action: {
                 time = hour * 60 + minute
-                RDDAO.updateGamerule(roomId: room.id, timelimit: time, killerCaptureRange: killerCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval, escapeTime: escapeTime)
+                RDDAO.updateGamerule(roomId: room.id, timelimit: time, killerCaptureRange: killerCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval, escapeTime: escapeTime, hour: hour, minute: minute)
                 model.playerInvitePushed = true
                 RDDAO.getGameRule(roomId: room.id) { (result) in
                     gamerule = result
@@ -65,9 +65,6 @@ struct CreateRoomView: View {
                 players = result
             }
         }
-        .onDisappear{
-            roomDel(room: room)
-        }
         .navigationBarBackButtonHidden(true)
         .onTapGesture {
             UIApplication.shared.closeKeyboard()
@@ -76,10 +73,6 @@ struct CreateRoomView: View {
     private func roomInit(room: Room) {
         RDDAO.updateRoomStatus(roomId: room.id, state: "wating")
         RDDAO.addPlayer(roomId: room.id, playerId: player.id, playerName: player.name)
-    }
-    
-    private func roomDel(room: Room) {
-        RDDAO.deleteRoom(roomId: room.id)
     }
 }
 

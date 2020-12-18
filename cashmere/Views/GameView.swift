@@ -17,7 +17,7 @@ struct GameView: View {
     let time: Int
     var body: some View {
         TabView {
-            MapView(roomId: $roomId, player: $player, players: $players, time: time)
+            MapView(roomId: $roomId, player: $player, players: $players, gamerule: $gamerule, time: time)
                 .tabItem {
                     Image(systemName: "map")
                     Text("マップ")

@@ -39,6 +39,10 @@ struct TimerView : View {
         } else if timeVal.day == 0 && timeVal.hour == 0 {
             timeColor = Color.red
         }
+    
+        if timeVal.second! < 0 && timeVal.minute == 0 {
+            return Text("開始中...")
+        }
 
         return Text(String(format: "残り時間　%02d:%02d:%02d:%02d",
         timeVal.day ?? 00,

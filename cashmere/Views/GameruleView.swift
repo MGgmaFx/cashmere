@@ -16,7 +16,9 @@ struct GameruleView: View {
             HStack {
                 Text("制限時間")
                 Spacer()
-                Text(gamerule["timelimit"] ?? "取得中...")
+                Text(gamerule["hour"] ?? "取得中...")
+                Text("時間")
+                Text(gamerule["minute"] ?? "取得中...")
                 Text("分")
             }
             .padding()
