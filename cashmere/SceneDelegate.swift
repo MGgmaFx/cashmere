@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let contentView = ContentView()
             .environmentObject(Model())
             .environmentObject(GameEventFlag())
+            .environmentObject(RealtimeDatabeseDAO())
                                         
 
         // Use a UIHostingController as window root view controller.

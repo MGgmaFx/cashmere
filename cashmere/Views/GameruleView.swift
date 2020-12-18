@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GameruleView: View {
     var RDDAO = RealtimeDatabeseDAO()
-    @State var gamerule: [String : String] = [:]
+    @Binding var gamerule: [String : String]
     @Binding var roomId: String
     var body: some View {
         VStack {
@@ -23,7 +23,7 @@ struct GameruleView: View {
             HStack {
                 Text("鬼の捕獲範囲")
                 Spacer()
-                Text(gamerule["demonCaptureRange"] ?? "取得中...")
+                Text(gamerule["killerCaptureRange"] ?? "取得中...")
                 Text("m")
             }
             .padding()
@@ -31,6 +31,13 @@ struct GameruleView: View {
                 Text("生存者の位置情報送信間隔")
                 Spacer()
                 Text(gamerule["survivorPositionTransmissionInterval"] ?? "取得中...")
+                Text("分")
+            }
+            .padding()
+            HStack {
+                Text("逃走時間")
+                Spacer()
+                Text(gamerule["escapeTime"] ?? "取得中...")
                 Text("分")
             }
             .padding()

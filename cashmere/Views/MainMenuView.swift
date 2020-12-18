@@ -9,16 +9,16 @@ import SwiftUI
 
 struct MainMenuView: View {
     @EnvironmentObject var model: Model
-    @State var player = Player(name: "Player")
+    @State var player = Player()
     var body: some View {
         NavigationView {
             VStack {
                 Spacer()
                 Text("鬼ごっこオンライン").font(.title)
                 Spacer()
-                NavigationLink(destination: JoinRoomView(player: $player), isActive: self.$model.joinRoomViewPushed) {
+                NavigationLink(destination: JoinRoomView(player: $player), isActive: $model.joinRoomViewPushed) {
                     Button(action: {
-                        self.model.joinRoomViewPushed = true
+                        model.joinRoomViewPushed = true
                     }) {
                         Text("ルームに参加する")
                     }
@@ -26,7 +26,7 @@ struct MainMenuView: View {
                 }
                 NavigationLink(destination: CreateRoomView(player: $player), isActive: $model.createRoomViewPushed) {
                     Button(action: {
-                        self.model.createRoomViewPushed = true
+                        model.createRoomViewPushed = true
                     }) {
                         Text("ルームをつくる")
                     }

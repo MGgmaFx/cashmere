@@ -7,7 +7,7 @@
 
 import SwiftUI
 struct TimerView : View {
-    @Binding var isGameOver: Bool
+    @EnvironmentObject var gameFlag: GameEventFlag
     @State var nowD:Date = Date()
     
     let setDate:Date
@@ -33,7 +33,7 @@ struct TimerView : View {
         let timeVal = cal.dateComponents([.day,.hour,.minute,.second], from: nowD,to: setDate)
     
         if timeVal.second == 0 && timeVal.minute == 0 && timeVal.hour == 0 && timeVal.day == 0{
-            isGameOver = true
+            gameFlag.isGameOver = true
         } else if timeVal.day == 0 && timeVal.hour == 0 && Int(timeVal.minute!) >= 15 {
             timeColor = Color.yellow
         } else if timeVal.day == 0 && timeVal.hour == 0 {

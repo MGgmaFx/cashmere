@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct GameWatingView: View {
+    @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @Binding var roomId: String
-    @State var playerList: [String] = []
-    var RDDAO = RealtimeDatabeseDAO()
+    @Binding var players: [Player]
+    @Binding var gamerule: [String : String]
     var body: some View {
         VStack {
-            InvitedPlayerListView(playerList: $playerList)
-            GameruleView(roomId: $roomId)
+            InvitedPlayerListView(players: $players)
+            GameruleView(gamerule: $gamerule, roomId: $roomId)
         }.onAppear {
-            RDDAO.getPlayerNameList(roomId: roomId) { result in
-            playerList = result
+            RDDAO.getPlayers(roomId: roomId) { result in
+            players = result
             }
         }
     }

@@ -12,29 +12,33 @@ import Firebase
 struct JoinRoomView: View {
     @EnvironmentObject var model: Model
     @EnvironmentObject var eventFlag: GameEventFlag
-    @Binding var player: Player
-    @State private var isShowingScanner = false
+    @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @State var roomId: String = ""
-    @State var time = 60
-    var RDDAO = RealtimeDatabeseDAO()
+    @State var players: [Player] = []
+    @State var gamerule: [String: String] = [:]
+    @State var escapingTime: String = "46"
+    @Binding var player: Player
     var body: some View {
         VStack {
             Spacer()
             Text("JoinRoom View").font(.title)
             Spacer()
-            if model.isGameWating {
-                GameWatingView(roomId: $roomId)
+            if eventFlag.isGameWating {
+                GameWatingView(roomId: $roomId, players: $players, gamerule: $gamerule)
             }
             Spacer()
             
-            Button(action: {
-                isShowingScanner = true
-            }) {
-                Text("ルームに参加する")
-            }
-            .buttonStyle(CustomButtomStyle(color: Color.green))
-            .sheet(isPresented: $isShowingScanner) {
-                CodeScannerView(codeTypes: [.qr], completion: self.handleScan)
+            
+            if !(eventFlag.isGameWating) {
+                Button(action: {
+                    model.isShowingScanner = true
+                }) {
+                    Text("ルームに参加する")
+                }
+                .buttonStyle(CustomButtomStyle(color: Color.green))
+                .sheet(isPresented: $model.isShowingScanner) {
+                    CodeScannerView(codeTypes: [.qr], completion: self.handleScan)
+                }
             }
             
             Button(action: {
@@ -49,23 +53,37 @@ struct JoinRoomView: View {
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isGameStarted) {
-                GameView(time: $time, roomId: $roomId, player: $player)
+                GameView(players: $players, roomId: $roomId, player: $player, time: Int(gamerule["timelimit"] ?? "837")!)
             })
+            
+            VStack {
+                
+            }
+            .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isEscaping) {
+                EscapeTimeView(setDate: Calendar.current.date(byAdding: .minute, value: Int(gamerule["escapeTime"] ?? "46")!, to: Date())!)
+            })
+            
+        }.onAppear {
             
         }
         
     }
     
     func handleScan(result: Result<String, CodeScannerView.ScanError>) {
-        self.isShowingScanner = false
+        model.isShowingScanner = false
         switch result {
         case .success(let code):
             roomId = code
             RDDAO.addPlayer(roomId: roomId, playerId: player.id, playerName: player.name)
+            RDDAO.updatePlayerRole(roomId: roomId, playerId: player.id, role: "survivor")
             RDDAO.gameStartCheck(roomId: roomId){ result in
-                eventFlag.isGameStarted = result
+                eventFlag.isEscaping = result
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(Int(gamerule["escapeTime"] ?? "46")! * 60)) {
+                    eventFlag.isEscaping = false
+                    eventFlag.isGameStarted = true
+                }
             }
-            model.isGameWating = true
+            eventFlag.isGameWating = true
             
             
         case .failure(let error):

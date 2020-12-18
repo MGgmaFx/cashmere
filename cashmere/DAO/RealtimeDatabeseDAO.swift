@@ -4,11 +4,12 @@
 //
 //  Created by 志村豪気 on 2020/12/11.
 //
+import SwiftUI
 import CoreLocation
 import Firebase
 
-struct RealtimeDatabeseDAO {
-    var ref = Database.database().reference()
+class RealtimeDatabeseDAO: ObservableObject {
+    @Published var ref = Database.database().reference()
     
     func getPlayerNameList(roomId: String, completionHandler: @escaping ([String]) -> Void) {
         var playerList: [String] = []
@@ -40,12 +41,14 @@ struct RealtimeDatabeseDAO {
                     for (key, value) in player {
                         if key == "playerLatitude" {
                             temp.latitude = CLLocationDegrees(value)
-                        }
-                        if key == "playerLongitude" {
+                        }else if key == "playerLongitude" {
                             temp.longitude = CLLocationDegrees(value)
-                        }
-                        if key == "playername" {
+                        }else if key == "playername" {
                             temp.name = value
+                        }else if key == "onlinestatus" {
+                            temp.onlineStatus = value
+                        }else if key == "role" {
+                            temp.role = value
                         }
                     }
                 }
@@ -57,13 +60,13 @@ struct RealtimeDatabeseDAO {
     
     func getGameRule(roomId: String, completionHandler: @escaping ([String : String]) -> Void) {
         var gamerule: [String : String] = [:]
-        ref.child(roomId).child("gamerule").observe(DataEventType.value, with: { (snapshot) in
+        ref.child(roomId).child("gamerule").observeSingleEvent(of: .value, with: { (snapshot) in
             let postDict = snapshot.value as? [String : String] ?? [:]
+            print(postDict)
             gamerule = [:]
             for (key, value) in postDict {
                 gamerule.updateValue(value, forKey: key)
             }
-            print(gamerule)
             completionHandler(gamerule)
         })
     }
@@ -91,11 +94,17 @@ struct RealtimeDatabeseDAO {
         ref.child(roomId).updateChildValues(data)
     }
     
-    func updateGamerule(roomId: String, timelimit: Int, demonCaptureRange: Int, survivorPositionTransmissionInterval: Int) {
-        let data = ["timelimit": String(timelimit),
-                    "demonCaptureRange": String(demonCaptureRange),
-                    "survivorPositionTransmissionInterval": String(survivorPositionTransmissionInterval)]
+    func updateGamerule(roomId: String, timelimit: Int, killerCaptureRange: Int, survivorPositionTransmissionInterval: Int, escapeTime: Int) {
+        let data = ["timelimit": String(timelimit + 1),
+                    "killerCaptureRange": String(killerCaptureRange + 1),
+                    "survivorPositionTransmissionInterval": String(survivorPositionTransmissionInterval + 1),
+                    "escapeTime": String(escapeTime + 1)]
         ref.child(roomId).child("gamerule").updateChildValues(data)
+    }
+    
+    func updatePlayerRole(roomId: String, playerId: String, role: String) {
+        let data = ["role": role]
+        ref.child(roomId).child("players").child(playerId).updateChildValues(data)
     }
     
     func addPlayer(roomId: String, playerId: String, playerName: String) {

@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct GameView: View {
-    @Binding var time: Int
+    @EnvironmentObject var gameFlag: GameEventFlag
+    @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
+    @Binding var players: [Player]
     @Binding var roomId: String
     @Binding var player: Player
-    @State var isGameOver = false
-    @State var players: [Player] = []
-    var RDDAO = RealtimeDatabeseDAO()
+    let time: Int
     var body: some View {
         TabView {
-            MapView(time: $time, isGameOver: $isGameOver, roomId: $roomId, player: $player, players: $players)
+            MapView(roomId: $roomId, player: $player, players: $players, time: time)
                 .tabItem {
                     Image(systemName: "map")
                     Text("マップ")
@@ -26,19 +26,14 @@ struct GameView: View {
                     Image(systemName: "case.fill")
                     Text("アイテム")
                 }
-            PlayerView()
+            PlayerView(players: $players)
                 .tabItem {
                     Image(systemName: "figure.walk")
                     Text("プレイヤー")
                 }
         }
-        .alert(isPresented: $isGameOver) {
+        .alert(isPresented: $gameFlag.isGameOver) {
             Alert(title: Text("ゲーム終了"))
-        }
-        .onAppear {
-            RDDAO.getPlayers(roomId: roomId) { (result) in
-                players = result
-            }
         }
     }
 }

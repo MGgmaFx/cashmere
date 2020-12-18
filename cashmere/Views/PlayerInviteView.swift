@@ -9,15 +9,17 @@ import SwiftUI
 
 struct PlayerInviteView: View {
     @EnvironmentObject var model: Model
+    @EnvironmentObject var eventFlag: GameEventFlag
+    @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
+    @Binding var gamerule: [String : String]
+    @Binding var players: [Player]
     @Binding var room: Room
-    @Binding var time: Int
     @Binding var player: Player
-    @State var playerList: [String] = []
-    var RDDAO = RealtimeDatabeseDAO()
+    let time: Int
     var body: some View {
         VStack {
             
-            InvitedPlayerListView(playerList: $playerList)
+            InvitedPlayerListView(players: $players)
             
             QRCodeView(room: $room)
                 .padding()
@@ -27,23 +29,32 @@ struct PlayerInviteView: View {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "HH:mm:ss"
                 RDDAO.updateRoomStatus(roomId: room.id, state: "playing")
+                RDDAO.updatePlayerRole(roomId: room.id, playerId: player.id, role: "killer")
                 RDDAO.updateGameStartTime(roomId: room.id, startTime: dateFormatter.string(from: date))
-                self.model.isPresentedGameView.toggle()
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(Int(gamerule["escapeTime"] ?? "46")! * 60)) {
+                    eventFlag.isEscaping = false
+                    eventFlag.isGameStarted = true
+                }
+                eventFlag.isEscaping = true
             }) {
                 Text("ゲーム開始")
                     .frame(width: 240, height: 60, alignment: .center)
             }
-            .fullScreenCover(isPresented: $model.isPresentedGameView) {
-                GameView(time: $time, roomId: $room.id, player: $player)
-            }
             .buttonStyle(CustomButtomStyle(color: Color.blue))
+            
+            VStack {
+            }
+            .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isEscaping) {
+                EscapeTimeView(setDate: Calendar.current.date(byAdding: .minute, value: Int(gamerule["escapeTime"] ?? "46")!, to: Date())!)
+            })
+            
+            VStack {
+            }
+            .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isGameStarted) {
+                GameView(players: $players, roomId: $room.id, player: $player, time: time)
+            })
 
             
-        }
-        .onAppear {
-            RDDAO.getPlayerNameList(roomId: room.id) { result in
-                playerList = result
-            }
         }
     }
 }

@@ -9,112 +9,43 @@ import SwiftUI
 import Firebase
 
 struct CreateRoomView: View {
-    @Binding var player: Player
     @EnvironmentObject var model: Model
-    @State var hour = 1
-    @State var minute = 0
-    @State var time = 60
+    @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @State var room = Room(name: "鬼ごっこルーム")
-    @State var demonCaptureRange = 10
-    @State var survivorPositionTransmissionInterval = 1
-    let RDDAO = RealtimeDatabeseDAO()
+    @State var players: [Player] = []
+    @State var gamerule: [String : String] = [:]
+    @State var hour = 0
+    @State var minute = 29
+    @State var killerCaptureRange = 9
+    @State var survivorPositionTransmissionInterval = 2
+    @State var escapeTime = 2
+    @State var time = 59
+    @Binding var player: Player
     var body: some View {
         VStack {
             Spacer()
             Text("CreateRoom View").font(.title)
             Spacer()
-            VStack {
-                HStack {
-                    Text("ルーム名")
-                        .padding(20)
-                    
-                    Spacer()
-                    
-                    TextField("ルーム名を入力", text: self.$room.name)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                }
-                HStack {
-                    Text("制限時間")
-                        .padding(20)
-                    
-                    Spacer()
-                    
-                    Picker("", selection: $hour) {
-                        ForEach(0 ..< 100) { num in
-                            Text(String(num) + "時間")
-                        }
-                    }
-                    .frame(width: 120, height: 60, alignment: .center)
-                    .labelsHidden()
-                    .compositingGroup()
-                    .clipped()
-                    
-                    Picker("", selection: $minute) {
-                        ForEach(0 ..< 60) { num in
-                            Text(String(num) + "分")
-                        }
-                    }
-                    .frame(width: 120, height: 60, alignment: .center)
-                    .labelsHidden()
-                    .compositingGroup()
-                    .clipped()
-                    
-                }
-                HStack {
-                    Text("鬼の捕獲範囲")
-                        .padding(20)
-                    
-                    Spacer()
-                    
-                    Picker("", selection: $demonCaptureRange) {
-                        ForEach(1 ..< 100) { num in
-                            Text(String(num - 1) + "m")
-                        }
-                    }
-                    .frame(width: 120, height: 60, alignment: .center)
-                    .labelsHidden()
-                    .compositingGroup()
-                    .clipped()
-                }
-                
-                HStack {
-                    Text("生存者の位置情報送信間隔")
-                        .padding(20)
-                    
-                    Spacer()
-                    
-                    Picker("", selection: $survivorPositionTransmissionInterval) {
-                        ForEach(1 ..< 100) { num in
-                            Text(String(num - 1) + "分")
-                        }
-                    }
-                    .frame(width: 120, height: 60, alignment: .center)
-                    .labelsHidden()
-                    .compositingGroup()
-                    .clipped()
-                }
-            }
-            .background(Color(red: 0.95, green: 0.95, blue: 1.0))
-            .cornerRadius(10)
+            
+            GameruleSettingsView(room: $room, hour: $hour, minute: $minute, killerCaptureRange: $killerCaptureRange, survivorPositionTransmissionInterval: $survivorPositionTransmissionInterval, escapeTime: $escapeTime)
             
             Spacer()
             
             Button(action: {
                 time = hour * 60 + minute
-                RDDAO.updateGamerule(roomId: room.id, timelimit: time, demonCaptureRange: demonCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval)
-                model.playerInvitePushed.toggle()
+                RDDAO.updateGamerule(roomId: room.id, timelimit: time, killerCaptureRange: killerCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval, escapeTime: escapeTime)
+                model.playerInvitePushed = true
             }) {
                 Text("プレイヤーを招待する")
                     .frame(width: 240, height: 60, alignment: .center)
             }
             .sheet(isPresented: $model.playerInvitePushed) {
-                PlayerInviteView(room: $room, time: $time, player: $player)
+                PlayerInviteView(gamerule: $gamerule, players: $players, room: $room, player: $player, time: time)
             }
             .buttonStyle(CustomButtomStyle(color: Color.green))
             
             Button(action: {
-                self.model.createRoomViewPushed = false
+                model.createRoomViewPushed = false
             }) {
                 Text("もどる")
                     .frame(width: 240, height: 60, alignment: .center)
@@ -123,10 +54,16 @@ struct CreateRoomView: View {
             
         }
         .onAppear{
-            roomInit(room: self.room)
+            roomInit(room: room)
+            RDDAO.getGameRule(roomId: room.id) { (result) in
+                gamerule = result
+            }
+            RDDAO.getPlayers(roomId: room.id) { (result) in
+                players = result
+            }
         }
         .onDisappear{
-            roomDel(room: self.room)
+            roomDel(room: room)
         }
         .navigationBarBackButtonHidden(true)
         .onTapGesture {
@@ -148,10 +85,3 @@ extension UIApplication {
         sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
-
-//struct CreateRoomView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CreateRoomView(player: Player(name: ""))
-//    }
-//}
-

@@ -8,10 +8,12 @@
 import SwiftUI
 import CoreLocation
 
-struct Player {
+struct Player: Hashable {
     var id = UUID().uuidString
     var name: String = "プレイヤー"
     var latitude: CLLocationDegrees?
     var longitude: CLLocationDegrees?
+    var onlineStatus: String?
+    var role: String?
     
 }

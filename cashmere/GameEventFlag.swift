@@ -10,4 +10,6 @@ import SwiftUI
 class GameEventFlag: ObservableObject {
     @Published var isGameOver = false
     @Published var isGameStarted = false
+    @Published var isEscaping = false
+    @Published var isGameWating = false
 }

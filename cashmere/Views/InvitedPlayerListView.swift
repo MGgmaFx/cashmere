@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InvitedPlayerListView: View {
-    @Binding var playerList: [String]
+    @Binding var players: [Player]
     var body: some View {
         VStack {
             Text("プレイヤー一覧")
@@ -16,13 +16,13 @@ struct InvitedPlayerListView: View {
                 .padding()
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(playerList, id: \.self) { value in
+                    ForEach(players, id: \.self) { player in
                         VStack {
                             Image(systemName: "figure.walk")
                                 .resizable()
                                 .frame(width: 40, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 .foregroundColor(.blue)
-                            Text(value)
+                            Text(player.name)
                                 .foregroundColor(.primary)
                         }
                         .padding()

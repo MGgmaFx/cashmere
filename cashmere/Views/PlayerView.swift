@@ -8,19 +8,12 @@
 import SwiftUI
 
 struct PlayerView: View {
+    @Binding var players: [Player]
     var body: some View {
         List {
-            PlayerListRow()
-            PlayerListRow()
-            PlayerListRow()
-            PlayerListRow()
-            PlayerListRow()
+            ForEach(players, id: \.id) { player in
+                PlayerListRow(playerName: player.name, onlineStatus: player.onlineStatus ?? "取得中...", role: player.role ?? "取得中...")
+            }
         }
-    }
-}
-
-struct PlayerView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlayerView()
     }
 }

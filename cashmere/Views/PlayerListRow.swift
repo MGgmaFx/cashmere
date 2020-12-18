@@ -8,21 +8,20 @@
 import SwiftUI
 
 struct PlayerListRow:View {
+    let playerName: String
+    let onlineStatus: String
+    let role: String
     var body: some View {
         HStack {
             Image(systemName: "person.crop.circle")
                 .resizable()
                 .foregroundColor(Color.blue)
                 .frame(width: 50, height: 50)
-            Text("Test Player").foregroundColor(Color.blue)
+            Text(playerName).foregroundColor(Color.primary)
             Spacer()
+            Text(role)
+            Spacer()
+            Text(onlineStatus)
         }
-    }
-}
-
-struct PlayerListRow_Previews: PreviewProvider {
-    static var previews: some View {
-        PlayerListRow()
-            .previewLayout(.fixed(width: 300, height: 70))
     }
 }
