@@ -18,6 +18,7 @@ struct JoinRoomView: View {
     @State var gamerule: [String: String] = [:]
     @State var escapingTime: String = "46"
     @Binding var player: Player
+    var time = 0
     var body: some View {
         VStack {
             Spacer()
@@ -43,6 +44,11 @@ struct JoinRoomView: View {
             
             Button(action: {
                 self.model.joinRoomViewPushed = false
+                leaveLoom(roomId: roomId)
+                eventFlag.isGameWating = false
+                players = []
+                gamerule = [:]
+                roomId = ""
             }) {
                 Text("もどる")
             }
@@ -53,20 +59,19 @@ struct JoinRoomView: View {
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isGameStarted) {
-                GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: Int(gamerule["timelimit"] ?? "837")!)
+                GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: 60)
             })
             
             VStack {
                 
             }
             .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isEscaping) {
-                EscapeTimeView(setDate: Calendar.current.date(byAdding: .minute, value: Int(gamerule["escapeTime"] ?? "46")!, to: Date())!)
+                EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: (Int(gamerule["escapeTime"] ?? "46")! * 60 - 1), to: Date())!)
             })
             
         }.onAppear {
             
         }
-        
     }
     
     func handleScan(result: Result<String, CodeScannerView.ScanError>) {
@@ -78,7 +83,7 @@ struct JoinRoomView: View {
             RDDAO.updatePlayerRole(roomId: roomId, playerId: player.id, role: "survivor")
             RDDAO.gameStartCheck(roomId: roomId){ result in
                 eventFlag.isEscaping = result
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double(Int(gamerule["escapeTime"] ?? "46")! * 60)) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double((Int(gamerule["escapeTime"] ?? "46")! * 60))) {
                     eventFlag.isEscaping = false
                     eventFlag.isGameStarted = true
                 }
@@ -89,6 +94,11 @@ struct JoinRoomView: View {
         case .failure(let error):
             print("Scanning failed")
             print(error)
+        }
+    }
+    private func leaveLoom(roomId: String) {
+        if roomId != "" {
+            RDDAO.deletePlayer(roomId: roomId, playerId: player.id)
         }
     }
 }

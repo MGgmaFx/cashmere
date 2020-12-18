@@ -60,7 +60,7 @@ class RealtimeDatabeseDAO: ObservableObject {
     
     func getGameRule(roomId: String, completionHandler: @escaping ([String : String]) -> Void) {
         var gamerule: [String : String] = [:]
-        ref.child(roomId).child("gamerule").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child(roomId).child("gamerule").observe(.value, with: { (snapshot) in
             let postDict = snapshot.value as? [String : String] ?? [:]
             print(postDict)
             gamerule = [:]
@@ -94,11 +94,13 @@ class RealtimeDatabeseDAO: ObservableObject {
         ref.child(roomId).updateChildValues(data)
     }
     
-    func updateGamerule(roomId: String, timelimit: Int, killerCaptureRange: Int, survivorPositionTransmissionInterval: Int, escapeTime: Int) {
+    func updateGamerule(roomId: String, timelimit: Int, killerCaptureRange: Int, survivorPositionTransmissionInterval: Int, escapeTime: Int, hour: Int, minute: Int) {
         let data = ["timelimit": String(timelimit + 1),
                     "killerCaptureRange": String(killerCaptureRange + 1),
                     "survivorPositionTransmissionInterval": String(survivorPositionTransmissionInterval + 1),
-                    "escapeTime": String(escapeTime + 1)]
+                    "escapeTime": String(escapeTime + 1),
+                    "hour": String(hour),
+                    "minute": String(minute + 1)]
         ref.child(roomId).child("gamerule").updateChildValues(data)
     }
     
@@ -121,6 +123,10 @@ class RealtimeDatabeseDAO: ObservableObject {
         let data = ["playerLatitude": String(latitude),
                     "playerLongitude": String(longitude)]
         ref.child(roomId).child("players").child(playerId).updateChildValues(data)
+    }
+    
+    func deletePlayer(roomId: String, playerId: String) {
+        ref.child(roomId).child("players").child(playerId).removeValue()
     }
     
 }
