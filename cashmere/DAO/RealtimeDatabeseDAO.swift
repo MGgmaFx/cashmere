@@ -62,7 +62,6 @@ class RealtimeDatabeseDAO: ObservableObject {
         var gamerule: [String : String] = [:]
         ref.child(roomId).child("gamerule").observe(.value, with: { (snapshot) in
             let postDict = snapshot.value as? [String : String] ?? [:]
-            print(postDict)
             gamerule = [:]
             for (key, value) in postDict {
                 gamerule.updateValue(value, forKey: key)
@@ -72,12 +71,10 @@ class RealtimeDatabeseDAO: ObservableObject {
     }
     
     func gameStartCheck(roomId: String, completionHandler: @escaping (Bool) -> Void) {
-        ref.child(roomId).observe(DataEventType.value, with: { (snapshot) in
-            let postDict = snapshot.value as? [String : AnyObject] ?? [:]
+        ref.child(roomId).child("status").observe(DataEventType.value, with: { (snapshot) in
+            let postDict = snapshot.value as? [String : String] ?? [:]
             for (_, value) in postDict {
-                var state = ""
-                state = value as? String ?? ""
-                if state == "playing" {
+                if value == "playing" {
                     completionHandler(true)
                 }
             }
@@ -86,7 +83,7 @@ class RealtimeDatabeseDAO: ObservableObject {
     
     func updateRoomStatus(roomId: String, state: String) {
         let data = ["status": state]
-        ref.child(roomId).updateChildValues(data)
+        ref.child(roomId).child("status").updateChildValues(data)
     }
     
     func updateGameStartTime(roomId: String, startTime: String) {

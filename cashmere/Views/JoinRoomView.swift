@@ -55,22 +55,17 @@ struct JoinRoomView: View {
             .buttonStyle(CustomButtomStyle(color: Color.gray))
             .navigationBarHidden(true)
             
+            VStack {
+            }
+            .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isEscaping) {
+                EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: (Int(gamerule["escapeTime"] ?? "99")! * 60 - 1), to: Date())!)
+            })
             
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isGameStarted) {
-                GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: 60)
+                GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: (Int(gamerule["timelimit"] ?? "99")! * 60 - 1))
             })
-            
-            VStack {
-                
-            }
-            .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isEscaping) {
-                EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: (Int(gamerule["escapeTime"] ?? "46")! * 60 - 1), to: Date())!)
-            })
-            
-        }.onAppear {
-            
         }
     }
     
@@ -83,7 +78,7 @@ struct JoinRoomView: View {
             RDDAO.updatePlayerRole(roomId: roomId, playerId: player.id, role: "survivor")
             RDDAO.gameStartCheck(roomId: roomId){ result in
                 eventFlag.isEscaping = result
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double((Int(gamerule["escapeTime"] ?? "46")! * 60))) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double((Int(gamerule["escapeTime"] ?? "99")! * 60))) {
                     eventFlag.isEscaping = false
                     eventFlag.isGameStarted = true
                 }
