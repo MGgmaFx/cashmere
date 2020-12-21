@@ -11,6 +11,7 @@ import CoreLocation
 struct Player: Hashable {
     var id = UUID().uuidString
     var name: String = "プレイヤー"
+    var captureState: String?
     var latitude: CLLocationDegrees?
     var longitude: CLLocationDegrees?
     var onlineStatus: String?

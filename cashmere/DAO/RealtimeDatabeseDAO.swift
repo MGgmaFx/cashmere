@@ -39,7 +39,9 @@ class RealtimeDatabeseDAO: ObservableObject {
                 temp.id = uuid
                 if let player = value as? [String : String] {
                     for (key, value) in player {
-                        if key == "playerLatitude" {
+                        if key == "captureState" {
+                            temp.captureState = value
+                        }else if key == "playerLatitude" {
                             temp.latitude = CLLocationDegrees(value)
                         }else if key == "playerLongitude" {
                             temp.longitude = CLLocationDegrees(value)
@@ -126,4 +128,11 @@ class RealtimeDatabeseDAO: ObservableObject {
         ref.child(roomId).child("players").child(playerId).removeValue()
     }
     
+    func addCaptureFlag(roomId: String, playerId: String) {
+        let data = ["captureState": "captured"]
+        ref.child(roomId).child("players").child(playerId).updateChildValues(data)
+    }
+    
 }
+
+

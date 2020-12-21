@@ -12,17 +12,15 @@ import Firebase
 
 
 struct mapView : UIViewRepresentable {
+    @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @Binding var manager: CLLocationManager
     @Binding var alert: Bool
     @Binding var roomId: String
     @Binding var player: Player
     @Binding var players: [Player]
-    
-    
+    @Binding var gamerule: [String : String]
     let map = MKMapView()
-    let RDDAO = RealtimeDatabeseDAO()
-    var ref = Database.database().reference()
-    
+
     func makeCoordinator() -> Coordinator {
         return Coordinator(parent1: self)
     }
@@ -30,10 +28,9 @@ struct mapView : UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         manager.requestWhenInUseAuthorization()
         manager.delegate = context.coordinator
-        // 現在地の表示（青ピン）
         map.showsUserLocation = true
         map.showsCompass = true
-        map.showsScale = true
+        // map.showsScale = true
         // 測位の精度を指定(最高精度
         manager.desiredAccuracy = kCLLocationAccuracyBest
         // 位置情報取得間隔を指定(2m移動したら、位置情報を通知)
@@ -44,14 +41,13 @@ struct mapView : UIViewRepresentable {
     }
     // 更新されたときの処理
     func updateUIView(_ uiView: MKMapView, context: Context) {
-    
+        
     }
 }
+
 class Coordinator : NSObject,CLLocationManagerDelegate{
-    
-    
-    static let startDate = Date().addingTimeInterval(-180071.3325)
     var parent : mapView
+    var timer: Timer?
     init(parent1 : mapView) {
         parent = parent1
     }
@@ -64,33 +60,50 @@ class Coordinator : NSObject,CLLocationManagerDelegate{
     }
     // ユーザの場所が変更された
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+        /**
+         位置情報送信タイミングの設定
+         */
+        let timeInterval = Double(parent.gamerule["survivorPositionTransmissionInterval"] ?? "1") ?? 1 * 60
+        timer = Timer(timeInterval: TimeInterval(timeInterval), target: self, selector: #selector(timerUpdate), userInfo: nil, repeats: true)
+        // RunLoop.main.add(Timer, forMode: RunLoop.Mode.default)
+        /**
+        
+        init(timeInterval interval: TimeInterval(timeInterval),
+        repeats: true,
+        block: @escaping (Timer) -> Void)
+        Timer.scheduledTimer(timeInterval: TimeInterval(timeInterval), target: self, selector: #selector(timerUpdate), userInfo: nil, repeats: false)
+         */
+        
+        /**
+         現在地書き込み処理
+         */
         let location = locations.last
-        /**DBに現在地を追加*/
         let latitude = location?.coordinate.latitude
         let longitude = location?.coordinate.longitude
         let playerId = parent.player.id
         let roomId = parent.roomId
-        if latitude != nil && longitude != nil {
+        if latitude != nil && longitude != nil && parent.player.captureState != "確保" {
             parent.RDDAO.addPlayerLocation(roomId: roomId, playerId: playerId, latitude: latitude!, longitude: longitude!)
         }
         
         /**
-         DBからプレイヤーの位置情報を取得
-         43.057427,141.373615
-         43.051846,141.385889
-         43.052747,141.377778
-         
-         42.958746,141.312503
-         42.982611,141.334991
-         43.020901,141.348724
-         43.078731,141.344261
+         確保系処理
          */
-        
-        parent.RDDAO.getPlayers(roomId: parent.roomId) { (result) in
-            
-            print(result)
-            self.parent.players = result
-            self.addAnnotations(self.parent.players)
+        let killerCaptureRange = Int(parent.gamerule["killerCaptureRange"] ?? "10")
+        for player in parent.players {
+            if parent.player.id != player.id && parent.player.captureState != "確保" {
+                let targetLatitude = player.latitude ?? 0.0
+                let targetLongitude = player.longitude ?? 0.0
+                let coordinate1 = CLLocation(latitude: latitude!, longitude: longitude!)
+                let coordinate2 = CLLocation(latitude: targetLatitude, longitude: targetLongitude)
+                let distanceInMeters = Int(coordinate1.distance(from: coordinate2))
+                print(distanceInMeters)
+                if distanceInMeters <= killerCaptureRange ?? 10 {
+                    print("♡♡♡捕まえちゃったわよ♡♡♡")
+                    print("♡♡♡" + player.id + "♡♡♡")
+                    parent.RDDAO.addCaptureFlag(roomId: parent.roomId, playerId: player.id)
+                }
+            }
         }
         
         let georeader = CLGeocoder()
@@ -103,12 +116,17 @@ class Coordinator : NSObject,CLLocationManagerDelegate{
         }
     }
     
+    @objc func timerUpdate(){
+        print("♡♡♡出力しちゃうわよ♡♡♡")
+        addAnnotations(self.parent.players)
+    }
+    
     func addAnnotations(_ players: [Player]){
-        self.parent.map.removeAnnotations(self.parent.map.annotations)
+        // self.parent.map.removeAnnotations(self.parent.map.annotations)
         let pin = MKPointAnnotation()
         for player in players {
-            print(player)
-            if player.latitude != nil && player.longitude != nil {
+            if player.latitude != nil && player.longitude != nil && player.captureState != "確保"{
+                self.parent.map.removeAnnotation(pin)
                 let latitude = player.latitude!
                 let longitude = player.longitude!
                 pin.subtitle = player.id

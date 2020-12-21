@@ -13,7 +13,7 @@ struct MapView: View {
         let toDate = Calendar.current.date(byAdding:.minute, value: time, to:Date())
         // ContentViewに地図を表示
         ZStack(alignment: .top) {
-            mapView(manager: $manager, alert: $alert, roomId: $roomId, player: $player, players: $players).alert(isPresented: $alert) {
+            mapView(manager: $manager, alert: $alert, roomId: $roomId, player: $player, players: $players, gamerule: $gamerule).alert(isPresented: $alert) {
               Alert(title: Text("Please Enable Location Access In Setting Panel!!!"))
             }
             TimerView(setDate: toDate!)
