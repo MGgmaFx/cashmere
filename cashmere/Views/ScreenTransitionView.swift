@@ -14,4 +14,5 @@ class Model: ObservableObject {
     @Published var playerInvitePushed = false
     @Published var profileSettingsViewPushed = false
     @Published var isShowingScanner = false
+    @Published var loginViewPushed = false
 }

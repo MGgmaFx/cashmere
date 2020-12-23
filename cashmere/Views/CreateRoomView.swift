@@ -11,6 +11,7 @@ import Firebase
 struct CreateRoomView: View {
     @EnvironmentObject var model: Model
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
+    @EnvironmentObject var session: SessionStore
     @State var room = Room(name: "鬼ごっこルーム")
     @State var players: [Player] = []
     @State var gamerule: [String : String] = [:]

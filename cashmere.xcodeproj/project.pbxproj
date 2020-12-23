@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05F0545F25761F5100ABE658 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0545E25761F5100ABE658 /* MapView.swift */; };
+		2449432C259309D500DB7F04 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2449432B259309D400DB7F04 /* SessionStore.swift */; };
 		245227E925761A7300B90ED7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227E825761A7300B90ED7 /* AppDelegate.swift */; };
 		245227EB25761A7300B90ED7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227EA25761A7300B90ED7 /* SceneDelegate.swift */; };
 		245227ED25761A7300B90ED7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227EC25761A7300B90ED7 /* ContentView.swift */; };
@@ -37,6 +38,9 @@
 		24522930258347E400B90ED7 /* RealtimeDatabeseDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452292F258347E400B90ED7 /* RealtimeDatabeseDAO.swift */; };
 		245229442583A0E200B90ED7 /* GameWatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245229432583A0E200B90ED7 /* GameWatingView.swift */; };
 		24522949258446AB00B90ED7 /* PlayerInviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24522948258446AB00B90ED7 /* PlayerInviteView.swift */; };
+		245B3F882591B495001D4A59 /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B3F872591B495001D4A59 /* GoogleSignInButton.swift */; };
+		245B3F8D2591B51F001D4A59 /* GoogleSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B3F8C2591B51F001D4A59 /* GoogleSignInViewController.swift */; };
+		245B3F952591B68F001D4A59 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B3F942591B68F001D4A59 /* LoginView.swift */; };
 		245C5DE12587111A00F4BE36 /* InvitedPlayerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245C5DE02587111A00F4BE36 /* InvitedPlayerListView.swift */; };
 		245C5DE62587231B00F4BE36 /* CustomButtomStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245C5DE52587231B00F4BE36 /* CustomButtomStyle.swift */; };
 		245C5DEB25873CDD00F4BE36 /* GameEventFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245C5DEA25873CDD00F4BE36 /* GameEventFlag.swift */; };
@@ -67,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		05F0545E25761F5100ABE658 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		2449432B259309D400DB7F04 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		245227E525761A7300B90ED7 /* cashmere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cashmere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		245227E825761A7300B90ED7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		245227EA25761A7300B90ED7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +106,9 @@
 		2452292F258347E400B90ED7 /* RealtimeDatabeseDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeDatabeseDAO.swift; sourceTree = "<group>"; };
 		245229432583A0E200B90ED7 /* GameWatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameWatingView.swift; sourceTree = "<group>"; };
 		24522948258446AB00B90ED7 /* PlayerInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerInviteView.swift; sourceTree = "<group>"; };
+		245B3F872591B495001D4A59 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInButton.swift; sourceTree = "<group>"; };
+		245B3F8C2591B51F001D4A59 /* GoogleSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInViewController.swift; sourceTree = "<group>"; };
+		245B3F942591B68F001D4A59 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		245C5DE02587111A00F4BE36 /* InvitedPlayerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedPlayerListView.swift; sourceTree = "<group>"; };
 		245C5DE52587231B00F4BE36 /* CustomButtomStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtomStyle.swift; sourceTree = "<group>"; };
 		245C5DEA25873CDD00F4BE36 /* GameEventFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEventFlag.swift; sourceTree = "<group>"; };
@@ -179,6 +187,7 @@
 				245227EA25761A7300B90ED7 /* SceneDelegate.swift */,
 				245228F9257F03B300B90ED7 /* Room.swift */,
 				245228FE257F04DE00B90ED7 /* Player.swift */,
+				2449432B259309D400DB7F04 /* SessionStore.swift */,
 				245228A925786FB700B90ED7 /* GoogleService-Info.plist */,
 				245227EE25761A7700B90ED7 /* Assets.xcassets */,
 				245227F325761A7700B90ED7 /* LaunchScreen.storyboard */,
@@ -236,6 +245,9 @@
 				2452292A2581E3B600B90ED7 /* ProfileSettingsView.swift */,
 				245228BE2579B82400B90ED7 /* JoinRoomView.swift */,
 				24522843257731EF00B90ED7 /* MainMenuView.swift */,
+				245B3F942591B68F001D4A59 /* LoginView.swift */,
+				245B3F872591B495001D4A59 /* GoogleSignInButton.swift */,
+				245B3F8C2591B51F001D4A59 /* GoogleSignInViewController.swift */,
 				245227EC25761A7300B90ED7 /* ContentView.swift */,
 				245229432583A0E200B90ED7 /* GameWatingView.swift */,
 				245C5DE02587111A00F4BE36 /* InvitedPlayerListView.swift */,
@@ -295,6 +307,7 @@
 				245227E225761A7300B90ED7 /* Frameworks */,
 				245227E325761A7300B90ED7 /* Resources */,
 				2E9F05263289690571F4158E /* [CP] Embed Pods Frameworks */,
+				CB3345A5FCD41F58D68CF0ED /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -336,6 +349,7 @@
 				2452280325761A7800B90ED7 /* Frameworks */,
 				2452280425761A7800B90ED7 /* Resources */,
 				99F134989CE8C04313C87313 /* [CP] Embed Pods Frameworks */,
+				A7E63707B5C8CF8A2D76DBF8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -521,6 +535,40 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-cashmere-cashmereUITests/Pods-cashmere-cashmereUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A7E63707B5C8CF8A2D76DBF8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cashmere-cashmereUITests/Pods-cashmere-cashmereUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cashmere-cashmereUITests/Pods-cashmere-cashmereUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-cashmere-cashmereUITests/Pods-cashmere-cashmereUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CB3345A5FCD41F58D68CF0ED /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cashmere/Pods-cashmere-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cashmere/Pods-cashmere-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-cashmere/Pods-cashmere-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -546,10 +594,13 @@
 				245227ED25761A7300B90ED7 /* ContentView.swift in Sources */,
 				245C5DEB25873CDD00F4BE36 /* GameEventFlag.swift in Sources */,
 				246AE480258B37B70052AD6D /* GameruleSettingsView.swift in Sources */,
+				245B3F882591B495001D4A59 /* GoogleSignInButton.swift in Sources */,
 				245228512577320B00B90ED7 /* GameView.swift in Sources */,
+				2449432C259309D500DB7F04 /* SessionStore.swift in Sources */,
 				245228BF2579B82400B90ED7 /* JoinRoomView.swift in Sources */,
 				24522949258446AB00B90ED7 /* PlayerInviteView.swift in Sources */,
 				245228FF257F04DE00B90ED7 /* Player.swift in Sources */,
+				245B3F8D2591B51F001D4A59 /* GoogleSignInViewController.swift in Sources */,
 				245228B22578731C00B90ED7 /* ScreenTransitionView.swift in Sources */,
 				246AE47B2589E44D0052AD6D /* EscapeTimeView.swift in Sources */,
 				245C5DE62587231B00F4BE36 /* CustomButtomStyle.swift in Sources */,
@@ -557,6 +608,7 @@
 				24522849257731F700B90ED7 /* CreateRoomView.swift in Sources */,
 				24522930258347E400B90ED7 /* RealtimeDatabeseDAO.swift in Sources */,
 				245228CE2579DC3A00B90ED7 /* ItemListRow.swift in Sources */,
+				245B3F952591B68F001D4A59 /* LoginView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

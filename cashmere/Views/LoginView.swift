@@ -5,4 +5,21 @@
 //  Created by 志村豪気 on 2020/12/22.
 //
 
-import Foundation
+import SwiftUI
+import GoogleSignIn
+
+struct LoginView: View {
+    @EnvironmentObject var model: Model
+    var body: some View {
+        VStack(alignment: .center){
+            Spacer()
+            GoogleSignInButton()
+            Spacer()
+            Button(action: {
+                model.loginViewPushed = false
+            }) {
+                Text("もどる")
+            }.buttonStyle(CustomButtomStyle(color: Color.gray))
+        }
+    }
+}

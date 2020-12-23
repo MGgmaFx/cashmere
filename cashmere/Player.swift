@@ -9,6 +9,7 @@ import SwiftUI
 import CoreLocation
 
 struct Player: Hashable {
+    var uid: String?
     var id = UUID().uuidString
     var name: String = "プレイヤー"
     var captureState: String?
