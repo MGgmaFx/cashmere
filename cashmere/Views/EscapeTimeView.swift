@@ -40,6 +40,12 @@ struct EscapeTimeView: View {
          let cal = Calendar(identifier: .japanese)
 
          let timeVal = cal.dateComponents([.day,.hour,.minute,.second], from: nowD,to: setDate)
+        
+        if timeVal.second! < 0 && timeVal.minute == 0 {
+            return Text("開始中...")
+                .foregroundColor(.white)
+                .font(.system(size: 70, weight: .regular, design: .default))
+        }
 
          return Text(String(format: "%02d:%02d",
          timeVal.minute ?? 00,
