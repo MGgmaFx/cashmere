@@ -9,41 +9,59 @@ import SwiftUI
 
 struct MainMenuView: View {
     @EnvironmentObject var model: Model
+    @EnvironmentObject var session: SessionStore
     @State var player = Player()
+    func getUser () {
+          session.listen()
+    }
     var body: some View {
         NavigationView {
             VStack {
                 Spacer()
-                Text("鬼ごっこオンライン").font(.title)
+                Image("logo")
+                    .resizable()
+                    .frame(width: 280, height: 70, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 Spacer()
-                NavigationLink(destination: JoinRoomView(player: $player), isActive: $model.joinRoomViewPushed) {
-                    Button(action: {
-                        model.joinRoomViewPushed = true
-                    }) {
-                        Text("ルームに参加する")
+                if session.session == nil {
+                    NavigationLink(destination: LoginView(), isActive: $model.loginViewPushed) {
+                        Button(action: {
+                            model.loginViewPushed = true
+                        }) {
+                            Text("ログイン")
+                        }
+                        .buttonStyle(CustomButtomStyle(color: Color.orange))
                     }
-                    .buttonStyle(CustomButtomStyle(color: Color.blue))
-                }
-                NavigationLink(destination: CreateRoomView(player: $player), isActive: $model.createRoomViewPushed) {
-                    Button(action: {
-                        model.createRoomViewPushed = true
-                    }) {
-                        Text("ルームをつくる")
+                } else {
+                    NavigationLink(destination: JoinRoomView(player: $player), isActive: $model.joinRoomViewPushed) {
+                        Button(action: {
+                            model.joinRoomViewPushed = true
+                        }) {
+                            Text("ルームに参加する")
+                        }
+                        .buttonStyle(CustomButtomStyle(color: Color.blue))
                     }
-                    .buttonStyle(CustomButtomStyle(color: Color.blue))
-                }
-                NavigationLink(destination: ProfileSettingsView(player: $player), isActive: $model.profileSettingsViewPushed) {
-                    Button(action: {
-                        model.profileSettingsViewPushed = true
-                    }) {
-                        Text("設定")
+                    NavigationLink(destination: CreateRoomView(player: $player), isActive: $model.createRoomViewPushed) {
+                        Button(action: {
+                            model.createRoomViewPushed = true
+                        }) {
+                            Text("ルームをつくる")
+                        }
+                        .buttonStyle(CustomButtomStyle(color: Color.blue))
                     }
-                    .buttonStyle(CustomButtomStyle(color: Color.gray))
+                    NavigationLink(destination: ProfileSettingsView(player: $player), isActive: $model.profileSettingsViewPushed) {
+                        Button(action: {
+                            model.profileSettingsViewPushed = true
+                        }) {
+                            Text("設定")
+                        }
+                        .buttonStyle(CustomButtomStyle(color: Color.gray))
+                    }
                 }
+                
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .edgesIgnoringSafeArea(.all)
-        }
+        }.onAppear(perform: getUser)
     }
 }
 
