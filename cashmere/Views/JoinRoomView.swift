@@ -58,13 +58,13 @@ struct JoinRoomView: View {
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isEscaping) {
-                EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: (Int(gamerule["escapeTime"] ?? "99")! * 60 - 1), to: Date())!)
+                EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: (Int(gamerule["escapeTime"] ?? "99")! * 60), to: Date())!)
             })
             
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isGameStarted) {
-                GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: (Int(gamerule["timelimit"] ?? "99")! * 60 - 1))
+                GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: Int(gamerule["timelimit"] ?? "99")!)
             })
         }
     }
