@@ -8,21 +8,32 @@
 import SwiftUI
 
 struct ItemListRow:View {
+    let item: Item
     var body: some View {
-        HStack {
-            Image(systemName: "cube")
-                .resizable()
-                .foregroundColor(Color.orange)
-                .frame(width: 50, height: 50)
-            Text("Test Item").foregroundColor(Color.orange)
-            Spacer()
+        VStack {
+            HStack {
+                Spacer()
+                Image(systemName: item.imageName)
+                    .resizable()
+                    .foregroundColor(Color.orange)
+                    .frame(width: 50, height: 50)
+                Spacer()
+                VStack {
+                    Text(item.name).foregroundColor(Color.black)
+                    Text(item.description).foregroundColor(Color.gray)
+                }
+                Spacer()
+                Text("x \(item.amount)")
+                Spacer()
+            }
         }
     }
 }
 
-struct ItemListRow_Previews: PreviewProvider {
-    static var previews: some View {
-        ItemListRow()
-            .previewLayout(.fixed(width: 300, height: 70))
-    }
-}
+//struct ItemListRow_Previews: PreviewProvider {
+//    let item = Item(id: 1, name: "test", imageName: "cube", description: "test-description", amount: 1)
+//    static var previews: some View {
+//        ItemListRow(item: item)
+//            .previewLayout(.fixed(width: 300, height: 70))
+//    }
+//}
