@@ -6,18 +6,33 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct ProfileSettingsView: View {
+    @EnvironmentObject var model: Model
     @Binding var player: Player
     var body: some View {
-        Spacer()
-        Text("ProfileSettings View")
-        Spacer()
-        
-        HStack {
-            Text("プレイヤー名").padding()
-            TextField("プレイヤー名を入力", text: $player.name).textFieldStyle(RoundedBorderTextFieldStyle())
+        VStack {
+            Spacer()
+            Text("ProfileSettings View")
+            Spacer()
+            
+            HStack {
+                Text("プレイヤー名").padding()
+                TextField("プレイヤー名を入力", text: $player.name).textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            Spacer()
+            Button(action: {
+                do {
+                    try Auth.auth().signOut()
+                    model.profileSettingsViewPushed = false
+                } catch let signOutError as NSError {
+                    print("SignOut Error: %@", signOutError)
+                }
+            }) {
+                Text("ログアウト")
+            }
+            .buttonStyle(CustomButtomStyle(color: Color.red))
         }
-        Spacer()
     }
 }
