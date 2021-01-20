@@ -7,11 +7,12 @@
 
 import SwiftUI
 import GoogleSignIn
+import FirebaseAuth
 
 struct LoginView: View {
     @EnvironmentObject var model: Model
     var body: some View {
-        VStack(alignment: .center){
+        VStack {
             Spacer()
             GoogleSignInButton()
             Spacer()

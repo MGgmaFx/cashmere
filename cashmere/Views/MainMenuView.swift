@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct MainMenuView: View {
     @EnvironmentObject var model: Model
@@ -22,8 +23,8 @@ struct MainMenuView: View {
                     .resizable()
                     .frame(width: 280, height: 70, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 Spacer()
-                if session.session == nil {
-                    NavigationLink(destination: LoginView(), isActive: $model.loginViewPushed) {
+                if Auth.auth().currentUser == nil {
+                    NavigationLink(destination: LoginView().navigationBarBackButtonHidden(true), isActive: $model.loginViewPushed) {
                         Button(action: {
                             model.loginViewPushed = true
                         }) {
