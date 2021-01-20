@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05F0545F25761F5100ABE658 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0545E25761F5100ABE658 /* MapView.swift */; };
+		24493F3625B52960009DB684 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24493F3525B52960009DB684 /* Item.swift */; };
 		2449432C259309D500DB7F04 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2449432B259309D400DB7F04 /* SessionStore.swift */; };
 		245227E925761A7300B90ED7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227E825761A7300B90ED7 /* AppDelegate.swift */; };
 		245227EB25761A7300B90ED7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227EA25761A7300B90ED7 /* SceneDelegate.swift */; };
@@ -47,6 +48,7 @@
 		246AE45C25885CCE0052AD6D /* GameruleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AE45B25885CCE0052AD6D /* GameruleView.swift */; };
 		246AE47B2589E44D0052AD6D /* EscapeTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AE47A2589E44D0052AD6D /* EscapeTimeView.swift */; };
 		246AE480258B37B70052AD6D /* GameruleSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AE47F258B37B70052AD6D /* GameruleSettingsView.swift */; };
+		24EA289725B65F4C0044DCFB /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EA289625B65F4C0044DCFB /* ResultView.swift */; };
 		4A538ACB74F2570FAF4D5C2A /* Pods_cashmere_cashmereUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B978F57396957BB528811F85 /* Pods_cashmere_cashmereUITests.framework */; };
 		6C3837FFA9DED59893BE0752 /* Pods_cashmereTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748503290558B2B13B49EEEE /* Pods_cashmereTests.framework */; };
 		AA1E508A3A9345CCC02BB948 /* Pods_cashmere.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE32DA295FEC37F04A0E6C1F /* Pods_cashmere.framework */; };
@@ -71,6 +73,7 @@
 
 /* Begin PBXFileReference section */
 		05F0545E25761F5100ABE658 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		24493F3525B52960009DB684 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		2449432B259309D400DB7F04 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		245227E525761A7300B90ED7 /* cashmere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cashmere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		245227E825761A7300B90ED7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +118,7 @@
 		246AE45B25885CCE0052AD6D /* GameruleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameruleView.swift; sourceTree = "<group>"; };
 		246AE47A2589E44D0052AD6D /* EscapeTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeTimeView.swift; sourceTree = "<group>"; };
 		246AE47F258B37B70052AD6D /* GameruleSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameruleSettingsView.swift; sourceTree = "<group>"; };
+		24EA289625B65F4C0044DCFB /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		3734E116E6263DD8E5F956D4 /* Pods-cashmere-cashmereUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cashmere-cashmereUITests.debug.xcconfig"; path = "Target Support Files/Pods-cashmere-cashmereUITests/Pods-cashmere-cashmereUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		57187BFF4836C0B0CFBC9649 /* Pods-cashmere.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cashmere.debug.xcconfig"; path = "Target Support Files/Pods-cashmere/Pods-cashmere.debug.xcconfig"; sourceTree = "<group>"; };
 		5998795B6D9E96219FF9DEB1 /* Pods-cashmereTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cashmereTests.release.xcconfig"; path = "Target Support Files/Pods-cashmereTests/Pods-cashmereTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 				245227F025761A7700B90ED7 /* Preview Content */,
 				245C5DE52587231B00F4BE36 /* CustomButtomStyle.swift */,
 				245C5DEA25873CDD00F4BE36 /* GameEventFlag.swift */,
+				24493F3525B52960009DB684 /* Item.swift */,
 			);
 			path = cashmere;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 				24522914258051E800B90ED7 /* QRCodeView.swift */,
 				245228B12578731C00B90ED7 /* ScreenTransitionView.swift */,
 				245228502577320B00B90ED7 /* GameView.swift */,
+				24EA289625B65F4C0044DCFB /* ResultView.swift */,
 				245228C32579D22300B90ED7 /* ItemView.swift */,
 				245228C82579D23900B90ED7 /* PlayerView.swift */,
 				05F0545E25761F5100ABE658 /* MapView.swift */,
@@ -576,6 +582,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24493F3625B52960009DB684 /* Item.swift in Sources */,
 				245229442583A0E200B90ED7 /* GameWatingView.swift in Sources */,
 				245228D8257A060100B90ED7 /* TimerView.swift in Sources */,
 				24522844257731EF00B90ED7 /* MainMenuView.swift in Sources */,
@@ -587,6 +594,7 @@
 				2452292B2581E3B600B90ED7 /* ProfileSettingsView.swift in Sources */,
 				245229102580507300B90ED7 /* QRCodeMaker.swift in Sources */,
 				245228C92579D23900B90ED7 /* PlayerView.swift in Sources */,
+				24EA289725B65F4C0044DCFB /* ResultView.swift in Sources */,
 				05F0545F25761F5100ABE658 /* MapView.swift in Sources */,
 				245227EB25761A7300B90ED7 /* SceneDelegate.swift in Sources */,
 				245228C42579D22300B90ED7 /* ItemView.swift in Sources */,

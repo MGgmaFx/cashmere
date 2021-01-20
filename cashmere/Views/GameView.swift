@@ -16,25 +16,26 @@ struct GameView: View {
     @Binding var gamerule: [String : String]
     let time: Int
     var body: some View {
-        TabView {
-            MapView(roomId: $roomId, player: $player, players: $players, gamerule: $gamerule, time: time)
-                .tabItem {
-                    Image(systemName: "map")
-                    Text("マップ")
-                }
-            ItemView()
-                .tabItem {
-                    Image(systemName: "case.fill")
-                    Text("アイテム")
-                }
-            PlayerView(players: $players)
-                .tabItem {
-                    Image(systemName: "figure.walk")
-                    Text("プレイヤー")
-                }
-        }
-        .alert(isPresented: $gameFlag.isGameOver) {
-            Alert(title: Text("ゲーム終了"))
+        VStack {
+            TabView {
+                MapView(roomId: $roomId, player: $player, players: $players, gamerule: $gamerule, time: time)
+                    .tabItem {
+                        Image(systemName: "map")
+                        Text("マップ")
+                    }
+                ItemView()
+                    .tabItem {
+                        Image(systemName: "case.fill")
+                        Text("アイテム")
+                    }
+                PlayerView(players: $players)
+                    .tabItem {
+                        Image(systemName: "figure.walk")
+                        Text("プレイヤー")
+                    }
+            }.fullScreenCover(isPresented: $gameFlag.isGameOver, content: {
+                ResultView(players: $players)
+            })
         }
     }
 }
