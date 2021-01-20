@@ -12,6 +12,7 @@ struct CreateRoomView: View {
     @EnvironmentObject var model: Model
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @EnvironmentObject var session: SessionStore
+    @EnvironmentObject var gameFlag: GameEventFlag
     @State var room = Room(name: "鬼ごっこルーム")
     @State var players: [Player] = []
     @State var gamerule: [String : String] = [:]
@@ -33,7 +34,7 @@ struct CreateRoomView: View {
             Spacer()
             
             Button(action: {
-                time = hour * 60 + minute
+                time = hour * 60 + (minute + escapeTime)
                 RDDAO.updateGamerule(roomId: room.id, timelimit: time, killerCaptureRange: killerCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval, escapeTime: escapeTime, hour: hour, minute: minute)
                 model.playerInvitePushed = true
                 RDDAO.getGameRule(roomId: room.id) { (result) in
@@ -64,6 +65,14 @@ struct CreateRoomView: View {
             }
             RDDAO.getPlayers(roomId: room.id) { (result) in
                 players = result
+                if gameFlag.isGameStarted {
+                    checkAllCaught(plyers: players){ (isAllCaught) in
+                        if isAllCaught {
+                            gameFlag.isGameOver = isAllCaught
+                        }
+                    }
+                }
+                
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -74,6 +83,17 @@ struct CreateRoomView: View {
     private func roomInit(room: Room) {
         RDDAO.updateRoomStatus(roomId: room.id, state: "wating")
         RDDAO.addPlayer(roomId: room.id, playerId: player.id, playerName: player.name)
+    }
+    
+    private func checkAllCaught(plyers: [Player], completionHandler: @escaping (Bool) -> Void) {
+        var isAllCaught = true
+        for player in players {
+            if player.captureState != "captured" && player.role == "survivor" {
+                isAllCaught = false
+            }
+        }
+        print(isAllCaught)
+        completionHandler(isAllCaught)
     }
 }
 
