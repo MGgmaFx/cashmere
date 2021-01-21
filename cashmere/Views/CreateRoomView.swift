@@ -34,7 +34,7 @@ struct CreateRoomView: View {
             Spacer()
             
             Button(action: {
-                time = hour * 60 + (minute + escapeTime)
+                time = hour * 60 + (minute + 1)
                 RDDAO.updateGamerule(roomId: room.id, timelimit: time, killerCaptureRange: killerCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval, escapeTime: escapeTime, hour: hour, minute: minute)
                 model.playerInvitePushed = true
                 RDDAO.getGameRule(roomId: room.id) { (result) in
@@ -74,6 +74,9 @@ struct CreateRoomView: View {
                 }
                 
             }
+        }
+        .onDisappear{
+            model.playerInvitePushed = false
         }
         .navigationBarBackButtonHidden(true)
         .onTapGesture {
