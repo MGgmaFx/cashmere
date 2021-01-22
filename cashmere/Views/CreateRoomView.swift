@@ -34,9 +34,9 @@ struct CreateRoomView: View {
             Spacer()
             
             Button(action: {
+                model.playerInvitePushed = true
                 time = hour * 60 + (minute + 1)
                 RDDAO.updateGamerule(roomId: room.id, timelimit: time, killerCaptureRange: killerCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval, escapeTime: escapeTime, hour: hour, minute: minute)
-                model.playerInvitePushed = true
                 RDDAO.getGameRule(roomId: room.id) { (result) in
                     gamerule = result
                 }
@@ -57,6 +57,18 @@ struct CreateRoomView: View {
             }
             .buttonStyle(CustomButtomStyle(color: Color.gray))
             
+            VStack {
+            }
+            .background(EmptyView().fullScreenCover(isPresented: $gameFlag.isEscaping) {
+                EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: (Int(gamerule["escapeTime"] ?? "99")! * 60), to: Date())!)
+            })
+            
+            VStack {
+            }
+            .background(EmptyView().fullScreenCover(isPresented: $gameFlag.isGameStarted) {
+                GameView(players: $players, roomId: $room.id, player: $player, gamerule: $gamerule, time: time)
+            })
+            
         }
         .onAppear{
             roomInit(room: room)
@@ -75,9 +87,6 @@ struct CreateRoomView: View {
                 
             }
         }
-        .onDisappear{
-            model.playerInvitePushed = false
-        }
         .navigationBarBackButtonHidden(true)
         .onTapGesture {
             UIApplication.shared.closeKeyboard()
@@ -95,7 +104,6 @@ struct CreateRoomView: View {
                 isAllCaught = false
             }
         }
-        print(isAllCaught)
         completionHandler(isAllCaught)
     }
 }
