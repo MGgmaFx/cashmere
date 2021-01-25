@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GameWatingView: View {
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
+    @EnvironmentObject var gameFlag: GameEventFlag
     @Binding var roomId: String
     @Binding var players: [Player]
     @Binding var gamerule: [String : String]
@@ -19,7 +20,23 @@ struct GameWatingView: View {
         }.onAppear {
             RDDAO.getPlayers(roomId: roomId) { result in
             players = result
+            if gameFlag.isGameStarted {
+                checkAllCaught(plyers: players){ (isAllCaught) in
+                    if isAllCaught {
+                        gameFlag.isGameOver = isAllCaught
+                    }
+                }
+            }
             }
         }
+    }
+    private func checkAllCaught(plyers: [Player], completionHandler: @escaping (Bool) -> Void) {
+        var isAllCaught = true
+        for player in players {
+            if player.captureState != "captured" && player.role == "survivor" {
+                isAllCaught = false
+            }
+        }
+        completionHandler(isAllCaught)
     }
 }

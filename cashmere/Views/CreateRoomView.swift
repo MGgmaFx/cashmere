@@ -22,21 +22,19 @@ struct CreateRoomView: View {
     @State var survivorPositionTransmissionInterval = 2
     @State var escapeTime = 2
     @State var time = 59
+    @State var escapeRange = 39
     @Binding var player: Player
     var body: some View {
         VStack {
-            Spacer()
-            Text("CreateRoom View").font(.title)
-            Spacer()
             
-            GameruleSettingsView(room: $room, hour: $hour, minute: $minute, killerCaptureRange: $killerCaptureRange, survivorPositionTransmissionInterval: $survivorPositionTransmissionInterval, escapeTime: $escapeTime)
+            GameruleSettingsView(room: $room, hour: $hour, minute: $minute, killerCaptureRange: $killerCaptureRange, survivorPositionTransmissionInterval: $survivorPositionTransmissionInterval, escapeTime: $escapeTime, escapeRange: $escapeRange)
             
             Spacer()
             
             Button(action: {
                 model.playerInvitePushed = true
                 time = hour * 60 + (minute + 1)
-                RDDAO.updateGamerule(roomId: room.id, timelimit: time, killerCaptureRange: killerCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval, escapeTime: escapeTime, hour: hour, minute: minute)
+                RDDAO.updateGamerule(roomId: room.id, timelimit: time, killerCaptureRange: killerCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval, escapeTime: escapeTime, hour: hour, minute: minute, escapeRange: escapeRange)
                 RDDAO.getGameRule(roomId: room.id) { (result) in
                     gamerule = result
                 }
@@ -84,8 +82,8 @@ struct CreateRoomView: View {
                         }
                     }
                 }
-                
             }
+            
         }
         .navigationBarBackButtonHidden(true)
         .onTapGesture {

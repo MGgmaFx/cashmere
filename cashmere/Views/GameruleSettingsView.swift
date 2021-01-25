@@ -14,6 +14,7 @@ struct GameruleSettingsView: View {
     @Binding var killerCaptureRange: Int
     @Binding var survivorPositionTransmissionInterval: Int
     @Binding var escapeTime: Int
+    @Binding var escapeRange: Int
     var body: some View {
         VStack {
             HStack {
@@ -107,6 +108,25 @@ struct GameruleSettingsView: View {
                 Picker("", selection: $escapeTime) {
                     ForEach(1 ..< 60) { num in
                         Text(String(num) + "分")
+                            .foregroundColor(.black)
+                    }
+                }
+                .frame(width: 120, height: 60, alignment: .center)
+                .labelsHidden()
+                .compositingGroup()
+                .clipped()
+                
+            }
+            .padding(.vertical)
+            HStack {
+                Text("逃走範囲")
+                    .padding(20)
+                    .foregroundColor(.black)
+                
+                Spacer()
+                Picker("", selection: $escapeRange) {
+                    ForEach(1 ..< 500) { num in
+                        Text(String(num * 10) + "m")
                             .foregroundColor(.black)
                     }
                 }
