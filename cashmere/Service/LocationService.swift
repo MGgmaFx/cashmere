@@ -23,12 +23,11 @@ class requestLocation: NSObject {
 
 extension requestLocation: CLLocationManagerDelegate {
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation], completionHandler: @escaping ([Double]) -> Void) {
-        
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation], completionHandler: @escaping ([String: String]) -> Void) {
         let location = locations.last
-        let roomLatitude = Double(location?.coordinate.latitude ?? 0)
-        let roomLongitude = Double(location?.coordinate.longitude ?? 0)
-        let roomLocation : [Double] = [roomLatitude, roomLongitude]
+        let roomLatitude = String(location?.coordinate.latitude ?? 0)
+        let roomLongitude = String(location?.coordinate.longitude ?? 0)
+        let roomLocation = ["roomLatitude": roomLatitude, "roomLongitude": roomLongitude]
         completionHandler(roomLocation)
     }
     
