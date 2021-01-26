@@ -186,14 +186,12 @@
 		245227E725761A7300B90ED7 /* cashmere */ = {
 			isa = PBXGroup;
 			children = (
+				2481F03925C01FA10071F10F /* DTO */,
 				24522939258348CE00B90ED7 /* Service */,
 				24522938258348B600B90ED7 /* DAO */,
 				245229342583483800B90ED7 /* Views */,
 				245227E825761A7300B90ED7 /* AppDelegate.swift */,
 				245227EA25761A7300B90ED7 /* SceneDelegate.swift */,
-				245228F9257F03B300B90ED7 /* Room.swift */,
-				245228FE257F04DE00B90ED7 /* Player.swift */,
-				2449432B259309D400DB7F04 /* SessionStore.swift */,
 				245228A925786FB700B90ED7 /* GoogleService-Info.plist */,
 				245227EE25761A7700B90ED7 /* Assets.xcassets */,
 				245227F325761A7700B90ED7 /* LaunchScreen.storyboard */,
@@ -201,7 +199,6 @@
 				245227F025761A7700B90ED7 /* Preview Content */,
 				245C5DE52587231B00F4BE36 /* CustomButtomStyle.swift */,
 				245C5DEA25873CDD00F4BE36 /* GameEventFlag.swift */,
-				24493F3525B52960009DB684 /* Item.swift */,
 			);
 			path = cashmere;
 			sourceTree = "<group>";
@@ -235,30 +232,11 @@
 		245229342583483800B90ED7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				246AE45B25885CCE0052AD6D /* GameruleView.swift */,
-				245228D22579F78D00B90ED7 /* PlayerListRow.swift */,
-				245228CD2579DC3A00B90ED7 /* ItemListRow.swift */,
-				24522914258051E800B90ED7 /* QRCodeView.swift */,
-				245228B12578731C00B90ED7 /* ScreenTransitionView.swift */,
-				245228502577320B00B90ED7 /* GameView.swift */,
-				24EA289625B65F4C0044DCFB /* ResultView.swift */,
-				245228C32579D22300B90ED7 /* ItemView.swift */,
-				245228C82579D23900B90ED7 /* PlayerView.swift */,
-				05F0545E25761F5100ABE658 /* MapView.swift */,
-				245228D7257A060100B90ED7 /* TimerView.swift */,
-				246AE47A2589E44D0052AD6D /* EscapeTimeView.swift */,
-				24522848257731F700B90ED7 /* CreateRoomView.swift */,
-				246AE47F258B37B70052AD6D /* GameruleSettingsView.swift */,
-				24522948258446AB00B90ED7 /* PlayerInviteView.swift */,
-				2452292A2581E3B600B90ED7 /* ProfileSettingsView.swift */,
-				245228BE2579B82400B90ED7 /* JoinRoomView.swift */,
-				24522843257731EF00B90ED7 /* MainMenuView.swift */,
-				245B3F942591B68F001D4A59 /* LoginView.swift */,
-				245B3F872591B495001D4A59 /* GoogleSignInButton.swift */,
-				245B3F8C2591B51F001D4A59 /* GoogleSignInViewController.swift */,
-				245227EC25761A7300B90ED7 /* ContentView.swift */,
-				245229432583A0E200B90ED7 /* GameWatingView.swift */,
-				245C5DE02587111A00F4BE36 /* InvitedPlayerListView.swift */,
+				2481F04925C028A90071F10F /* Escape */,
+				2481F04525C028600071F10F /* Game */,
+				2481F03C25C022800071F10F /* Room */,
+				2481F03B25C0201B0071F10F /* Top */,
+				2481F03A25C020030071F10F /* Login */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -274,11 +252,129 @@
 		24522939258348CE00B90ED7 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				2449432B259309D400DB7F04 /* SessionStore.swift */,
 				2452290F2580507300B90ED7 /* QRCodeMaker.swift */,
 				24EA28C225BE55800044DCFB /* LocationService.swift */,
 				245228212576255700B90ED7 /* MapService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		2481F03925C01FA10071F10F /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				245228F9257F03B300B90ED7 /* Room.swift */,
+				245228FE257F04DE00B90ED7 /* Player.swift */,
+				24493F3525B52960009DB684 /* Item.swift */,
+				245228B12578731C00B90ED7 /* ScreenTransitionView.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		2481F03A25C020030071F10F /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				245B3F942591B68F001D4A59 /* LoginView.swift */,
+				245B3F872591B495001D4A59 /* GoogleSignInButton.swift */,
+				245B3F8C2591B51F001D4A59 /* GoogleSignInViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		2481F03B25C0201B0071F10F /* Top */ = {
+			isa = PBXGroup;
+			children = (
+				245227EC25761A7300B90ED7 /* ContentView.swift */,
+				24522843257731EF00B90ED7 /* MainMenuView.swift */,
+				2452292A2581E3B600B90ED7 /* ProfileSettingsView.swift */,
+			);
+			path = Top;
+			sourceTree = "<group>";
+		};
+		2481F03C25C022800071F10F /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				2481F04125C028170071F10F /* Invite */,
+				2481F04025C027F10071F10F /* Create */,
+				2481F05625C029930071F10F /* Join */,
+			);
+			path = Room;
+			sourceTree = "<group>";
+		};
+		2481F04025C027F10071F10F /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				24522848257731F700B90ED7 /* CreateRoomView.swift */,
+				246AE47F258B37B70052AD6D /* GameruleSettingsView.swift */,
+			);
+			path = Create;
+			sourceTree = "<group>";
+		};
+		2481F04125C028170071F10F /* Invite */ = {
+			isa = PBXGroup;
+			children = (
+				24522948258446AB00B90ED7 /* PlayerInviteView.swift */,
+				245C5DE02587111A00F4BE36 /* InvitedPlayerListView.swift */,
+				24522914258051E800B90ED7 /* QRCodeView.swift */,
+			);
+			path = Invite;
+			sourceTree = "<group>";
+		};
+		2481F04525C028600071F10F /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				245228502577320B00B90ED7 /* GameView.swift */,
+				24EA289625B65F4C0044DCFB /* ResultView.swift */,
+				2481F05525C0294A0071F10F /* Item */,
+				2481F04B25C0290F0071F10F /* Player */,
+				2481F04A25C028FD0071F10F /* Map */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		2481F04925C028A90071F10F /* Escape */ = {
+			isa = PBXGroup;
+			children = (
+				246AE47A2589E44D0052AD6D /* EscapeTimeView.swift */,
+			);
+			path = Escape;
+			sourceTree = "<group>";
+		};
+		2481F04A25C028FD0071F10F /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				05F0545E25761F5100ABE658 /* MapView.swift */,
+				245228D7257A060100B90ED7 /* TimerView.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		2481F04B25C0290F0071F10F /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				245228D22579F78D00B90ED7 /* PlayerListRow.swift */,
+				245228C82579D23900B90ED7 /* PlayerView.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		2481F05525C0294A0071F10F /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				245228C32579D22300B90ED7 /* ItemView.swift */,
+				245228CD2579DC3A00B90ED7 /* ItemListRow.swift */,
+			);
+			path = Item;
+			sourceTree = "<group>";
+		};
+		2481F05625C029930071F10F /* Join */ = {
+			isa = PBXGroup;
+			children = (
+				245228BE2579B82400B90ED7 /* JoinRoomView.swift */,
+				245229432583A0E200B90ED7 /* GameWatingView.swift */,
+				246AE45B25885CCE0052AD6D /* GameruleView.swift */,
+			);
+			path = Join;
 			sourceTree = "<group>";
 		};
 		8B8373CC9E1EBBBE61F11FDC /* Frameworks */ = {
