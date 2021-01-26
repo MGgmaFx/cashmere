@@ -34,7 +34,7 @@ struct GameView: View {
                         Text("プレイヤー")
                     }
             }.fullScreenCover(isPresented: $gameFlag.isGameOver, content: {
-                ResultView(players: $players)
+                ResultView(players: $players, player: $player)
             })
         }
     }

@@ -12,13 +12,26 @@ struct ResultView: View {
     @EnvironmentObject var gameFlag: GameEventFlag
     @EnvironmentObject var model: Model
     @State var isSurviverWin = false
+    @Binding var player: Player
     var body: some View {
         
         VStack {
             if isSurviverWin {
-                Text("生存者の勝ち")
+                if player.role == "surviver" {
+                    Image("app_logo_win")
+                    Image("toubou")
+                } else {
+                    Image("app_logo_lose")
+                    Image("oni")
+                }
             } else {
-                Text("鬼の勝ち")
+                if player.role == "surviver" {
+                    Image("app_logo_lose")
+                    Image("toubou")
+                } else {
+                    Image("app_logo_win")
+                    Image("oni")
+                }
             }
             
             Button(action: {
@@ -57,6 +70,6 @@ struct ResultView: View {
                 }
             }
         }
-        
     }
 }
+
