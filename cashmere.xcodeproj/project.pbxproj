@@ -10,6 +10,7 @@
 		05F0545F25761F5100ABE658 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0545E25761F5100ABE658 /* MapView.swift */; };
 		2433509B25C04B9A0006866E /* CustomButtomStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433509A25C04B9A0006866E /* CustomButtomStyle.swift */; };
 		243350A025C04BCB0006866E /* GameEventFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433509F25C04BCB0006866E /* GameEventFlag.swift */; };
+		243350A825C04C600006866E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 243350A725C04C600006866E /* GoogleService-Info.plist */; };
 		24493F3625B52960009DB684 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24493F3525B52960009DB684 /* Item.swift */; };
 		2449432C259309D500DB7F04 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2449432B259309D400DB7F04 /* SessionStore.swift */; };
 		245227E925761A7300B90ED7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227E825761A7300B90ED7 /* AppDelegate.swift */; };
@@ -24,7 +25,6 @@
 		24522844257731EF00B90ED7 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24522843257731EF00B90ED7 /* MainMenuView.swift */; };
 		24522849257731F700B90ED7 /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24522848257731F700B90ED7 /* CreateRoomView.swift */; };
 		245228512577320B00B90ED7 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228502577320B00B90ED7 /* GameView.swift */; };
-		245228AA25786FB700B90ED7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 245228A925786FB700B90ED7 /* GoogleService-Info.plist */; };
 		245228B22578731C00B90ED7 /* ScreenTransitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228B12578731C00B90ED7 /* ScreenTransitionView.swift */; };
 		245228BF2579B82400B90ED7 /* JoinRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228BE2579B82400B90ED7 /* JoinRoomView.swift */; };
 		245228C42579D22300B90ED7 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245228C32579D22300B90ED7 /* ItemView.swift */; };
@@ -76,6 +76,7 @@
 		05F0545E25761F5100ABE658 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		2433509A25C04B9A0006866E /* CustomButtomStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtomStyle.swift; sourceTree = "<group>"; };
 		2433509F25C04BCB0006866E /* GameEventFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEventFlag.swift; sourceTree = "<group>"; };
+		243350A725C04C600006866E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		24493F3525B52960009DB684 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		2449432B259309D400DB7F04 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		245227E525761A7300B90ED7 /* cashmere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cashmere.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,7 +97,6 @@
 		24522843257731EF00B90ED7 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 		24522848257731F700B90ED7 /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
 		245228502577320B00B90ED7 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		245228A925786FB700B90ED7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		245228B12578731C00B90ED7 /* ScreenTransitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTransitionView.swift; sourceTree = "<group>"; };
 		245228BE2579B82400B90ED7 /* JoinRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinRoomView.swift; sourceTree = "<group>"; };
 		245228C32579D22300B90ED7 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
@@ -194,15 +194,15 @@
 		245227E725761A7300B90ED7 /* cashmere */ = {
 			isa = PBXGroup;
 			children = (
-				2481F03925C01FA10071F10F /* DTO */,
+				2481F03925C01FA10071F10F /* Model */,
 				24522939258348CE00B90ED7 /* Service */,
-				24522938258348B600B90ED7 /* DAO */,
+				24522938258348B600B90ED7 /* Repository */,
 				245229342583483800B90ED7 /* Views */,
 				245227E825761A7300B90ED7 /* AppDelegate.swift */,
 				245227EA25761A7300B90ED7 /* SceneDelegate.swift */,
-				245228A925786FB700B90ED7 /* GoogleService-Info.plist */,
 				245227EE25761A7700B90ED7 /* Assets.xcassets */,
 				245227F325761A7700B90ED7 /* LaunchScreen.storyboard */,
+				243350A725C04C600006866E /* GoogleService-Info.plist */,
 				245227F625761A7700B90ED7 /* Info.plist */,
 				245227F025761A7700B90ED7 /* Preview Content */,
 			);
@@ -248,12 +248,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		24522938258348B600B90ED7 /* DAO */ = {
+		24522938258348B600B90ED7 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
 				2452292F258347E400B90ED7 /* RealtimeDatabeseDAO.swift */,
 			);
-			path = DAO;
+			path = Repository;
 			sourceTree = "<group>";
 		};
 		24522939258348CE00B90ED7 /* Service */ = {
@@ -267,7 +267,7 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		2481F03925C01FA10071F10F /* DTO */ = {
+		2481F03925C01FA10071F10F /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				245228F9257F03B300B90ED7 /* Room.swift */,
@@ -276,7 +276,7 @@
 				245228B12578731C00B90ED7 /* ScreenTransitionView.swift */,
 				2433509F25C04BCB0006866E /* GameEventFlag.swift */,
 			);
-			path = DTO;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		2481F03A25C020030071F10F /* Login */ = {
@@ -525,7 +525,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				245227F525761A7700B90ED7 /* LaunchScreen.storyboard in Resources */,
-				245228AA25786FB700B90ED7 /* GoogleService-Info.plist in Resources */,
+				243350A825C04C600006866E /* GoogleService-Info.plist in Resources */,
 				245227F225761A7700B90ED7 /* Preview Assets.xcassets in Resources */,
 				245227EF25761A7700B90ED7 /* Assets.xcassets in Resources */,
 			);
