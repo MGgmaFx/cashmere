@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		05F0545F25761F5100ABE658 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0545E25761F5100ABE658 /* MapView.swift */; };
+		2433509B25C04B9A0006866E /* CustomButtomStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433509A25C04B9A0006866E /* CustomButtomStyle.swift */; };
+		243350A025C04BCB0006866E /* GameEventFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433509F25C04BCB0006866E /* GameEventFlag.swift */; };
 		24493F3625B52960009DB684 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24493F3525B52960009DB684 /* Item.swift */; };
 		2449432C259309D500DB7F04 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2449432B259309D400DB7F04 /* SessionStore.swift */; };
 		245227E925761A7300B90ED7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227E825761A7300B90ED7 /* AppDelegate.swift */; };
@@ -43,8 +45,6 @@
 		245B3F8D2591B51F001D4A59 /* GoogleSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B3F8C2591B51F001D4A59 /* GoogleSignInViewController.swift */; };
 		245B3F952591B68F001D4A59 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B3F942591B68F001D4A59 /* LoginView.swift */; };
 		245C5DE12587111A00F4BE36 /* InvitedPlayerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245C5DE02587111A00F4BE36 /* InvitedPlayerListView.swift */; };
-		245C5DE62587231B00F4BE36 /* CustomButtomStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245C5DE52587231B00F4BE36 /* CustomButtomStyle.swift */; };
-		245C5DEB25873CDD00F4BE36 /* GameEventFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245C5DEA25873CDD00F4BE36 /* GameEventFlag.swift */; };
 		246AE45C25885CCE0052AD6D /* GameruleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AE45B25885CCE0052AD6D /* GameruleView.swift */; };
 		246AE47B2589E44D0052AD6D /* EscapeTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AE47A2589E44D0052AD6D /* EscapeTimeView.swift */; };
 		246AE480258B37B70052AD6D /* GameruleSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AE47F258B37B70052AD6D /* GameruleSettingsView.swift */; };
@@ -74,6 +74,8 @@
 
 /* Begin PBXFileReference section */
 		05F0545E25761F5100ABE658 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		2433509A25C04B9A0006866E /* CustomButtomStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtomStyle.swift; sourceTree = "<group>"; };
+		2433509F25C04BCB0006866E /* GameEventFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEventFlag.swift; sourceTree = "<group>"; };
 		24493F3525B52960009DB684 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		2449432B259309D400DB7F04 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		245227E525761A7300B90ED7 /* cashmere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cashmere.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,8 +116,6 @@
 		245B3F8C2591B51F001D4A59 /* GoogleSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInViewController.swift; sourceTree = "<group>"; };
 		245B3F942591B68F001D4A59 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		245C5DE02587111A00F4BE36 /* InvitedPlayerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedPlayerListView.swift; sourceTree = "<group>"; };
-		245C5DE52587231B00F4BE36 /* CustomButtomStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtomStyle.swift; sourceTree = "<group>"; };
-		245C5DEA25873CDD00F4BE36 /* GameEventFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEventFlag.swift; sourceTree = "<group>"; };
 		246AE45B25885CCE0052AD6D /* GameruleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameruleView.swift; sourceTree = "<group>"; };
 		246AE47A2589E44D0052AD6D /* EscapeTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeTimeView.swift; sourceTree = "<group>"; };
 		246AE47F258B37B70052AD6D /* GameruleSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameruleSettingsView.swift; sourceTree = "<group>"; };
@@ -161,6 +161,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2433509925C04B9A0006866E /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				2433509A25C04B9A0006866E /* CustomButtomStyle.swift */,
+			);
+			path = Style;
+			sourceTree = "<group>";
+		};
 		245227DC25761A7300B90ED7 = {
 			isa = PBXGroup;
 			children = (
@@ -197,8 +205,6 @@
 				245227F325761A7700B90ED7 /* LaunchScreen.storyboard */,
 				245227F625761A7700B90ED7 /* Info.plist */,
 				245227F025761A7700B90ED7 /* Preview Content */,
-				245C5DE52587231B00F4BE36 /* CustomButtomStyle.swift */,
-				245C5DEA25873CDD00F4BE36 /* GameEventFlag.swift */,
 			);
 			path = cashmere;
 			sourceTree = "<group>";
@@ -232,6 +238,7 @@
 		245229342583483800B90ED7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2433509925C04B9A0006866E /* Style */,
 				2481F04925C028A90071F10F /* Escape */,
 				2481F04525C028600071F10F /* Game */,
 				2481F03C25C022800071F10F /* Room */,
@@ -267,6 +274,7 @@
 				245228FE257F04DE00B90ED7 /* Player.swift */,
 				24493F3525B52960009DB684 /* Item.swift */,
 				245228B12578731C00B90ED7 /* ScreenTransitionView.swift */,
+				2433509F25C04BCB0006866E /* GameEventFlag.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -699,18 +707,18 @@
 				245228C42579D22300B90ED7 /* ItemView.swift in Sources */,
 				24522915258051E800B90ED7 /* QRCodeView.swift in Sources */,
 				245227ED25761A7300B90ED7 /* ContentView.swift in Sources */,
-				245C5DEB25873CDD00F4BE36 /* GameEventFlag.swift in Sources */,
 				246AE480258B37B70052AD6D /* GameruleSettingsView.swift in Sources */,
 				245B3F882591B495001D4A59 /* GoogleSignInButton.swift in Sources */,
 				245228512577320B00B90ED7 /* GameView.swift in Sources */,
+				2433509B25C04B9A0006866E /* CustomButtomStyle.swift in Sources */,
 				2449432C259309D500DB7F04 /* SessionStore.swift in Sources */,
 				245228BF2579B82400B90ED7 /* JoinRoomView.swift in Sources */,
 				24522949258446AB00B90ED7 /* PlayerInviteView.swift in Sources */,
 				245228FF257F04DE00B90ED7 /* Player.swift in Sources */,
 				245B3F8D2591B51F001D4A59 /* GoogleSignInViewController.swift in Sources */,
+				243350A025C04BCB0006866E /* GameEventFlag.swift in Sources */,
 				245228B22578731C00B90ED7 /* ScreenTransitionView.swift in Sources */,
 				246AE47B2589E44D0052AD6D /* EscapeTimeView.swift in Sources */,
-				245C5DE62587231B00F4BE36 /* CustomButtomStyle.swift in Sources */,
 				246AE45C25885CCE0052AD6D /* GameruleView.swift in Sources */,
 				24522849257731F700B90ED7 /* CreateRoomView.swift in Sources */,
 				24522930258347E400B90ED7 /* RealtimeDatabeseDAO.swift in Sources */,
