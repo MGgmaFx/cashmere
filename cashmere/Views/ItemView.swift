@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ItemView: View {
+    @EnvironmentObject var itemFlag: ItemFlag
     @State var showingAlert = false
     @State var items: [Item] = [
             Item(id: 1,
@@ -31,11 +32,11 @@ struct ItemView: View {
         List (items.indices) { index in
             itemAlert(showingAlert: $showingAlert, item: $items[index])
         }
-
     }
 }
 
 struct itemAlert: View {
+    @EnvironmentObject var itemFlag: ItemFlag
     @Binding var showingAlert: Bool
     @Binding var item: Item
     var body: some View {
@@ -50,6 +51,22 @@ struct itemAlert: View {
                 message: Text(item.description),
                 primaryButton: .cancel(Text("キャンセル")),
                 secondaryButton: .default(Text("つかう")) {
+                    if item.id == 1{
+                        itemFlag.useStealthCloak = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(60)) {
+                            itemFlag.useStealthCloak = false
+                        }
+                    } else if item.id == 2 {
+                        itemFlag.useGoldenBeans = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(60)) {
+                            itemFlag.useGoldenBeans = false
+                        }
+                    } else if item.id == 3 {
+                        itemFlag.useSearchlight = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(60)) {
+                            itemFlag.useSearchlight = false
+                        }
+                    }
                     item.amount = item.amount - 1
                 })
             }
