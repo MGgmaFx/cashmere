@@ -24,6 +24,8 @@ struct CreateRoomView: View {
     @State var time = 59
     @State var escapeRange = 39
     @Binding var player: Player
+    @State var roomLatitude = ""
+    @State var roomLongitude = ""
     var body: some View {
         VStack {
             
@@ -69,6 +71,11 @@ struct CreateRoomView: View {
             
         }
         .onAppear{
+            let location = requestLocation().roomLocation
+            roomLatitude = location["roomLatitude"] ?? "0"
+            roomLongitude = location["roomLongitude"] ?? "0"
+            
+            
             roomInit(room: room)
             RDDAO.getGameRule(roomId: room.id) { (result) in
                 gamerule = result
@@ -85,6 +92,9 @@ struct CreateRoomView: View {
             }
             
         }
+        .onDisappear{
+            roomDel(room: room.id)
+        }
         .navigationBarBackButtonHidden(true)
         .onTapGesture {
             UIApplication.shared.closeKeyboard()
@@ -93,6 +103,10 @@ struct CreateRoomView: View {
     private func roomInit(room: Room) {
         RDDAO.updateRoomStatus(roomId: room.id, state: "wating")
         RDDAO.addPlayer(roomId: room.id, playerId: player.id, playerName: player.name)
+    }
+    
+    private func roomDel(room: String) {
+        RDDAO.deleteRoom(roomId: room)
     }
     
     private func checkAllCaught(plyers: [Player], completionHandler: @escaping (Bool) -> Void) {
