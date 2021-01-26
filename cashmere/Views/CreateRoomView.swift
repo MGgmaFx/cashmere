@@ -36,7 +36,7 @@ struct CreateRoomView: View {
             Button(action: {
                 model.playerInvitePushed = true
                 time = hour * 60 + (minute + 1)
-                RDDAO.updateGamerule(roomId: room.id, timelimit: time, killerCaptureRange: killerCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval, escapeTime: escapeTime, hour: hour, minute: minute, escapeRange: escapeRange)
+                RDDAO.updateGamerule(roomId: room.id, timelimit: time, killerCaptureRange: killerCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval, escapeTime: escapeTime, hour: hour, minute: minute, escapeRange: escapeRange, roomLatitude: roomLongitude, roomLongitude: roomLongitude)
                 RDDAO.getGameRule(roomId: room.id) { (result) in
                     gamerule = result
                 }

@@ -105,7 +105,7 @@ class RealtimeDatabeseDAO: ObservableObject {
         }
     }
     
-    func updateGamerule(roomId: String, timelimit: Int, killerCaptureRange: Int, survivorPositionTransmissionInterval: Int, escapeTime: Int, hour: Int, minute: Int, escapeRange: Int) {
+    func updateGamerule(roomId: String, timelimit: Int, killerCaptureRange: Int, survivorPositionTransmissionInterval: Int, escapeTime: Int, hour: Int, minute: Int, escapeRange: Int, roomLatitude: String, roomLongitude: String) {
         if let _ = Auth.auth().currentUser?.uid {
             let data = ["timelimit": String(timelimit + 1),
                         "killerCaptureRange": String(killerCaptureRange + 1),
@@ -113,7 +113,9 @@ class RealtimeDatabeseDAO: ObservableObject {
                         "escapeTime": String(escapeTime + 1),
                         "hour": String(hour),
                         "minute": String(minute + 1),
-                        "escapeRange": String((escapeRange + 1) * 10)]
+                        "escapeRange": String((escapeRange + 1) * 10),
+                        "roomLatitude": roomLatitude,
+                        "roomLongitude": roomLongitude]
             ref.child(roomId).child("gamerule").updateChildValues(data)
         }
     }
