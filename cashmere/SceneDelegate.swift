@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .environmentObject(GameEventFlag())
             .environmentObject(RealtimeDatabeseDAO())
             .environmentObject(SessionStore())
+            .environmentObject(ItemFlag())
                                         
 
         // Use a UIHostingController as window root view controller.

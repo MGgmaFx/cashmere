@@ -16,7 +16,7 @@ struct JoinRoomView: View {
     @State var roomId: String = ""
     @State var players: [Player] = []
     @State var gamerule: [String: String] = [:]
-    @State var escapingTime: String = "46"
+    @State var escapingTime: String = "99"
     @Binding var player: Player
     var time = 0
     var body: some View {
@@ -33,6 +33,7 @@ struct JoinRoomView: View {
             if !(eventFlag.isGameWating) {
                 Button(action: {
                     model.isShowingScanner = true
+                    player.role = "survivor"
                 }) {
                     Text("ルームに参加する")
                 }
@@ -49,6 +50,7 @@ struct JoinRoomView: View {
                 players = []
                 gamerule = [:]
                 roomId = ""
+                player.role = ""
             }) {
                 Text("もどる")
             }
@@ -64,7 +66,7 @@ struct JoinRoomView: View {
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isGameStarted) {
-                GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: Int(gamerule["timelimit"] ?? "99")!)
+                GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: Int(gamerule["timelimit"] ?? "99")! - 1)
             })
         }
     }
