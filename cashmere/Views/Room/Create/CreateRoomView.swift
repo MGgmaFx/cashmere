@@ -71,6 +71,7 @@ struct CreateRoomView: View {
             
         }
         .onAppear{
+            player.role = "killer"
             let location = requestLocation().roomLocation
             roomLatitude = location["roomLatitude"] ?? "0"
             roomLongitude = location["roomLongitude"] ?? "0"
@@ -93,6 +94,7 @@ struct CreateRoomView: View {
             
         }
         .onDisappear{
+            player.role = ""
             roomDel(room: room.id)
         }
         .navigationBarBackButtonHidden(true)
