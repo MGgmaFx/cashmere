@@ -16,6 +16,9 @@ struct LoginView: View {
             Spacer()
             GoogleSignInButton()
             Spacer()
+            if Auth.auth().currentUser?.uid != nil {
+                Text("ログインしました")
+            }
             Button(action: {
                 model.loginViewPushed = false
             }) {
