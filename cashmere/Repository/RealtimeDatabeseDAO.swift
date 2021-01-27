@@ -162,6 +162,13 @@ class RealtimeDatabeseDAO: ObservableObject {
         }
     }
     
+    func updateCaptureState(roomId: String, playerId: String, state: String) {
+        if let _ = Auth.auth().currentUser?.uid {
+            let data = ["captureState": state]
+            ref.child(roomId).child("players").child(playerId).updateChildValues(data)
+        }
+    }
+    
 }
 
 
