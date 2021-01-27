@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 import CoreLocation
 
 class requestLocation: NSObject {
@@ -26,12 +25,29 @@ class requestLocation: NSObject {
 
 extension requestLocation: CLLocationManagerDelegate {
     
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status{
+        case .authorizedAlways:
+            print("常に許可")
+        case .authorizedWhenInUse:
+            print("使用時のみ許可")
+        case .denied:
+            print("承認拒否")
+        case .notDetermined:
+            print("未設定")
+        case .restricted:
+            print("機能制限")
+        @unknown default:
+            print("何も一致しなかったよ")
+        }
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last
-        let roomLatitude = String(location?.coordinate.latitude ?? 0)
-        let roomLongitude = String(location?.coordinate.longitude ?? 0)
+        let roomLatitude = String(location?.coordinate.latitude ?? 200)
+        let roomLongitude = String(location?.coordinate.longitude ?? 200)
         roomLocation = ["roomLatitude": roomLatitude, "roomLongitude": roomLongitude]
+        print("roomLocation: \(roomLocation)")
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
