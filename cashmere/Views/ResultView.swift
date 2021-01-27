@@ -17,19 +17,19 @@ struct ResultView: View {
         
         VStack {
             if isSurviverWin {
-                if player.role == "surviver" {
-                    Image("app_logo_win")
+                if player.role == "survivor" {
+                    Image("app_logo_win").resizable().frame(width: 250, height: 130)
                     Image("toubou")
                 } else {
-                    Image("app_logo_lose")
+                    Image("app_logo_lose").resizable().frame(width: 250, height: 130)
                     Image("oni")
                 }
             } else {
-                if player.role == "surviver" {
-                    Image("app_logo_lose")
+                if player.role == "survivor" {
+                    Image("app_logo_lose").resizable().frame(width: 250, height: 130)
                     Image("toubou")
                 } else {
-                    Image("app_logo_win")
+                    Image("app_logo_win").resizable().frame(width: 250, height: 130)
                     Image("oni")
                 }
             }
