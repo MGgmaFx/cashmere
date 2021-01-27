@@ -19,18 +19,18 @@ struct ResultView: View {
             if isSurviverWin {
                 if player.role == "survivor" {
                     Image("app_logo_win").resizable().frame(width: 250, height: 130)
-                    Image("toubou")
+                    Image("survivor_win")
                 } else {
                     Image("app_logo_lose").resizable().frame(width: 250, height: 130)
-                    Image("oni")
+                    Image("killer_lose")
                 }
             } else {
                 if player.role == "survivor" {
                     Image("app_logo_lose").resizable().frame(width: 250, height: 130)
-                    Image("toubou")
+                    Image("survivor_lose")
                 } else {
                     Image("app_logo_win").resizable().frame(width: 250, height: 130)
-                    Image("oni")
+                    Image("killer_win")
                 }
             }
             
