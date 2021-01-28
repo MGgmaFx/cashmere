@@ -71,12 +71,6 @@ struct CreateRoomView: View {
             
         }
         .onAppear{
-            player.role = "killer"
-            let location = requestLocation().roomLocation
-            roomLatitude = location["roomLatitude"] ?? "0"
-            roomLongitude = location["roomLongitude"] ?? "0"
-            
-            
             roomInit(room: room)
             RDDAO.getGameRule(roomId: room.id) { (result) in
                 gamerule = result
@@ -94,7 +88,6 @@ struct CreateRoomView: View {
             
         }
         .onDisappear{
-            player.role = ""
             roomDel(room: room.id)
         }
         .navigationBarBackButtonHidden(true)
@@ -103,11 +96,15 @@ struct CreateRoomView: View {
         }
     }
     private func roomInit(room: Room) {
+        player.role = "killer"
+        player.captureState = "-"
         RDDAO.updateRoomStatus(roomId: room.id, state: "wating")
         RDDAO.addPlayer(roomId: room.id, playerId: player.id, playerName: player.name)
     }
     
     private func roomDel(room: String) {
+        player.role = ""
+        player.captureState = ""
         RDDAO.deleteRoom(roomId: room)
     }
     
@@ -120,6 +117,13 @@ struct CreateRoomView: View {
         }
         completionHandler(isAllCaught)
     }
+    
+    private func getLocation() {
+        let location = requestLocation().roomLocation
+        roomLatitude = location["roomLatitude"] ?? "0"
+        roomLongitude = location["roomLongitude"] ?? "0"
+    }
+    
 }
 
 extension UIApplication {
