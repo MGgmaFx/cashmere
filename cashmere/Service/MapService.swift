@@ -137,7 +137,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         }
         let playerId = parent.player.id
         let roomId = parent.roomId
-        if latitude != nil && longitude != nil && parent.player.captureState == "hide" {
+        if latitude != nil && longitude != nil && parent.player.captureState != "caputured" {
             parent.RDDAO.addPlayerLocation(roomId: roomId, playerId: playerId, latitude: latitude, longitude: longitude)
         }
         
@@ -146,7 +146,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
          */
         let killerCaptureRange = Int(parent.gamerule["killerCaptureRange"] ?? "20")
         for player in parent.players {
-            if parent.player.id != player.id && player.captureState == "hide" {
+            if parent.player.id != player.id && player.captureState == "escaping" {
                 let targetLatitude = player.latitude ?? 0.0
                 let targetLongitude = player.longitude ?? 0.0
                 let myLocation = CLLocation(latitude: latitude, longitude: longitude)
@@ -196,7 +196,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         self.parent.map.removeAnnotations(self.parent.map.annotations)
         let pin = MKPointAnnotation()
         for player in players {
-            if parent.player.id != player.id && player.role == "survivor" && player.latitude != nil && player.longitude != nil && player.captureState == "hide"{
+            if parent.player.id != player.id && player.role == "survivor" && player.latitude != nil && player.longitude != nil && player.captureState == "escaping"{
                 let latitude = player.latitude!
                 let longitude = player.longitude!
                 pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -213,7 +213,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         self.parent.map.removeAnnotations(self.parent.map.annotations)
         let killerPin = MKPointAnnotation()
         for player in players {
-            if parent.player.id != player.id && player.role == "killer" && player.latitude != nil && player.longitude != nil && player.captureState == "hide"{
+            if parent.player.id != player.id && player.role == "killer" && player.latitude != nil && player.longitude != nil && player.captureState == "escaping"{
                 let latitude = player.latitude!
                 let longitude = player.longitude!
                 killerPin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
