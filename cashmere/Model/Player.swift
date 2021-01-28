@@ -12,7 +12,7 @@ struct Player: Hashable {
     var uid: String?
     var id = UUID().uuidString
     var name: String = "プレイヤー"
-    var captureState: String = "hide"
+    var captureState: String?
     var latitude: CLLocationDegrees?
     var longitude: CLLocationDegrees?
     var onlineStatus: String?

@@ -107,10 +107,12 @@ class RealtimeDatabeseDAO: ObservableObject {
         }
     }
     
-    func addPlayer(roomId: String, playerId: String, playerName: String) {
+    func addPlayer(roomId: String, playerId: String, playerName: String, captureState: String, role: String) {
         if let _ = Auth.auth().currentUser?.uid {
             let data = ["playername": playerName,
-                        "onlinestatus": "online"]
+                        "onlinestatus": "online",
+                        "captureState": captureState,
+                        "role": role]
             ref.child(roomId).child("players").child(playerId).updateChildValues(data)
         }
     }

@@ -12,7 +12,7 @@ struct PlayerView: View {
     var body: some View {
         List {
             ForEach(players, id: \.id) { player in
-                PlayerListRow(playerName: player.name, onlineStatus: player.onlineStatus ?? "取得中...", role: player.role ?? "取得中...")
+                PlayerListRow(playerName: player.name, captureState: player.captureState ?? "取得中...", role: player.role ?? "取得中...")
             }
         }
     }

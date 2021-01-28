@@ -97,9 +97,9 @@ struct CreateRoomView: View {
     }
     private func roomInit(room: Room) {
         player.role = "killer"
-        player.captureState = "-"
+        player.captureState = "tracking"
         RDDAO.updateRoomStatus(roomId: room.id, state: "wating")
-        RDDAO.addPlayer(roomId: room.id, playerId: player.id, playerName: player.name)
+        RDDAO.addPlayer(roomId: room.id, playerId: player.id, playerName: player.name, captureState: player.captureState ?? "tracking", role: player.role ?? "killer")
     }
     
     private func roomDel(room: String) {

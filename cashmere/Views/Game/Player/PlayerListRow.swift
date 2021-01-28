@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PlayerListRow:View {
     let playerName: String
-    let onlineStatus: String
+    let captureState: String
     let role: String
     var body: some View {
         HStack {
@@ -25,10 +25,16 @@ struct PlayerListRow:View {
                 Text("逃走者").foregroundColor(Color.blue)
             }
             Spacer()
-            if onlineStatus == "online" {
-                Text("オンライン")
+            if captureState == "escaping" {
+                Text("逃走中").foregroundColor(.primary)
+            } else if captureState == "tracking" {
+                Text("追跡中").foregroundColor(.primary)
+            } else if captureState == "captured" {
+                Text("確保済み").foregroundColor(Color.red)
+            } else if captureState == nil {
+                Text("nil")
             } else {
-                Text("オフライン").foregroundColor(Color.red)
+                Text(captureState)
             }
         }
     }

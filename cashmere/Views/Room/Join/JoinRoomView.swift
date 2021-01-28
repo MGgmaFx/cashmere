@@ -29,11 +29,9 @@ struct JoinRoomView: View {
             }
             Spacer()
             
-            
             if !(eventFlag.isGameWating) {
                 Button(action: {
                     model.isShowingScanner = true
-                    player.role = "survivor"
                 }) {
                     Text("ルームに参加する")
                 }
@@ -45,12 +43,9 @@ struct JoinRoomView: View {
             
             Button(action: {
                 self.model.joinRoomViewPushed = false
-                leaveLoom(roomId: roomId)
-                eventFlag.isGameWating = false
-                players = []
-                gamerule = [:]
+                leaveRoom(roomId: roomId)
                 roomId = ""
-                player.role = ""
+                
             }) {
                 Text("もどる")
             }
@@ -68,6 +63,8 @@ struct JoinRoomView: View {
             .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isGameStarted) {
                 GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: Int(gamerule["timelimit"] ?? "99")! - 1)
             })
+        }.onAppear {
+            joinRoom()
         }
     }
     
@@ -76,7 +73,7 @@ struct JoinRoomView: View {
         switch result {
         case .success(let code):
             roomId = code
-            RDDAO.addPlayer(roomId: roomId, playerId: player.id, playerName: player.name)
+            RDDAO.addPlayer(roomId: roomId, playerId: player.id, playerName: player.name, captureState: player.captureState ?? "escaping", role: player.role ?? "survivor")
             RDDAO.updatePlayerRole(roomId: roomId, playerId: player.id, role: "survivor")
             RDDAO.gameStartCheck(roomId: roomId){ result in
                 eventFlag.isEscaping = result
@@ -93,7 +90,18 @@ struct JoinRoomView: View {
             print(error)
         }
     }
-    private func leaveLoom(roomId: String) {
+    
+    private func joinRoom() {
+        player.role = "survivor"
+        player.captureState = "escaping"
+    }
+    
+    private func leaveRoom(roomId: String) {
+        eventFlag.isGameWating = false
+        players = []
+        gamerule = [:]
+        player.role = ""
+        player.captureState = ""
         if roomId != "" {
             RDDAO.deletePlayer(roomId: roomId, playerId: player.id)
         }
