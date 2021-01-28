@@ -77,6 +77,15 @@ struct CreateRoomView: View {
                 gamerule = result
             }
             RDDAO.getPlayers(roomId: room.id) { (result) in
+                for playerDB in players {
+                    if player.id == playerDB.id {
+                        player.latitude = playerDB.latitude
+                        player.longitude = playerDB.longitude
+                        player.onlineStatus = playerDB.onlineStatus
+                        player.role = playerDB.role
+                        player.captureState = playerDB.captureState
+                    }
+                }
                 players = result
                 if gameFlag.isGameStarted {
                     checkAllCaught(plyers: players){ (isAllCaught) in

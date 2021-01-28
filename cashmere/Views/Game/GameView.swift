@@ -23,7 +23,7 @@ struct GameView: View {
                         Image(systemName: "map")
                         Text("マップ")
                     }
-                ItemView()
+                ItemView(player: $player)
                     .tabItem {
                         Image(systemName: "case.fill")
                         Text("アイテム")

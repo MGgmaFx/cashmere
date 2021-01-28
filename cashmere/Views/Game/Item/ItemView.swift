@@ -27,10 +27,11 @@ struct ItemView: View {
                description: "１分間、鬼の位置情報を表示する。",
                amount: 0),
         ]
+    @Binding var player: Player
     var body: some View {
 
         List (items.indices) { index in
-            itemAlert(showingAlert: $showingAlert, item: $items[index])
+            itemAlert(showingAlert: $showingAlert, item: $items[index], player: $player)
         }
     }
 }
@@ -39,8 +40,9 @@ struct itemAlert: View {
     @EnvironmentObject var itemFlag: ItemFlag
     @Binding var showingAlert: Bool
     @Binding var item: Item
+    @Binding var player: Player
     var body: some View {
-        if item.amount > 0 {
+        if item.amount > 0 && player.captureState != "captured"{
             Button(action: {
                 showingAlert = true
             }) {
@@ -85,8 +87,3 @@ struct itemAlert: View {
     }
 }
 
-struct ItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        ItemView()
-    }
-}
