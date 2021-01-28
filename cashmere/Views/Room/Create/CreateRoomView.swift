@@ -119,9 +119,10 @@ struct CreateRoomView: View {
     }
     
     private func getLocation() {
-        let location = requestLocation().roomLocation
-        roomLatitude = location["roomLatitude"] ?? "0"
-        roomLongitude = location["roomLongitude"] ?? "0"
+        requestLocation().getLocation(comp: { roomLocation in
+            roomLatitude = roomLocation["roomLatitude"]!
+            roomLongitude = roomLocation["roomLongitude"]!
+        })
     }
     
 }
