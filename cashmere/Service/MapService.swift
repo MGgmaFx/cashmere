@@ -20,6 +20,7 @@ extension UIColor {
 struct mapView : UIViewRepresentable {
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @EnvironmentObject var itemFlag: ItemFlag
+    @EnvironmentObject var gameFlag: GameEventFlag
     @Binding var manager: CLLocationManager
     @Binding var alert: Bool
     @Binding var roomId: String
@@ -50,16 +51,20 @@ struct mapView : UIViewRepresentable {
         return map
     }
     
+    func stopUpdatingLocation() {
+        manager.stopUpdatingLocation()
+    }
+    
     // 更新されたときの処理
     func updateUIView(_ uiView: MKMapView, context: Context) {
         // 表示しているマップとデリゲートを紐付け
         uiView.delegate = mapViewDelegate
-//        let roomLatitude = Double(gamerule["roomLatitude"] ?? "0")
-//        let roomLongitude = Double(gamerule["roomLongitude"] ?? "0")
-        let roomLatitude = Double(43.063432)
-        let roomLongitude = Double(141.39747)
+        let roomLatitude = Double(gamerule["roomLatitude"] ?? "0")
+        let roomLongitude = Double(gamerule["roomLongitude"] ?? "0")
+        // let roomLatitude = Double(43.063432)
+        // let roomLongitude = Double(141.39747)
         // 中心点を定義(latitudeは緯度、latitudeは経度)
-        let coordinate = CLLocationCoordinate2D(latitude: roomLatitude, longitude: roomLongitude)
+        let coordinate = CLLocationCoordinate2D(latitude: roomLatitude!, longitude: roomLongitude!)
         // 領域を定義
         let span = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
         // マップの表示領域を定義
@@ -91,7 +96,7 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
     
     var parent : mapView
-    var timer: Timer?
+    // var timer: Timer?
     init(parent1 : mapView) {
         parent = parent1
     }
@@ -112,26 +117,13 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         @unknown default:
             print("何も一致しなかったよ")
         }
+        DispatchQueue.global(qos: .default).async {
+            self.countTimer()
+        }
     }
     
     // ユーザの場所が変更された
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-        /**
-         CoreLocationの停止
-         print("位置情報止めちゃうよ！！")
-         self.parent.manager.stopUpdatingLocation()
-         */
-        
-        
-        /**
-         位置情報送信タイミングの設定
-         */
-        // let timeInterval = Double(parent.gamerule["survivorPositionTransmissionInterval"] ?? "1")! * 60
-        let timeInterval = Double(10)
-        self.timer = Timer(timeInterval: timeInterval, target: self, selector: #selector(timerUpdate), userInfo: nil, repeats: true)
-        RunLoop.main.add(self.timer!, forMode: RunLoop.Mode.default)
-        //　タイマーの終了
-        // timer?.invalidate()
         
         /**
          現在地書き込み処理
@@ -161,14 +153,16 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
                 let yourLocation = CLLocation(latitude: targetLatitude, longitude: targetLongitude)
                 let distanceInMeters = Int(myLocation.distance(from: yourLocation))
                 print("生存者との距離 " + String(distanceInMeters))
-                if distanceInMeters <= killerCaptureRange ?? 20 {
-                    print("♡♡♡捕まえちゃったわよ♡♡♡")
-                    print("♡♡♡" + player.id + "♡♡♡")
+                if distanceInMeters <= killerCaptureRange ?? 1 {
+                    print("生存者の確保")
                     parent.RDDAO.addCaptureFlag(roomId: parent.roomId, playerId: player.id)
                 }
             }
         }
         
+        /**
+         サーチライト(アイテム)メソッドの呼び出し
+         */
         if parent.itemFlag.useSearchlight {
             searchLight(self.parent.players)
         }
@@ -183,19 +177,26 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         }
     }
     
-    @objc func timerUpdate() {
-        if self.parent.player.role == "killer" {
-            print("addAnnotations を呼び出し")
-            addAnnotations(self.parent.players)
+    public func countTimer() {
+        let time = Int(parent.gamerule["survivorPositionTransmissionInterval"] ?? "1")! * 60
+        while !(parent.gameFlag.isGameOver) {
+            print("countTimer を呼び出し")
+            sleep(UInt32(time))
+            if parent.player.role == "killer" {
+                DispatchQueue.main.async { [self] in
+                    print("addAnnotations を呼び出し")
+                    addAnnotations(self.parent.players)
+                }
+                
+            }
         }
-        
     }
     
     func addAnnotations(_ players: [Player]) {
         self.parent.map.removeAnnotations(self.parent.map.annotations)
         let pin = MKPointAnnotation()
         for player in players {
-            if parent.player.id != player.id && player.role == "Survivor" && player.latitude != nil && player.longitude != nil && player.captureState == "hide"{
+            if parent.player.id != player.id && player.role == "survivor" && player.latitude != nil && player.longitude != nil && player.captureState == "hide"{
                 let latitude = player.latitude!
                 let longitude = player.longitude!
                 pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -210,13 +211,13 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
      */
     func searchLight(_ players: [Player]) {
         self.parent.map.removeAnnotations(self.parent.map.annotations)
-        let pin = MKPointAnnotation()
+        let killerPin = MKPointAnnotation()
         for player in players {
             if parent.player.id != player.id && player.role == "killer" && player.latitude != nil && player.longitude != nil && player.captureState == "hide"{
                 let latitude = player.latitude!
                 let longitude = player.longitude!
-                pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                self.parent.map.addAnnotation(pin)
+                killerPin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                self.parent.map.addAnnotation(killerPin)
             }
         }
     }
