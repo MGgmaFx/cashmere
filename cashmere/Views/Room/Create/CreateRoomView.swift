@@ -72,6 +72,7 @@ struct CreateRoomView: View {
         }
         .onAppear{
             roomInit(room: room)
+            getLocation()
             RDDAO.getGameRule(roomId: room.id) { (result) in
                 gamerule = result
             }
