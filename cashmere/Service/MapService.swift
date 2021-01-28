@@ -213,7 +213,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         self.parent.map.removeAnnotations(self.parent.map.annotations)
         let killerPin = MKPointAnnotation()
         for player in players {
-            if parent.player.id != player.id && player.role == "killer" && player.latitude != nil && player.longitude != nil && player.captureState == "escaping"{
+            if parent.player.id != player.id && player.role == "killer" && player.latitude != nil && player.longitude != nil{
                 let latitude = player.latitude!
                 let longitude = player.longitude!
                 killerPin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
