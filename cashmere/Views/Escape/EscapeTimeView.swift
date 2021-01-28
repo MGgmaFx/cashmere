@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct EscapeTimeView: View {
-    @EnvironmentObject var gameFlag: GameEventFlag
     @State var nowD:Date = Date()
     let setDate: Date
     

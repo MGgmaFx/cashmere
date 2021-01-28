@@ -19,9 +19,17 @@ struct PlayerListRow:View {
                 .frame(width: 50, height: 50)
             Text(playerName).foregroundColor(Color.primary)
             Spacer()
-            Text(role)
+            if role == "killer" {
+                Text("鬼").foregroundColor(Color.red)
+            } else {
+                Text("逃走者").foregroundColor(Color.blue)
+            }
             Spacer()
-            Text(onlineStatus)
+            if onlineStatus == "online" {
+                Text("オンライン")
+            } else {
+                Text("オフライン").foregroundColor(Color.red)
+            }
         }
     }
 }

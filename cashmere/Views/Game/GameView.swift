@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameView: View {
-    @EnvironmentObject var gameFlag: GameEventFlag
+    @EnvironmentObject var gameEventFlag: GameEventFlag
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @Binding var players: [Player]
     @Binding var roomId: String
@@ -33,8 +33,8 @@ struct GameView: View {
                         Image(systemName: "figure.walk")
                         Text("プレイヤー")
                     }
-            }.fullScreenCover(isPresented: $gameFlag.isGameOver, content: {
-                ResultView(players: $players, player: $player)
+            }.fullScreenCover(isPresented: $gameEventFlag.isGameOver, content: {
+                ResultView(player: $player, players: $players)
             })
         }
     }

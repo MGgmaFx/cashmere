@@ -11,53 +11,33 @@ import Firebase
 class RealtimeDatabeseDAO: ObservableObject {
     @Published var ref = Database.database().reference()
     
-    func getPlayerNameList(roomId: String, completionHandler: @escaping ([String]) -> Void) {
-        if let _ = Auth.auth().currentUser?.uid {
-            var playerList: [String] = []
-            ref.child(roomId).child("players").observe(DataEventType.value, with: { (snapshot) in
-                let postDict = snapshot.value as? [String : AnyObject] ?? [:]
-                playerList = []
-                for (_, value) in postDict {
-                    if let players = value as? [String : String] {
-                        for (key, player) in players {
-                            if key == "playername" {
-                                playerList.append(player)
-                            }
-                        }
-                    }
-                }
-                completionHandler(playerList)
-            })
-        }
-    }
-    
     func getPlayers(roomId: String, completionHandler: @escaping ([Player]) -> Void) {
         if let _ = Auth.auth().currentUser?.uid {
             var players: [Player] = []
             ref.child(roomId).child("players").observe(DataEventType.value, with: { (snapshot) in
                 let postDict = snapshot.value as? [String : AnyObject] ?? [:]
                 players = []
-                for (uuid, value) in postDict {
-                    var temp = Player()
-                    temp.id = uuid
-                    if let player = value as? [String : String] {
-                        for (key, value) in player {
+                for (id, value) in postDict {
+                    var player = Player()
+                    player.id = id
+                    if let playerRow = value as? [String : String] {
+                        for (key, value) in playerRow {
                             if key == "captureState" {
-                                temp.captureState = value
+                                player.captureState = value
                             }else if key == "playerLatitude" {
-                                temp.latitude = CLLocationDegrees(value)
+                                player.latitude = CLLocationDegrees(value)
                             }else if key == "playerLongitude" {
-                                temp.longitude = CLLocationDegrees(value)
+                                player.longitude = CLLocationDegrees(value)
                             }else if key == "playername" {
-                                temp.name = value
+                                player.name = value
                             }else if key == "onlinestatus" {
-                                temp.onlineStatus = value
+                                player.onlineStatus = value
                             }else if key == "role" {
-                                temp.role = value
+                                player.role = value
                             }
                         }
                     }
-                    players.append(temp)
+                    players.append(player)
                 }
                 completionHandler(players)
             })

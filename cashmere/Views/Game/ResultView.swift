@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ResultView: View {
-    @Binding var players: [Player]
-    @EnvironmentObject var gameFlag: GameEventFlag
+    @EnvironmentObject var gameEventFlag: GameEventFlag
     @EnvironmentObject var model: Model
     @State var isSurviverWin = false
     @Binding var player: Player
+    @Binding var players: [Player]
     var body: some View {
         
         VStack {
@@ -40,32 +40,30 @@ struct ResultView: View {
                 Text("メニューにもどる")
             }.buttonStyle(CustomButtomStyle(color: Color.orange))
         }.onAppear {
-            if gameFlag.isTimeOut {
+            if gameEventFlag.isTimeOut {
                 isSurviverWin = true
             } else {
             }
         }
     }
     func gameInitialization() -> Void {
-        
-        
-        
+        // 上位のビューから順番に閉じないと下位のビューがうまく閉じられないので上位ビューから順次閉じている
         DispatchQueue.main.async {
             model.createRoomViewPushed = false
             DispatchQueue.main.async {
-                gameFlag.isEscaping = false
-                gameFlag.isGameWating = false
+                gameEventFlag.isEscaping = false
+                gameEventFlag.isGameWating = false
                 model.joinRoomViewPushed = false
                 model.isPresentedQRCodeView = false
                 model.profileSettingsViewPushed = false
                 model.isShowingScanner = false
                 model.loginViewPushed = false
-                gameFlag.isTimeOut = false
+                gameEventFlag.isTimeOut = false
                 model.playerInvitePushed = false
                 DispatchQueue.main.async {
-                    gameFlag.isGameOver = false
+                    gameEventFlag.isGameOver = false
                     DispatchQueue.main.async {
-                        gameFlag.isGameStarted = false
+                        gameEventFlag.isGameStarted = false
                     }
                 }
             }
