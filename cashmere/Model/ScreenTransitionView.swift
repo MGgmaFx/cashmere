@@ -15,4 +15,5 @@ class Model: ObservableObject {
     @Published var profileSettingsViewPushed = false
     @Published var isShowingScanner = false
     @Published var loginViewPushed = false
+    @Published var isGameOverView = false
 }

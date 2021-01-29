@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05F0545F25761F5100ABE658 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0545E25761F5100ABE658 /* MapView.swift */; };
+		240BA77A25C2F095001CF995 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240BA77925C2F095001CF995 /* GameOverView.swift */; };
 		2433509B25C04B9A0006866E /* CustomButtomStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433509A25C04B9A0006866E /* CustomButtomStyle.swift */; };
 		243350A025C04BCB0006866E /* GameEventFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433509F25C04BCB0006866E /* GameEventFlag.swift */; };
 		24493F3625B52960009DB684 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24493F3525B52960009DB684 /* Item.swift */; };
@@ -75,6 +76,7 @@
 
 /* Begin PBXFileReference section */
 		05F0545E25761F5100ABE658 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		240BA77925C2F095001CF995 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		2433509A25C04B9A0006866E /* CustomButtomStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtomStyle.swift; sourceTree = "<group>"; };
 		2433509F25C04BCB0006866E /* GameEventFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEventFlag.swift; sourceTree = "<group>"; };
 		24493F3525B52960009DB684 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				2481F05525C0294A0071F10F /* Item */,
 				2481F04B25C0290F0071F10F /* Player */,
 				2481F04A25C028FD0071F10F /* Map */,
+				240BA77925C2F095001CF995 /* GameOverView.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -500,7 +503,7 @@
 				};
 			};
 			buildConfigurationList = 245227E025761A7300B90ED7 /* Build configuration list for PBXProject "cashmere" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -702,6 +705,7 @@
 				245227E925761A7300B90ED7 /* AppDelegate.swift in Sources */,
 				245228D32579F78D00B90ED7 /* PlayerListRow.swift in Sources */,
 				2452292B2581E3B600B90ED7 /* ProfileSettingsView.swift in Sources */,
+				240BA77A25C2F095001CF995 /* GameOverView.swift in Sources */,
 				245229102580507300B90ED7 /* QRCodeMaker.swift in Sources */,
 				245228C92579D23900B90ED7 /* PlayerView.swift in Sources */,
 				24EA289725B65F4C0044DCFB /* ResultView.swift in Sources */,
