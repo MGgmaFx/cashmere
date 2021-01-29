@@ -13,4 +13,5 @@ class GameEventFlag: ObservableObject {
     @Published var isEscaping = false
     @Published var isGameWating = false
     @Published var isTimeOut = false
+    @Published var isCaptured = false
 }

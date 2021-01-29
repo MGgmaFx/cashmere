@@ -11,7 +11,7 @@ import Firebase
 
 struct JoinRoomView: View {
     @EnvironmentObject var model: Model
-    @EnvironmentObject var eventFlag: GameEventFlag
+    @EnvironmentObject var gameEventFlag: GameEventFlag
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @State var roomId: String = ""
     @State var players: [Player] = []
@@ -24,12 +24,12 @@ struct JoinRoomView: View {
             Spacer()
             Text("JoinRoom View").font(.title)
             Spacer()
-            if eventFlag.isGameWating {
+            if gameEventFlag.isGameWating {
                 GameWatingView(roomId: $roomId, players: $players, gamerule: $gamerule)
             }
             Spacer()
             
-            if !(eventFlag.isGameWating) {
+            if !(gameEventFlag.isGameWating) {
                 Button(action: {
                     model.isShowingScanner = true
                 }) {
@@ -54,13 +54,13 @@ struct JoinRoomView: View {
             
             VStack {
             }
-            .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isEscaping) {
+            .background(EmptyView().fullScreenCover(isPresented: $gameEventFlag.isEscaping) {
                 EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: (Int(gamerule["escapeTime"] ?? "99")! * 60), to: Date())!)
             })
             
             VStack {
             }
-            .background(EmptyView().fullScreenCover(isPresented: $eventFlag.isGameStarted) {
+            .background(EmptyView().fullScreenCover(isPresented: $gameEventFlag.isGameStarted) {
                 GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: Int(gamerule["timelimit"] ?? "99")! - 1)
             })
         }.onAppear {
@@ -73,16 +73,30 @@ struct JoinRoomView: View {
         switch result {
         case .success(let code):
             roomId = code
+            RDDAO.getPlayers(roomId: roomId){ (result) in
+                players = result
+                for playerDB in players {
+                    player.latitude = playerDB.latitude
+                    player.longitude = playerDB.longitude
+                    player.captureState = playerDB.captureState
+                    player.onlineStatus = playerDB.onlineStatus
+                    player.role = playerDB.role
+                    if player.captureState == "captured" {
+                        gameEventFlag.isCaptured = true
+                    }
+                }
+            }
+            
             RDDAO.addPlayer(roomId: roomId, playerId: player.id, playerName: player.name, captureState: player.captureState ?? "escaping", role: player.role ?? "survivor")
             RDDAO.updatePlayerRole(roomId: roomId, playerId: player.id, role: "survivor")
             RDDAO.gameStartCheck(roomId: roomId){ result in
-                eventFlag.isEscaping = result
+                gameEventFlag.isEscaping = result
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double((Int(gamerule["escapeTime"] ?? "99")! * 60))) {
-                    eventFlag.isEscaping = false
-                    eventFlag.isGameStarted = true
+                    gameEventFlag.isEscaping = false
+                    gameEventFlag.isGameStarted = true
                 }
             }
-            eventFlag.isGameWating = true
+            gameEventFlag.isGameWating = true
             
             
         case .failure(let error):
@@ -97,7 +111,7 @@ struct JoinRoomView: View {
     }
     
     private func leaveRoom(roomId: String) {
-        eventFlag.isGameWating = false
+        gameEventFlag.isGameWating = false
         players = []
         gamerule = [:]
         player.role = ""

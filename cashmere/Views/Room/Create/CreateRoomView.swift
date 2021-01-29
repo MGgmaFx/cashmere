@@ -12,7 +12,7 @@ struct CreateRoomView: View {
     @EnvironmentObject var model: Model
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @EnvironmentObject var session: SessionStore
-    @EnvironmentObject var gameFlag: GameEventFlag
+    @EnvironmentObject var gameEventFlag: GameEventFlag
     @State var room = Room(name: "鬼ごっこルーム")
     @State var players: [Player] = []
     @State var gamerule: [String : String] = [:]
@@ -59,13 +59,13 @@ struct CreateRoomView: View {
             
             VStack {
             }
-            .background(EmptyView().fullScreenCover(isPresented: $gameFlag.isEscaping) {
+            .background(EmptyView().fullScreenCover(isPresented: $gameEventFlag.isEscaping) {
                 EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: (Int(gamerule["escapeTime"] ?? "99")! * 60), to: Date())!)
             })
             
             VStack {
             }
-            .background(EmptyView().fullScreenCover(isPresented: $gameFlag.isGameStarted) {
+            .background(EmptyView().fullScreenCover(isPresented: $gameEventFlag.isGameStarted) {
                 GameView(players: $players, roomId: $room.id, player: $player, gamerule: $gamerule, time: time)
             })
             
@@ -84,13 +84,16 @@ struct CreateRoomView: View {
                         player.onlineStatus = playerDB.onlineStatus
                         player.role = playerDB.role
                         player.captureState = playerDB.captureState
+                        if player.captureState == "captured" {
+                            gameEventFlag.isCaptured = true
+                        }
                     }
                 }
                 players = result
-                if gameFlag.isGameStarted {
+                if gameEventFlag.isGameStarted {
                     checkAllCaught(plyers: players){ (isAllCaught) in
                         if isAllCaught {
-                            gameFlag.isGameOver = isAllCaught
+                            gameEventFlag.isGameOver = isAllCaught
                         }
                     }
                 }

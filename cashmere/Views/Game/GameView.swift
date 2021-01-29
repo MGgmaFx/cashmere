@@ -36,6 +36,12 @@ struct GameView: View {
             }.fullScreenCover(isPresented: $gameEventFlag.isGameOver, content: {
                 ResultView(player: $player, players: $players)
             })
+            
+            VStack {
+            }
+            .background(EmptyView().sheet(isPresented: $gameEventFlag.isCaptured) {
+                GameOverView()
+            })
         }
     }
 }
