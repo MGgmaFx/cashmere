@@ -51,7 +51,7 @@ struct mapView : UIViewRepresentable {
         return map
     }
     
-    func stopUpdatingLocation() {
+    public func stopUpdatingLocation() {
         manager.stopUpdatingLocation()
     }
     
@@ -72,7 +72,7 @@ struct mapView : UIViewRepresentable {
         // マップに設定
         uiView.setRegion(region, animated: true)
         
-        let radius = Double(gamerule["escapeRange"] ?? "39")! * 10
+        let radius = Double(gamerule["escapeRange"] ?? "39")!
         // 円の定義(centerは中心点、radiusは半径)
         let circle = MKCircle(center: coordinate, radius: radius)
         // 円の追加
@@ -137,7 +137,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         }
         let playerId = parent.player.id
         let roomId = parent.roomId
-        if latitude != nil && longitude != nil && parent.player.captureState != "caputured" {
+        if parent.player.captureState != "caputured" {
             parent.RDDAO.addPlayerLocation(roomId: roomId, playerId: playerId, latitude: latitude, longitude: longitude)
         }
         
@@ -196,7 +196,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         self.parent.map.removeAnnotations(self.parent.map.annotations)
         let pin = MKPointAnnotation()
         for player in players {
-            if parent.player.id != player.id && player.role == "survivor" && player.latitude != nil && player.longitude != nil && player.captureState == "escaping"{
+            if parent.player.id != player.id && player.role == "survivor" && player.captureState == "escaping"{
                 let latitude = player.latitude!
                 let longitude = player.longitude!
                 pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -213,7 +213,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         self.parent.map.removeAnnotations(self.parent.map.annotations)
         let killerPin = MKPointAnnotation()
         for player in players {
-            if parent.player.id != player.id && player.role == "killer" && player.latitude != nil && player.longitude != nil{
+            if parent.player.id != player.id && player.role == "killer" {
                 let latitude = player.latitude!
                 let longitude = player.longitude!
                 killerPin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
