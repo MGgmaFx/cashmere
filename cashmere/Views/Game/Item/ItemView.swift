@@ -20,12 +20,12 @@ struct ItemView: View {
                name: "黄金の豆",
                imageName: "questionmark.diamond",
                description: "１分間、鬼が逃走者を捕まえることができなくなる。",
-               amount: 1),
+               amount: 3),
             Item(id: 3,
                name: "サーチライト",
                imageName: "questionmark.diamond",
                description: "１分間、鬼の位置情報を表示する。",
-               amount: 0),
+               amount: 3),
         ]
     @Binding var player: Player
     var body: some View {
