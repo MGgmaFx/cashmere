@@ -51,7 +51,7 @@ struct mapView : UIViewRepresentable {
         return map
     }
     
-    public func stopUpdatingLocation() {
+    func stopUpdatingLocation() {
         manager.stopUpdatingLocation()
     }
     
@@ -124,7 +124,10 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
     
     // ユーザの場所が変更された
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-        
+        if parent.gameFlag.isGameOver {
+            print("げーむの終了")
+            parent.stopUpdatingLocation()
+        }
         /**
          現在地書き込み処理
          */
@@ -164,6 +167,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
          サーチライト(アイテム)メソッドの呼び出し
          */
         if parent.itemFlag.useSearchlight {
+            print("searchLightの呼び出し")
             searchLight(self.parent.players)
         }
        
@@ -210,16 +214,19 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
      ピンの削除処理を追加予定
      */
     func searchLight(_ players: [Player]) {
-        self.parent.map.removeAnnotations(self.parent.map.annotations)
+        
         let killerPin = MKPointAnnotation()
         for player in players {
             if parent.player.id != player.id && player.role == "killer" {
+                print("鬼を表示するよ")
                 let latitude = player.latitude!
                 let longitude = player.longitude!
                 killerPin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 self.parent.map.addAnnotation(killerPin)
             }
         }
+        sleep(5)
+        self.parent.map.removeAnnotations(self.parent.map.annotations)
     }
 }
 
