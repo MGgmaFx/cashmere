@@ -23,13 +23,11 @@ struct GameView: View {
                         Image(systemName: "map")
                         Text("マップ")
                     }
-                if player.role == "survivor" {
-                    ItemView(gamerule: $gamerule, roomId: $roomId, player: $player)
-                        .tabItem {
-                            Image(systemName: "case.fill")
-                            Text("アイテム")
-                        }
-                }
+                ItemView(gamerule: $gamerule, roomId: $roomId, player: $player)
+                    .tabItem {
+                        Image(systemName: "case.fill")
+                        Text("アイテム")
+                    }
                 PlayerView(players: $players)
                     .tabItem {
                         Image(systemName: "figure.walk")
