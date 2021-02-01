@@ -14,7 +14,7 @@ struct ItemView: View {
             Item(id: 1,
                name: "ステルスマント",
                imageName: "questionmark.diamond",
-               description: "１分間、使用者の位置情報を隠蔽する。",
+               description: "次回の位置情報送信時、使用者の位置情報を隠蔽する。",
                amount: 3),
             Item(id: 2,
                name: "黄金の豆",
@@ -27,17 +27,22 @@ struct ItemView: View {
                description: "１分間、鬼の位置情報を表示する。",
                amount: 3),
         ]
+    @Binding var gamerule: [String : String]
+    @Binding var roomId: String
     @Binding var player: Player
     var body: some View {
 
         List (items.indices) { index in
-            itemAlert(showingAlert: $showingAlert, item: $items[index], player: $player)
+            itemAlert(roomId: $roomId, gamerule: $gamerule, showingAlert: $showingAlert, item: $items[index], player: $player)
         }
     }
 }
 
 struct itemAlert: View {
     @EnvironmentObject var itemFlag: ItemFlag
+    @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
+    @Binding var roomId: String
+    @Binding var gamerule: [String : String]
     @Binding var showingAlert: Bool
     @Binding var item: Item
     @Binding var player: Player
@@ -55,7 +60,9 @@ struct itemAlert: View {
                 secondaryButton: .default(Text("つかう")) {
                     if item.id == 1{
                         itemFlag.useStealthCloak = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(60)) {
+                        RDDAO.updateCaptureState(roomId: roomId, playerId: player.id, state: "hiding")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(gamerule["survivorPositionTransmissionInterval"] ?? "1")! * 60) {
+                            RDDAO.updateCaptureState(roomId: roomId, playerId: player.id, state: "escaping")
                             itemFlag.useStealthCloak = false
                         }
                     } else if item.id == 2 {
