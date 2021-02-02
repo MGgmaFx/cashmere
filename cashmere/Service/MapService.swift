@@ -117,6 +117,9 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         @unknown default:
             print("何も一致しなかったよ")
         }
+        /**
+         位置情報送信間隔
+         */
         DispatchQueue.global(qos: .default).async {
             self.countTimer()
         }
@@ -132,12 +135,8 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
          現在地書き込み処理
          */
         let location = locations.last
-        var latitude = 0.0
-        var longitude = 0.0
-        if !(parent.itemFlag.useStealthCloak) {
-            latitude = location?.coordinate.latitude ?? 0.0
-            longitude = location?.coordinate.longitude ?? 0.0
-        }
+        let latitude = location?.coordinate.latitude ?? 0.0
+        let longitude = location?.coordinate.longitude ?? 0.0
         let playerId = parent.player.id
         let roomId = parent.roomId
         if parent.player.captureState != "caputured" {
@@ -191,7 +190,6 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
                     print("addAnnotations を呼び出し")
                     addAnnotations(self.parent.players)
                 }
-                
             }
         }
     }
@@ -209,12 +207,12 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         }
     }
     
+    
     /**
      サーチライト：鬼の位置情報を表示(1分間)
      ピンの削除処理を追加予定
      */
     func searchLight(_ players: [Player]) {
-        
         let killerPin = MKPointAnnotation()
         for player in players {
             if parent.player.id != player.id && player.role == "killer" {
@@ -225,8 +223,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
                 self.parent.map.addAnnotation(killerPin)
             }
         }
-        sleep(5)
-        self.parent.map.removeAnnotations(self.parent.map.annotations)
+        // self.parent.map.removeAnnotations(self.parent.map.annotations)
     }
 }
 
