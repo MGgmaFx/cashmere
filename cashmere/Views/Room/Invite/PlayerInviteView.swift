@@ -49,7 +49,7 @@ struct PlayerInviteView: View {
                     Text("ゲーム開始")
                         .frame(width: 240, height: 60, alignment: .center)
                 }
-                .buttonStyle(CustomButtomStyle(color: Color.blue))
+                .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "0BBB18"))))
             } else {
                 Button(action: {
                     
@@ -61,6 +61,10 @@ struct PlayerInviteView: View {
             }
 
             
-        }
+        }.frame(minWidth: 0,
+                maxWidth: .infinity,
+                minHeight: 0,
+                maxHeight: .infinity
+        ).background(Color(UIColor(hex: "212121"))).edgesIgnoringSafeArea(.all)
     }
 }

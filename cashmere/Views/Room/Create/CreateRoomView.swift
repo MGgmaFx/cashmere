@@ -28,9 +28,11 @@ struct CreateRoomView: View {
     @State var roomLongitude = ""
     var body: some View {
         VStack {
-            
-            GameruleSettingsView(room: $room, hour: $hour, minute: $minute, killerCaptureRange: $killerCaptureRange, survivorPositionTransmissionInterval: $survivorPositionTransmissionInterval, escapeTime: $escapeTime, escapeRange: $escapeRange)
-            
+            VStack {
+                GameruleSettingsView(room: $room, hour: $hour, minute: $minute, killerCaptureRange: $killerCaptureRange, survivorPositionTransmissionInterval: $survivorPositionTransmissionInterval, escapeTime: $escapeTime, escapeRange: $escapeRange)
+            }.padding()
+            .padding(.top, 30)
+                
             Spacer()
             
             Button(action: {
@@ -47,7 +49,7 @@ struct CreateRoomView: View {
             .sheet(isPresented: $model.playerInvitePushed) {
                 PlayerInviteView(gamerule: $gamerule, players: $players, room: $room, player: $player, time: time)
             }
-            .buttonStyle(CustomButtomStyle(color: Color.green))
+            .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "E94822"))))
             
             Button(action: {
                 model.createRoomViewPushed = false
@@ -55,7 +57,7 @@ struct CreateRoomView: View {
                 Text("もどる")
                     .frame(width: 240, height: 60, alignment: .center)
             }
-            .buttonStyle(CustomButtomStyle(color: Color.gray))
+            .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "C9E8F1"))))
             
             VStack {
             }
@@ -70,6 +72,11 @@ struct CreateRoomView: View {
             })
             
         }
+        .frame(minWidth: 0,
+                maxWidth: .infinity,
+                minHeight: 0,
+                maxHeight: .infinity
+        ).background(Color(UIColor(hex: "212121"))).edgesIgnoringSafeArea(.all)
         .onAppear{
             roomInit(room: room)
             getLocation()
@@ -77,6 +84,8 @@ struct CreateRoomView: View {
                 gamerule = result
             }
             RDDAO.getPlayers(roomId: room.id) { (result) in
+                players = result
+                players.sort { $0.id < $1.id }
                 for playerDB in players {
                     if player.id == playerDB.id {
                         player.latitude = playerDB.latitude
@@ -89,7 +98,6 @@ struct CreateRoomView: View {
                         }
                     }
                 }
-                players = result
                 if gameEventFlag.isGameStarted {
                     checkAllCaught(plyers: players){ (isAllCaught) in
                         if isAllCaught {

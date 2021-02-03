@@ -16,53 +16,59 @@ struct MainMenuView: View {
           session.listen()
     }
     var body: some View {
-        NavigationView {
-            VStack {
-                Spacer()
-                Image("logo")
-                    .resizable()
-                    .frame(width: 280, height: 70, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                Spacer()
-                if Auth.auth().currentUser == nil {
-                    NavigationLink(destination: LoginView().navigationBarBackButtonHidden(true), isActive: $model.loginViewPushed) {
-                        Button(action: {
-                            model.loginViewPushed = true
-                        }) {
-                            Text("ログイン")
-                        }
-                        .buttonStyle(CustomButtomStyle(color: Color.orange))
-                    }
-                } else {
-                    NavigationLink(destination: JoinRoomView(player: $player), isActive: $model.joinRoomViewPushed) {
-                        Button(action: {
-                            model.joinRoomViewPushed = true
-                        }) {
-                            Text("ルームに参加する")
-                        }
-                        .buttonStyle(CustomButtomStyle(color: Color.blue))
-                    }
-                    NavigationLink(destination: CreateRoomView(player: $player), isActive: $model.createRoomViewPushed) {
-                        Button(action: {
-                            model.createRoomViewPushed = true
-                        }) {
-                            Text("ルームをつくる")
-                        }
-                        .buttonStyle(CustomButtomStyle(color: Color.blue))
-                    }
+            NavigationView {
+                VStack {
                     NavigationLink(destination: ProfileSettingsView(player: $player), isActive: $model.profileSettingsViewPushed) {
-                        Button(action: {
-                            model.profileSettingsViewPushed = true
-                        }) {
-                            Text("設定")
+                    HStack {
+                        Spacer()
+                        
+                            Image(systemName: "gearshape.fill")
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                                .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 20))
+                                .foregroundColor(.gray)
+                                .onTapGesture {
+                                    model.profileSettingsViewPushed = true
+                                }
                         }
-                        .buttonStyle(CustomButtomStyle(color: Color.gray))
                     }
-                }
-                
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .edgesIgnoringSafeArea(.all)
-        }.onAppear(perform: getUser)
+                    Image("logo")
+                        .resizable()
+                        .frame(width: 280, height: 70, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    Spacer()
+                    if Auth.auth().currentUser == nil {
+                        NavigationLink(destination: LoginView().navigationBarBackButtonHidden(true), isActive: $model.loginViewPushed) {
+                            Button(action: {
+                                model.loginViewPushed = true
+                            }) {
+                                Text("ログイン")
+                            }
+                            .buttonStyle(CustomButtomStyle(color: Color.orange))
+                        }
+                    } else {
+                        NavigationLink(destination: JoinRoomView(player: $player), isActive: $model.joinRoomViewPushed) {
+                            Button(action: {
+                                model.joinRoomViewPushed = true
+                            }) {
+                                Text("ルームに参加する")
+                            }
+                            .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "F2910A"))))
+                        }
+                        NavigationLink(destination: CreateRoomView(player: $player), isActive: $model.createRoomViewPushed) {
+                            Button(action: {
+                                model.createRoomViewPushed = true
+                            }) {
+                                Text("ルームをつくる")
+                            }
+                            .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "E94822"))))
+                        }
+                    }
+                }.frame(minWidth: 0,
+                        maxWidth: .infinity,
+                        minHeight: 0,
+                        maxHeight: .infinity
+                ).background(Color(UIColor(hex: "212121"))).edgesIgnoringSafeArea(.all)
+            }.onAppear(perform: getUser)
     }
 }
 

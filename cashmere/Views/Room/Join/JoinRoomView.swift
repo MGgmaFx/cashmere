@@ -21,8 +21,7 @@ struct JoinRoomView: View {
     var time = 0
     var body: some View {
         VStack {
-            Spacer()
-            Text("JoinRoom View").font(.title)
+            
             Spacer()
             if gameEventFlag.isGameWating {
                 GameWatingView(roomId: $roomId, players: $players, gamerule: $gamerule)
@@ -35,7 +34,7 @@ struct JoinRoomView: View {
                 }) {
                     Text("ルームに参加する")
                 }
-                .buttonStyle(CustomButtomStyle(color: Color.green))
+                .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "F2910A"))))
                 .sheet(isPresented: $model.isShowingScanner) {
                     CodeScannerView(codeTypes: [.qr], completion: self.handleScan)
                 }
@@ -49,7 +48,7 @@ struct JoinRoomView: View {
             }) {
                 Text("もどる")
             }
-            .buttonStyle(CustomButtomStyle(color: Color.gray))
+            .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "C9E8F1"))))
             .navigationBarHidden(true)
             
             VStack {
@@ -63,7 +62,12 @@ struct JoinRoomView: View {
             .background(EmptyView().fullScreenCover(isPresented: $gameEventFlag.isGameStarted) {
                 GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: Int(gamerule["timelimit"] ?? "99")! - 1)
             })
-        }.onAppear {
+        }.frame(minWidth: 0,
+                maxWidth: .infinity,
+                minHeight: 0,
+                maxHeight: .infinity
+        ).background(Color(UIColor(hex: "212121"))).edgesIgnoringSafeArea(.all)
+        .onAppear {
             joinRoom()
         }
     }
@@ -75,16 +79,18 @@ struct JoinRoomView: View {
             roomId = code
             RDDAO.getPlayers(roomId: roomId){ (result) in
                 players = result
+                players.sort { $0.id < $1.id }
                 for playerDB in players {
-                    player.latitude = playerDB.latitude
-                    player.longitude = playerDB.longitude
-                    player.captureState = playerDB.captureState
-                    player.onlineStatus = playerDB.onlineStatus
-                    player.role = playerDB.role
-                    if player.captureState == "captured" {
-                        gameEventFlag.isCaptured = true
-                    }
-                }
+                    if player.id == playerDB.id {
+                        player.latitude = playerDB.latitude
+                        player.longitude = playerDB.longitude
+                        player.captureState = playerDB.captureState
+                        player.onlineStatus = playerDB.onlineStatus
+                        player.role = playerDB.role
+                        if player.captureState == "captured" {
+                            gameEventFlag.isCaptured = true
+                        }
+                    }}
             }
             
             RDDAO.addPlayer(roomId: roomId, playerId: player.id, playerName: player.name, captureState: player.captureState ?? "escaping", role: player.role ?? "survivor")

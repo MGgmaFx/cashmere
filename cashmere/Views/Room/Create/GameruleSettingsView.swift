@@ -18,22 +18,10 @@ struct GameruleSettingsView: View {
     var body: some View {
         ScrollView(.vertical) {
             VStack {
-                HStack {
-                    Text("ルーム名")
-                        .padding(20)
-                        .foregroundColor(.black)
-                    
-                    Spacer()
-                    
-                    TextField("ルーム名を入力", text: $room.name)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .foregroundColor(.primary)
-                        .padding()
-                }
-                .padding(.vertical)
+                Text("ルール").font(.largeTitle).padding(.top, 20)
                 HStack {
                     Text("制限時間")
-                        .padding(20)
+                        .padding()
                         .foregroundColor(.black)
                     
                     Spacer()
@@ -139,7 +127,7 @@ struct GameruleSettingsView: View {
                 }
                 .padding(.vertical)
             }
-            .background(Color(red: 0.8, green: 0.8, blue: 0.85))
+            .background(Color(UIColor(hex: "AAAAAA")))
             .cornerRadius(10)
         }
     }

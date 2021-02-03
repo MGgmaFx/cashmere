@@ -12,7 +12,7 @@ struct InvitedPlayerListView: View {
     var body: some View {
         VStack {
             Text("プレイヤー一覧")
-                .foregroundColor(.primary)
+                .foregroundColor(.white)
                 .padding()
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
@@ -23,7 +23,7 @@ struct InvitedPlayerListView: View {
                                 .frame(width: 40, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 .foregroundColor(.blue)
                             Text(player.name)
-                                .foregroundColor(.primary)
+                                .foregroundColor(.white)
                         }
                         .padding()
                     }
