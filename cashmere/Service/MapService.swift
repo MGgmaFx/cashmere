@@ -199,8 +199,8 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         let pin = MKPointAnnotation()
         for player in players {
             if parent.player.id != player.id && player.role == "survivor" && player.captureState == "escaping"{
-                let latitude = player.latitude!
-                let longitude = player.longitude!
+                let latitude = player.latitude ?? 0.0
+                let longitude = player.longitude ?? 0.0
                 pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 self.parent.map.addAnnotation(pin)
             }
@@ -217,8 +217,8 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         for player in players {
             if parent.player.id != player.id && player.role == "killer" {
                 print("鬼を表示するよ")
-                let latitude = player.latitude!
-                let longitude = player.longitude!
+                let latitude = player.latitude ?? 0.0
+                let longitude = player.longitude ?? 0.0
                 killerPin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 self.parent.map.addAnnotation(killerPin)
             }
