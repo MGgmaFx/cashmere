@@ -31,9 +31,23 @@ struct ItemView: View {
     @Binding var roomId: String
     @Binding var player: Player
     var body: some View {
-
-        List (items.indices) { index in
-            itemAlert(roomId: $roomId, gamerule: $gamerule, showingAlert: $showingAlert, item: $items[index], player: $player)
+        ZStack {
+            Color(UIColor(hex: "212121")).edgesIgnoringSafeArea(.all)
+            VStack {
+                List {
+                    ForEach(items, id: \.id) { item in
+                        itemAlert(items: $items, roomId: $roomId, gamerule: $gamerule, showingAlert: $showingAlert, player: $player, item: item)
+                            .listRowBackground(Color(UIColor(hex: "212121")))
+                    }
+                }.onAppear {
+                    // Listの背景色を変えるための処理
+                    UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+                    UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+                    UITableView.appearance().backgroundColor = UIColor.clear
+                    UITableView.appearance().separatorStyle = .singleLine
+                    UITableView.appearance().separatorColor = UIColor.white.withAlphaComponent(0.6)
+                }
+            }
         }
     }
 }
@@ -41,54 +55,60 @@ struct ItemView: View {
 struct itemAlert: View {
     @EnvironmentObject var itemFlag: ItemFlag
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
+    @Binding var items: [Item]
     @Binding var roomId: String
     @Binding var gamerule: [String : String]
     @Binding var showingAlert: Bool
-    @Binding var item: Item
     @Binding var player: Player
+    let item: Item
     var body: some View {
-        if item.amount > 0 && player.captureState != "captured"{
-            Button(action: {
-                showingAlert = true
-            }) {
-                ItemListRow(item: item)
-            }
-            .alert(isPresented: $showingAlert) {
-                Alert(title: Text(item.name),
-                message: Text(item.description),
-                primaryButton: .cancel(Text("キャンセル")),
-                secondaryButton: .default(Text("つかう")) {
-                    if item.id == 1{
-                        itemFlag.useStealthCloak = true
-                        RDDAO.updateCaptureState(roomId: roomId, playerId: player.id, state: "hiding")
-                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(gamerule["survivorPositionTransmissionInterval"] ?? "1")! * 60) {
-                            RDDAO.updateCaptureState(roomId: roomId, playerId: player.id, state: "escaping")
-                            itemFlag.useStealthCloak = false
+        ZStack {
+            Color(UIColor(hex: "212121")).edgesIgnoringSafeArea(.all)
+            if item.amount > 0 && player.captureState != "captured"{
+                Button(action: {
+                    showingAlert = true
+                }) {
+                    ItemListRow(item: item)
+                        .listRowBackground(Color(UIColor(hex: "212121")))
+                }
+                .alert(isPresented: $showingAlert) {
+                    Alert(title: Text(item.name),
+                    message: Text(item.description),
+                    primaryButton: .cancel(Text("キャンセル")),
+                    secondaryButton: .default(Text("つかう")) {
+                        if item.id == 1{
+                            itemFlag.useStealthCloak = true
+                            RDDAO.updateCaptureState(roomId: roomId, playerId: player.id, state: "hiding")
+                            DispatchQueue.main.asyncAfter(deadline: .now() + Double(gamerule["survivorPositionTransmissionInterval"] ?? "1")! * 60) {
+                                RDDAO.updateCaptureState(roomId: roomId, playerId: player.id, state: "escaping")
+                                itemFlag.useStealthCloak = false
+                            }
+                        } else if item.id == 2 {
+                            itemFlag.useGoldenBeans = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + Double(60)) {
+                                itemFlag.useGoldenBeans = false
+                            }
+                        } else if item.id == 3 {
+                            itemFlag.useSearchlight = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + Double(60)) {
+                                itemFlag.useSearchlight = false
+                            }
                         }
-                    } else if item.id == 2 {
-                        itemFlag.useGoldenBeans = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(60)) {
-                            itemFlag.useGoldenBeans = false
-                        }
-                    } else if item.id == 3 {
-                        itemFlag.useSearchlight = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(60)) {
-                            itemFlag.useSearchlight = false
-                        }
-                    }
-                    item.amount = item.amount - 1
-                })
-            }
-        } else {
-            Button(action: {
-                showingAlert = true
-            }) {
-                ItemListRow(item: item)
-            }
-            .alert(isPresented: $showingAlert) {
-                Alert(title: Text(item.name),
-                message: Text(item.description),
-                dismissButton: .default(Text("もどる")))
+                        items[item.id - 1].amount = items[item.id - 1].amount - 1
+                    })
+                }
+            } else {
+                Button(action: {
+                    showingAlert = true
+                }) {
+                    ItemListRow(item: item)
+                        .listRowBackground(Color(UIColor(hex: "212121")))
+                }
+                .alert(isPresented: $showingAlert) {
+                    Alert(title: Text(item.name),
+                    message: Text(item.description),
+                    dismissButton: .default(Text("もどる")))
+                }
             }
         }
     }

@@ -10,7 +10,8 @@ import SwiftUI
 struct ItemListRow:View {
     let item: Item
     var body: some View {
-        VStack {
+        ZStack {
+            Color(UIColor(hex: "212121")).edgesIgnoringSafeArea(.all)
             HStack {
                 Spacer()
                 Image(systemName: item.imageName)
@@ -19,13 +20,13 @@ struct ItemListRow:View {
                     .frame(width: 50, height: 50)
                 Spacer()
                 VStack {
-                    Text(item.name).foregroundColor(Color.black)
-                    Text(item.description).foregroundColor(Color.gray)
-                }
+                    Text(item.name).foregroundColor(Color.white).font(.title3)
+                    Text(item.description).foregroundColor(Color.white).font(.subheadline)
+                }.background(Color(UIColor(hex: "212121")))
                 Spacer()
-                Text("x \(item.amount)")
+                Text("x \(item.amount)").foregroundColor(Color.white)
                 Spacer()
-            }
+            }.background(Color(UIColor(hex: "212121")))
         }
     }
 }
