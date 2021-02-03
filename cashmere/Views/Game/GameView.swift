@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct GameView: View {
     @EnvironmentObject var gameEventFlag: GameEventFlag
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
+    @State var pinColor: Color = Color.blue
     @Binding var players: [Player]
     @Binding var roomId: String
     @Binding var player: Player
@@ -33,7 +35,9 @@ struct GameView: View {
                         Image(systemName: "figure.walk")
                         Text("プレイヤー")
                     }
-            }.fullScreenCover(isPresented: $gameEventFlag.isGameOver, content: {
+            }
+            .accentColor(pinColor) // 選択したアイテム色を指定
+            .fullScreenCover(isPresented: $gameEventFlag.isGameOver, content: {
                 ResultView(player: $player, players: $players)
             })
             
@@ -42,6 +46,12 @@ struct GameView: View {
             .background(EmptyView().sheet(isPresented: $gameEventFlag.isCaptured) {
                 GameOverView()
             })
+        }.onAppear {
+            if player.role == "survivor" {
+                pinColor = Color.blue
+            } else {
+                pinColor = Color.red
+            }
         }
     }
 }
