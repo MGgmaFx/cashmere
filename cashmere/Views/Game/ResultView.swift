@@ -60,6 +60,7 @@ struct ResultView: View {
                 model.loginViewPushed = false
                 gameEventFlag.isTimeOut = false
                 model.playerInvitePushed = false
+                gameEventFlag.isCaptured = false
                 DispatchQueue.main.async {
                     gameEventFlag.isGameOver = false
                     DispatchQueue.main.async {
