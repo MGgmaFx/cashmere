@@ -17,7 +17,7 @@ struct GameruleSettingsView: View {
     @Binding var escapeRange: Int
     var body: some View {
         VStack {
-            Text("ルール").font(.largeTitle).padding(.top, 20)
+            Text("ルール設定").font(.title).padding(.top, 20)
             HStack {
                 Text("制限時間")
                     .lineLimit(nil)
