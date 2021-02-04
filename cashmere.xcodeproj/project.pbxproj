@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		05F0545F25761F5100ABE658 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F0545E25761F5100ABE658 /* MapView.swift */; };
-		2406968C25CB862F00F0D6D6 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2406968B25CB862F00F0D6D6 /* PageViewController.swift */; };
-		2406969125CB864600F0D6D6 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2406969025CB864600F0D6D6 /* PageView.swift */; };
 		240BA77A25C2F095001CF995 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240BA77925C2F095001CF995 /* GameOverView.swift */; };
 		2433509B25C04B9A0006866E /* CustomButtomStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433509A25C04B9A0006866E /* CustomButtomStyle.swift */; };
 		243350A025C04BCB0006866E /* GameEventFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433509F25C04BCB0006866E /* GameEventFlag.swift */; };
@@ -52,6 +50,7 @@
 		246AE45C25885CCE0052AD6D /* GameruleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AE45B25885CCE0052AD6D /* GameruleView.swift */; };
 		246AE47B2589E44D0052AD6D /* EscapeTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AE47A2589E44D0052AD6D /* EscapeTimeView.swift */; };
 		246AE480258B37B70052AD6D /* GameruleSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AE47F258B37B70052AD6D /* GameruleSettingsView.swift */; };
+		24DF9E5525CBB0BE00C3C3C8 /* RuleExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF9E5425CBB0BE00C3C3C8 /* RuleExplanationView.swift */; };
 		24EA289725B65F4C0044DCFB /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EA289625B65F4C0044DCFB /* ResultView.swift */; };
 		24EA28C325BE55800044DCFB /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EA28C225BE55800044DCFB /* LocationService.swift */; };
 		24EA28DB25C1253B0044DCFB /* ItemFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EA28DA25C1253B0044DCFB /* ItemFlag.swift */; };
@@ -79,8 +78,6 @@
 
 /* Begin PBXFileReference section */
 		05F0545E25761F5100ABE658 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		2406968B25CB862F00F0D6D6 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
-		2406969025CB864600F0D6D6 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		240BA77925C2F095001CF995 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		2433509A25C04B9A0006866E /* CustomButtomStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtomStyle.swift; sourceTree = "<group>"; };
 		2433509F25C04BCB0006866E /* GameEventFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEventFlag.swift; sourceTree = "<group>"; };
@@ -128,6 +125,7 @@
 		246AE45B25885CCE0052AD6D /* GameruleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameruleView.swift; sourceTree = "<group>"; };
 		246AE47A2589E44D0052AD6D /* EscapeTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeTimeView.swift; sourceTree = "<group>"; };
 		246AE47F258B37B70052AD6D /* GameruleSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameruleSettingsView.swift; sourceTree = "<group>"; };
+		24DF9E5425CBB0BE00C3C3C8 /* RuleExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleExplanationView.swift; sourceTree = "<group>"; };
 		24EA289625B65F4C0044DCFB /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		24EA28C225BE55800044DCFB /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		24EA28DA25C1253B0044DCFB /* ItemFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemFlag.swift; path = cashmere/ItemFlag.swift; sourceTree = SOURCE_ROOT; };
@@ -306,9 +304,8 @@
 			children = (
 				245227EC25761A7300B90ED7 /* ContentView.swift */,
 				24522843257731EF00B90ED7 /* MainMenuView.swift */,
+				24DF9E5425CBB0BE00C3C3C8 /* RuleExplanationView.swift */,
 				2452292A2581E3B600B90ED7 /* ProfileSettingsView.swift */,
-				2406968B25CB862F00F0D6D6 /* PageViewController.swift */,
-				2406969025CB864600F0D6D6 /* PageView.swift */,
 			);
 			path = Top;
 			sourceTree = "<group>";
@@ -704,12 +701,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2406969125CB864600F0D6D6 /* PageView.swift in Sources */,
 				24493F3625B52960009DB684 /* Item.swift in Sources */,
 				245229442583A0E200B90ED7 /* GameWatingView.swift in Sources */,
 				245228D8257A060100B90ED7 /* TimerView.swift in Sources */,
 				24522844257731EF00B90ED7 /* MainMenuView.swift in Sources */,
 				245228222576255700B90ED7 /* MapService.swift in Sources */,
+				24DF9E5525CBB0BE00C3C3C8 /* RuleExplanationView.swift in Sources */,
 				245228FA257F03B300B90ED7 /* Room.swift in Sources */,
 				245C5DE12587111A00F4BE36 /* InvitedPlayerListView.swift in Sources */,
 				245227E925761A7300B90ED7 /* AppDelegate.swift in Sources */,
@@ -736,7 +733,6 @@
 				245B3F8D2591B51F001D4A59 /* GoogleSignInViewController.swift in Sources */,
 				243350A025C04BCB0006866E /* GameEventFlag.swift in Sources */,
 				245228B22578731C00B90ED7 /* ScreenTransitionView.swift in Sources */,
-				2406968C25CB862F00F0D6D6 /* PageViewController.swift in Sources */,
 				246AE47B2589E44D0052AD6D /* EscapeTimeView.swift in Sources */,
 				246AE45C25885CCE0052AD6D /* GameruleView.swift in Sources */,
 				24522849257731F700B90ED7 /* CreateRoomView.swift in Sources */,

@@ -24,7 +24,7 @@ struct MainMenuView: View {
                         
                             Image(systemName: "gearshape.fill")
                                 .resizable()
-                                .frame(width: 40, height: 40)
+                                .frame(width: 30, height: 30)
                                 .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 20))
                                 .foregroundColor(.gray)
                                 .onTapGesture {
@@ -32,10 +32,18 @@ struct MainMenuView: View {
                                 }
                         }
                     }
-                    Image("logo")
+                    Image("logo_title")
                         .resizable()
                         .frame(width: 280, height: 70, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    Spacer()
+                        .padding()
+                    VStack {
+                        TabView {
+                            RuleExplanationView(imageName: "create_room")
+                            RuleExplanationView(imageName: "role")
+                            RuleExplanationView(imageName: "win_or_lose")
+                        }
+                        .tabViewStyle(PageTabViewStyle())
+                    }
                     if Auth.auth().currentUser == nil {
                         NavigationLink(destination: LoginView().navigationBarBackButtonHidden(true), isActive: $model.loginViewPushed) {
                             Button(action: {
@@ -46,14 +54,6 @@ struct MainMenuView: View {
                             .buttonStyle(CustomButtomStyle(color: Color.orange))
                         }
                     } else {
-                        NavigationLink(destination: JoinRoomView(player: $player), isActive: $model.joinRoomViewPushed) {
-                            Button(action: {
-                                model.joinRoomViewPushed = true
-                            }) {
-                                Text("ルームに参加する")
-                            }
-                            .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "F2910A"))))
-                        }
                         NavigationLink(destination: CreateRoomView(player: $player), isActive: $model.createRoomViewPushed) {
                             Button(action: {
                                 model.createRoomViewPushed = true
@@ -62,6 +62,15 @@ struct MainMenuView: View {
                             }
                             .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "E94822"))))
                         }
+                        NavigationLink(destination: JoinRoomView(player: $player), isActive: $model.joinRoomViewPushed) {
+                            Button(action: {
+                                model.joinRoomViewPushed = true
+                            }) {
+                                Text("ルームに参加する")
+                            }
+                            .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "F2910A"))))
+                        }
+                        
                     }
                 }.frame(minWidth: 0,
                         maxWidth: .infinity,

@@ -25,6 +25,10 @@ struct JoinRoomView: View {
             Spacer()
             if gameEventFlag.isGameWating {
                 GameWatingView(roomId: $roomId, players: $players, gamerule: $gamerule)
+            } else {
+                Image("rule")
+                    .resizable()
+                    .frame(width: 280, height: 400, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             }
             Spacer()
             

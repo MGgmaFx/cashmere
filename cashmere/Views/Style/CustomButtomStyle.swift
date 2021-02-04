@@ -18,7 +18,7 @@ struct CustomButtomStyle: ButtonStyle {
         .background(color)
         .cornerRadius(20)
         .foregroundColor(Color.white)
-        .padding(.bottom, 40)
+        .padding(.bottom, 20)
         .compositingGroup()
         .clipped()
     }
