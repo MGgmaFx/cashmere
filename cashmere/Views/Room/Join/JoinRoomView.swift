@@ -46,7 +46,7 @@ struct JoinRoomView: View {
                 roomId = ""
                 
             }) {
-                Text("もどる")
+                Text("もどる").foregroundColor(Color.black)
             }
             .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "C9E8F1"))))
             .navigationBarHidden(true)
@@ -86,7 +86,6 @@ struct JoinRoomView: View {
                         player.longitude = playerDB.longitude
                         player.captureState = playerDB.captureState
                         player.onlineStatus = playerDB.onlineStatus
-                        player.role = playerDB.role
                         if player.captureState == "captured" {
                             gameEventFlag.isCaptured = true
                         }

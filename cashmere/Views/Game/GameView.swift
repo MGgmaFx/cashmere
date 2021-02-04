@@ -25,11 +25,13 @@ struct GameView: View {
                         Image(systemName: "map")
                         Text("マップ")
                     }
-                ItemView(gamerule: $gamerule, roomId: $roomId, player: $player)
-                    .tabItem {
-                        Image(systemName: "case.fill")
-                        Text("アイテム")
-                    }
+                if player.role == "survivor" {
+                    ItemView(gamerule: $gamerule, roomId: $roomId, player: $player)
+                        .tabItem {
+                            Image(systemName: "case.fill")
+                            Text("アイテム")
+                        }
+                }
                 PlayerView(players: $players)
                     .tabItem {
                         Image(systemName: "figure.walk")
@@ -43,9 +45,11 @@ struct GameView: View {
             
             VStack {
             }
-            .background(EmptyView().sheet(isPresented: $gameEventFlag.isCaptured) {
-                GameOverView()
-            })
+            .alert(isPresented: $gameEventFlag.isCaptured) {
+                Alert(title: Text("通知"),
+                      message: Text("鬼に確保されました！"),
+                      dismissButton: .default(Text("了解")))
+            }
         }.onAppear {
             if player.role == "survivor" {
                 pinColor = Color.blue

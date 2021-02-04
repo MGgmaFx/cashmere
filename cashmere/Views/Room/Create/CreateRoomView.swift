@@ -54,7 +54,7 @@ struct CreateRoomView: View {
             Button(action: {
                 model.createRoomViewPushed = false
             }) {
-                Text("もどる")
+                Text("もどる").foregroundColor(Color.black)
                     .frame(width: 240, height: 60, alignment: .center)
             }
             .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "C9E8F1"))))
@@ -91,7 +91,6 @@ struct CreateRoomView: View {
                         player.latitude = playerDB.latitude
                         player.longitude = playerDB.longitude
                         player.onlineStatus = playerDB.onlineStatus
-                        player.role = playerDB.role
                         player.captureState = playerDB.captureState
                         if player.captureState == "captured" {
                             gameEventFlag.isCaptured = true
