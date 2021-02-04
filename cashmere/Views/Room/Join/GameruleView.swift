@@ -23,6 +23,20 @@ struct GameruleView: View {
             }
             .padding()
             HStack {
+                Text("逃走時間").foregroundColor(Color.white)
+                Spacer()
+                Text(gamerule["escapeTime"] ?? "取得中...").foregroundColor(Color.white)
+                Text("分").foregroundColor(Color.white)
+            }
+            .padding()
+            HStack {
+                Text("逃走範囲").foregroundColor(Color.white)
+                Spacer()
+                Text(gamerule["escapeRange"] ?? "取得中...").foregroundColor(Color.white)
+                Text("m").foregroundColor(Color.white)
+            }
+            .padding()
+            HStack {
                 Text("鬼の捕獲範囲").foregroundColor(Color.white)
                 Spacer()
                 Text(gamerule["killerCaptureRange"] ?? "取得中...").foregroundColor(Color.white)
@@ -36,13 +50,7 @@ struct GameruleView: View {
                 Text("分").foregroundColor(Color.white)
             }
             .padding()
-            HStack {
-                Text("逃走時間").foregroundColor(Color.white)
-                Spacer()
-                Text(gamerule["escapeTime"] ?? "取得中...").foregroundColor(Color.white)
-                Text("分").foregroundColor(Color.white)
-            }
-            .padding()
+            
         }.onAppear{
             RDDAO.getGameRule(roomId: roomId) { (result) in
                 gamerule = result
