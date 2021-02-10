@@ -58,7 +58,12 @@ struct PlayerInviteView: View {
         
 
             
-        }.frame(minWidth: 0,
+        }.onAppear(){
+            RDDAO.getPlayers(room: room, completionHandler: { players in
+                room.players = players
+            })
+        }
+        .frame(minWidth: 0,
                 maxWidth: .infinity,
                 minHeight: 0,
                 maxHeight: .infinity

@@ -31,10 +31,10 @@ struct Player: Identifiable {
     var id = UUID().uuidString
     // プレイヤー名
     var name: String = "プレイヤー"
-    // 緯度
-    var latitude: CLLocationDegrees?
-    // 経度
-    var longitude: CLLocationDegrees?
+    // 緯度(東京駅)
+    var latitude: String = "35.681200"
+    // 経度(東京駅)
+    var longitude: String = "139.767336"
     // 通信状況
     var onlineStatus: CommunicationStatus = .online
     // 確保状態
@@ -52,8 +52,8 @@ struct Player: Identifiable {
     init?(src:[String:String]){
         self.id = src["id"]!
         self.name = src["playername"]!
-        self.latitude = Double(src["playerLatitude"]!)
-        self.longitude = Double(src["playerLongitude"]!)
+        self.latitude = src["playerLatitude"]!
+        self.longitude = src["playerLongitude"]!
         self.onlineStatus = Player.CommunicationStatus(rawValue: src["onlineStatus"]!)!
         self.captureState = Player.CaptureStatus(rawValue: src["captureState"]!)!
         self.role = Player.Role(rawValue: src["role"]!)!
@@ -63,8 +63,8 @@ struct Player: Identifiable {
         return [
                 "id":id,
                 "playername": name,
-                "playerLatitude": String(latitude ?? 0.0),
-                "playerLongitude": String(longitude ?? 0.0),
+                "playerLatitude": latitude,
+                "playerLongitude": longitude,
                 "onlineStatus": onlineStatus.rawValue,
                 "captureState": captureState.rawValue,
                 "role": role.rawValue

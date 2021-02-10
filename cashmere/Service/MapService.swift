@@ -146,8 +146,8 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         let killerCaptureRange = parent.room.rule.killerCaptureRange
         for player in parent.room.players {
             if parent.room.me.id != player.id && player.captureState == .escaping {
-                let targetLatitude = player.latitude ?? 0.0
-                let targetLongitude = player.longitude ?? 0.0
+                let targetLatitude = Double(player.latitude)!
+                let targetLongitude = Double(player.longitude)!
                 let myLocation = CLLocation(latitude: latitude, longitude: longitude)
                 let yourLocation = CLLocation(latitude: targetLatitude, longitude: targetLongitude)
                 let distanceInMeters = Int(myLocation.distance(from: yourLocation))
@@ -196,8 +196,8 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         let pin = MKPointAnnotation()
         for player in players {
             if parent.room.me.id != player.id && player.role == .survivor && player.captureState == .escaping {
-                let latitude = player.latitude ?? 0.0
-                let longitude = player.longitude ?? 0.0
+                let latitude = Double(player.latitude)!
+                let longitude = Double(player.longitude)!
                 pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 self.parent.map.addAnnotation(pin)
             }
@@ -214,8 +214,8 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         for player in players {
             if parent.room.me.id != player.id && player.role == .killer {
                 print("鬼を表示するよ")
-                let latitude = player.latitude ?? 0.0
-                let longitude = player.longitude ?? 0.0
+                let latitude = Double(player.latitude)!
+                let longitude = Double(player.longitude)!
                 killerPin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 self.parent.map.addAnnotation(killerPin)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
