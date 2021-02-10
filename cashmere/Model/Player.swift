@@ -52,8 +52,8 @@ struct Player: Identifiable {
     init?(src:[String:String]){
         self.id = src["id"]!
         self.name = src["playername"]!
-//        self.latitude = src["latitude"]!
-//        self.longitude = src["longitude"]!
+        self.latitude = Double(src["playerLatitude"]!)
+        self.longitude = Double(src["playerLongitude"]!)
         self.onlineStatus = Player.CommunicationStatus(rawValue: src["onlineStatus"]!)!
         self.captureState = Player.CaptureStatus(rawValue: src["captureState"]!)!
         self.role = Player.Role(rawValue: src["role"]!)!
@@ -63,8 +63,8 @@ struct Player: Identifiable {
         return [
                 "id":id,
                 "playername": name,
-//                "latitude": latitude!.debugDescription,
-//                "longitude": longitude!.description,
+                "playerLatitude": String(latitude ?? 0.0),
+                "playerLongitude": String(longitude ?? 0.0),
                 "onlineStatus": onlineStatus.rawValue,
                 "captureState": captureState.rawValue,
                 "role": role.rawValue
