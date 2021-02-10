@@ -8,13 +8,7 @@
 import SwiftUI
 
 struct GameruleSettingsView: View {
-    @Binding var room: Room
-    @Binding var hour: Int
-    @Binding var minute: Int
-    @Binding var killerCaptureRange: Int
-    @Binding var survivorPositionTransmissionInterval: Int
-    @Binding var escapeTime: Int
-    @Binding var escapeRange: Int
+    @Binding var gameSetting: GameSettingObserve
     var body: some View {
         VStack {
             Text("ルール設定").font(.title).padding(.top, 20)
@@ -27,7 +21,7 @@ struct GameruleSettingsView: View {
                 
                 Spacer()
                 
-                Picker("", selection: $hour) {
+                Picker("", selection: $gameSetting.hour) {
                     ForEach(0 ..< 100) { num in
                         Text(String(num) + "時間")
                             .foregroundColor(.black)
@@ -38,7 +32,7 @@ struct GameruleSettingsView: View {
                 .compositingGroup()
                 .clipped()
                 
-                Picker("", selection: $minute) {
+                Picker("", selection: $gameSetting.minute) {
                     ForEach(1 ..< 60) { num in
                         Text(String(num) + "分")
                             .foregroundColor(.black)
@@ -59,7 +53,7 @@ struct GameruleSettingsView: View {
                     .font(.callout)
                 
                 Spacer()
-                Picker("", selection: $escapeTime) {
+                Picker("", selection: $gameSetting.escapeTime) {
                     ForEach(1 ..< 60) { num in
                         Text(String(num) + "分")
                             .foregroundColor(.black)
@@ -80,7 +74,7 @@ struct GameruleSettingsView: View {
                     .font(.callout)
                 
                 Spacer()
-                Picker("", selection: $escapeRange) {
+                Picker("", selection: $gameSetting.escapeRange) {
                     ForEach(1 ..< 500) { num in
                         Text(String(num * 10) + "m")
                             .foregroundColor(.black)
@@ -102,7 +96,7 @@ struct GameruleSettingsView: View {
                 
                 Spacer()
                 
-                Picker("", selection: $killerCaptureRange) {
+                Picker("", selection: $gameSetting.killerCaptureRange) {
                     ForEach(1 ..< 100) { num in
                         Text(String(num) + "m")
                             .foregroundColor(.black)
@@ -123,7 +117,7 @@ struct GameruleSettingsView: View {
                 
                 Spacer()
                 
-                Picker("", selection: $survivorPositionTransmissionInterval) {
+                Picker("", selection: $gameSetting.survivorPositionTransmissionInterval) {
                     ForEach(1 ..< 100) { num in
                         Text(String(num) + "分")
                             .foregroundColor(.black)

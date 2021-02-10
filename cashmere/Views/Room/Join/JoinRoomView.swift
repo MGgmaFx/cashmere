@@ -13,18 +13,13 @@ struct JoinRoomView: View {
     @EnvironmentObject var model: Model
     @EnvironmentObject var gameEventFlag: GameEventFlag
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
-    @State var roomId: String = ""
-    @State var players: [Player] = []
-    @State var gamerule: [String: String] = [:]
-    @State var escapingTime: String = "99"
-    @Binding var player: Player
-    var time = 0
+    @EnvironmentObject var room: Room
     var body: some View {
         VStack {
             
             Spacer()
             if gameEventFlag.isGameWating {
-                GameWatingView(roomId: $roomId, players: $players, gamerule: $gamerule)
+                GameWatingView()
             } else {
                 Image("rule")
                     .resizable()
@@ -46,8 +41,7 @@ struct JoinRoomView: View {
             
             Button(action: {
                 self.model.joinRoomViewPushed = false
-                leaveRoom(roomId: roomId)
-                roomId = ""
+                leaveRoom(room: room)
                 
             }) {
                 Text("もどる").foregroundColor(Color.black)
@@ -58,13 +52,13 @@ struct JoinRoomView: View {
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $gameEventFlag.isEscaping) {
-                EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: (Int(gamerule["escapeTime"] ?? "99")! * 60), to: Date())!)
+                EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: room.rule.escapeTime * 60, to: Date())!)
             })
             
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $gameEventFlag.isGameStarted) {
-                GameView(players: $players, roomId: $roomId, player: $player, gamerule: $gamerule, time: Int(gamerule["timelimit"] ?? "99")! - 1)
+                GameView()
             })
         }.frame(minWidth: 0,
                 maxWidth: .infinity,
@@ -80,27 +74,38 @@ struct JoinRoomView: View {
         model.isShowingScanner = false
         switch result {
         case .success(let code):
-            roomId = code
-            RDDAO.getPlayers(roomId: roomId){ (result) in
-                players = result
-                players.sort { $0.id < $1.id }
-                for playerDB in players {
-                    if player.id == playerDB.id {
-                        player.latitude = playerDB.latitude
-                        player.longitude = playerDB.longitude
-                        player.captureState = playerDB.captureState
-                        player.onlineStatus = playerDB.onlineStatus
-                        if player.captureState == "captured" {
+            room.id = code
+            RDDAO.addPlayer(roomId: room.id, player: room.me)
+            RDDAO.getGameRule(room: room) { rule in
+                if let r = rule {
+                    self.room.rule = r
+                }
+                // FIXME: nilの場合は何もしない
+            }
+            RDDAO.getPlayers(room: room){ (players) in
+                room.players = players
+                for player in players {
+                    if room.me.id == player.id {
+                        room.me.latitude = player.latitude
+                        room.me.longitude = player.longitude
+                        room.me.captureState = player.captureState
+                        room.me.onlineStatus = player.onlineStatus
+                        if room.me.captureState.rawValue == "captured" {
                             gameEventFlag.isCaptured = true
                         }
-                    }}
+                    }
+                }
+                if gameEventFlag.isGameStarted {
+                    checkAllCaught(plyers: room.players){ (isAllCaught) in
+                        if isAllCaught {
+                            gameEventFlag.isGameOver = isAllCaught
+                        }
+                    }
+                }
             }
-            
-            RDDAO.addPlayer(roomId: roomId, playerId: player.id, playerName: player.name, captureState: player.captureState ?? "escaping", role: player.role ?? "survivor")
-            RDDAO.updatePlayerRole(roomId: roomId, playerId: player.id, role: "survivor")
-            RDDAO.gameStartCheck(roomId: roomId){ result in
-                gameEventFlag.isEscaping = result
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double((Int(gamerule["escapeTime"] ?? "99")! * 60))) {
+            RDDAO.gameStartCheck(roomId: room.id){ isEscaping in
+                gameEventFlag.isEscaping = isEscaping
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(room.rule.escapeTime) * 60) {
                     gameEventFlag.isEscaping = false
                     gameEventFlag.isGameStarted = true
                 }
@@ -115,18 +120,23 @@ struct JoinRoomView: View {
     }
     
     private func joinRoom() {
-        player.role = "survivor"
-        player.captureState = "escaping"
+        room.me.role = .survivor
+        room.me.captureState = .escaping
     }
     
-    private func leaveRoom(roomId: String) {
+    private func leaveRoom(room: Room) {
         gameEventFlag.isGameWating = false
-        players = []
-        gamerule = [:]
-        player.role = ""
-        player.captureState = ""
-        if roomId != "" {
-            RDDAO.deletePlayer(roomId: roomId, playerId: player.id)
+        if room.id != "" {
+            RDDAO.deletePlayer(roomId: room.id, playerId: room.me.id)
         }
+    }
+    private func checkAllCaught(plyers: [Player], completionHandler: @escaping (Bool) -> Void) {
+        var isAllCaught = true
+        for player in room.players {
+            if player.captureState != .captured && player.role == .survivor {
+                isAllCaught = false
+            }
+        }
+        completionHandler(isAllCaught)
     }
 }

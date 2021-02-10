@@ -11,28 +11,25 @@ import UIKit
 struct GameView: View {
     @EnvironmentObject var gameEventFlag: GameEventFlag
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
+    @EnvironmentObject var room: Room
     @State var pinColor: Color = Color.blue
-    @Binding var players: [Player]
-    @Binding var roomId: String
-    @Binding var player: Player
-    @Binding var gamerule: [String : String]
-    let time: Int
+
     var body: some View {
         VStack {
             TabView {
-                MapView(roomId: $roomId, player: $player, players: $players, gamerule: $gamerule, time: time)
+                MapView(time: room.rule.time)
                     .tabItem {
                         Image(systemName: "map")
                         Text("マップ")
                     }
-                if player.role == "survivor" {
-                    ItemView(gamerule: $gamerule, roomId: $roomId, player: $player)
+                if room.me.role == .survivor {
+                    ItemView()
                         .tabItem {
                             Image(systemName: "case.fill")
                             Text("アイテム")
                         }
                 }
-                PlayerView(players: $players)
+                PlayerView(players: $room.players)
                     .tabItem {
                         Image(systemName: "figure.walk")
                         Text("プレイヤー")
@@ -40,7 +37,7 @@ struct GameView: View {
             }
             .accentColor(pinColor) // 選択したアイテム色を指定
             .fullScreenCover(isPresented: $gameEventFlag.isGameOver, content: {
-                ResultView(player: $player, players: $players)
+                ResultView()
             })
             
             VStack {
@@ -51,7 +48,7 @@ struct GameView: View {
                       dismissButton: .default(Text("了解")))
             }
         }.onAppear {
-            if player.role == "survivor" {
+            if room.me.role == .survivor {
                 pinColor = Color.blue
             } else {
                 pinColor = Color.red

@@ -21,12 +21,9 @@ struct mapView : UIViewRepresentable {
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @EnvironmentObject var itemFlag: ItemFlag
     @EnvironmentObject var gameFlag: GameEventFlag
+    @EnvironmentObject var room: Room
     @Binding var manager: CLLocationManager
     @Binding var alert: Bool
-    @Binding var roomId: String
-    @Binding var player: Player
-    @Binding var players: [Player]
-    @Binding var gamerule: [String: String]
     typealias UIViewType = MKMapView
     let map = MKMapView()
     // マップのデリゲートを定義
@@ -59,10 +56,8 @@ struct mapView : UIViewRepresentable {
     func updateUIView(_ uiView: MKMapView, context: Context) {
         // 表示しているマップとデリゲートを紐付け
         uiView.delegate = mapViewDelegate
-        let roomLatitude = Double(gamerule["roomLatitude"] ?? "0")
-        let roomLongitude = Double(gamerule["roomLongitude"] ?? "0")
-        // let roomLatitude = Double(43.063432)
-        // let roomLongitude = Double(141.39747)
+        let roomLatitude = Double(room.point?.roomLatitude ?? "0")
+        let roomLongitude = Double(room.point?.roomLongitude ?? "0")
         // 中心点を定義(latitudeは緯度、latitudeは経度)
         let coordinate = CLLocationCoordinate2D(latitude: roomLatitude!, longitude: roomLongitude!)
         // 領域を定義
@@ -72,7 +67,7 @@ struct mapView : UIViewRepresentable {
         // マップに設定
         uiView.setRegion(region, animated: true)
         
-        let radius = Double(gamerule["escapeRange"] ?? "39")!
+        let radius = Double(room.rule.escapeRange)
         // 円の定義(centerは中心点、radiusは半径)
         let circle = MKCircle(center: coordinate, radius: radius)
         // 円の追加
@@ -137,27 +132,27 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         let location = locations.last
         let latitude = location?.coordinate.latitude ?? 0.0
         let longitude = location?.coordinate.longitude ?? 0.0
-        let playerId = parent.player.id
-        let roomId = parent.roomId
-        if parent.player.captureState != "caputured" {
+        let playerId = parent.room.me.id
+        let roomId = parent.room.id
+        if parent.room.me.captureState != .captured {
             parent.RDDAO.addPlayerLocation(roomId: roomId, playerId: playerId, latitude: latitude, longitude: longitude)
         }
         
         /**
          確保系処理
          */
-        let killerCaptureRange = Int(parent.gamerule["killerCaptureRange"] ?? "20")
-        for player in parent.players {
-            if parent.player.id != player.id && player.captureState == "escaping" {
+        let killerCaptureRange = parent.room.rule.killerCaptureRange
+        for player in parent.room.players {
+            if parent.room.me.id != player.id && player.captureState == .escaping {
                 let targetLatitude = player.latitude ?? 0.0
                 let targetLongitude = player.longitude ?? 0.0
                 let myLocation = CLLocation(latitude: latitude, longitude: longitude)
                 let yourLocation = CLLocation(latitude: targetLatitude, longitude: targetLongitude)
                 let distanceInMeters = Int(myLocation.distance(from: yourLocation))
                 print("生存者との距離 " + String(distanceInMeters))
-                if distanceInMeters <= killerCaptureRange ?? 1 {
+                if distanceInMeters <= killerCaptureRange {
                     print("生存者の確保")
-                    parent.RDDAO.addCaptureFlag(roomId: parent.roomId, playerId: player.id)
+                    parent.RDDAO.addCaptureFlag(roomId: parent.room.id, playerId: player.id)
                 }
             }
         }
@@ -167,7 +162,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
          */
         if parent.itemFlag.useSearchlight {
             print("searchLightの呼び出し")
-            searchLight(self.parent.players)
+            searchLight(self.parent.room.players)
         }
        
         let georeader = CLGeocoder()
@@ -181,14 +176,14 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
     }
     
     public func countTimer() {
-        let time = Int(parent.gamerule["survivorPositionTransmissionInterval"] ?? "1")! * 60
+        let time = parent.room.rule.survivorPositionTransmissionInterval * 60
         while !(parent.gameFlag.isGameOver) {
             print("countTimer を呼び出し")
             sleep(UInt32(time))
-            if parent.player.role == "killer" {
+            if parent.room.me.role == .killer {
                 DispatchQueue.main.async { [self] in
                     print("addAnnotations を呼び出し")
-                    addAnnotations(self.parent.players)
+                    addAnnotations(self.parent.room.players)
                 }
             }
         }
@@ -198,7 +193,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         self.parent.map.removeAnnotations(self.parent.map.annotations)
         let pin = MKPointAnnotation()
         for player in players {
-            if parent.player.id != player.id && player.role == "survivor" && player.captureState == "escaping"{
+            if parent.room.me.id != player.id && player.role == .survivor && player.captureState == .escaping {
                 let latitude = player.latitude ?? 0.0
                 let longitude = player.longitude ?? 0.0
                 pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -215,7 +210,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
     func searchLight(_ players: [Player]) {
         let killerPin = MKPointAnnotation()
         for player in players {
-            if parent.player.id != player.id && player.role == "killer" {
+            if parent.room.me.id != player.id && player.role == .killer {
                 print("鬼を表示するよ")
                 let latitude = player.latitude ?? 0.0
                 let longitude = player.longitude ?? 0.0

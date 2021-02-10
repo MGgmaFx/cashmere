@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ItemView: View {
     @EnvironmentObject var itemFlag: ItemFlag
+    @EnvironmentObject var room: Room
     @State var showingAlert = false
     @State var items: [Item] = [
             Item(id: 1,
@@ -27,16 +28,13 @@ struct ItemView: View {
                description: "１分間、鬼の位置情報を表示する。",
                amount: 3),
         ]
-    @Binding var gamerule: [String : String]
-    @Binding var roomId: String
-    @Binding var player: Player
     var body: some View {
         ZStack {
             Color(UIColor(hex: "212121")).edgesIgnoringSafeArea(.all)
             VStack {
                 List {
                     ForEach(items, id: \.id) { item in
-                        itemAlert(items: $items, roomId: $roomId, gamerule: $gamerule, showingAlert: $showingAlert, player: $player, item: item)
+                        itemAlert(items: $items, showingAlert: $showingAlert, item: item)
                             .listRowBackground(Color(UIColor(hex: "212121")))
                     }
                 }.onAppear {
@@ -55,16 +53,14 @@ struct ItemView: View {
 struct itemAlert: View {
     @EnvironmentObject var itemFlag: ItemFlag
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
+    @EnvironmentObject var room: Room
     @Binding var items: [Item]
-    @Binding var roomId: String
-    @Binding var gamerule: [String : String]
     @Binding var showingAlert: Bool
-    @Binding var player: Player
     let item: Item
     var body: some View {
         ZStack {
             Color(UIColor(hex: "212121")).edgesIgnoringSafeArea(.all)
-            if item.amount > 0 && player.captureState != "captured"{
+            if item.amount > 0 && room.me.captureState != .captured {
                 Button(action: {
                     showingAlert = true
                 }) {
@@ -78,9 +74,9 @@ struct itemAlert: View {
                     secondaryButton: .default(Text("つかう")) {
                         if item.id == 1{
                             itemFlag.useStealthCloak = true
-                            RDDAO.updateCaptureState(roomId: roomId, playerId: player.id, state: "hiding")
-                            DispatchQueue.main.asyncAfter(deadline: .now() + Double(gamerule["survivorPositionTransmissionInterval"] ?? "1")! * 60) {
-                                RDDAO.updateCaptureState(roomId: roomId, playerId: player.id, state: "escaping")
+                            RDDAO.updateCaptureState(roomId: room.id, playerId: room.me.id, state: .hiding)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + Double(room.rule.survivorPositionTransmissionInterval * 60)) {
+                                RDDAO.updateCaptureState(roomId: room.id, playerId: room.me.id, state: .escaping)
                                 itemFlag.useStealthCloak = false
                             }
                         } else if item.id == 2 {

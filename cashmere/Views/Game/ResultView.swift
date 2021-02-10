@@ -10,14 +10,13 @@ import SwiftUI
 struct ResultView: View {
     @EnvironmentObject var gameEventFlag: GameEventFlag
     @EnvironmentObject var model: Model
+    @EnvironmentObject var room: Room
     @State var isSurviverWin = false
-    @Binding var player: Player
-    @Binding var players: [Player]
     var body: some View {
         
         VStack {
             if isSurviverWin {
-                if player.role == "survivor" {
+                if room.me.role == .survivor {
                     Image("app_logo_win").resizable().frame(width: 250, height: 130)
                     Image("survivor_win")
                 } else {
@@ -25,7 +24,7 @@ struct ResultView: View {
                     Image("killer_lose")
                 }
             } else {
-                if player.role == "survivor" {
+                if room.me.role == .survivor {
                     Image("app_logo_lose").resizable().frame(width: 250, height: 130)
                     Image("survivor_lose")
                 } else {

@@ -2,18 +2,16 @@ import SwiftUI
 import CoreLocation
 
 struct MapView: View {
+    @EnvironmentObject var room: Room
     @State var manager = CLLocationManager()
     @State var alert = false
-    @Binding var roomId: String
-    @Binding var player: Player
-    @Binding var players: [Player]
-    @Binding var gamerule: [String : String]
     let time: Int
+
     var body: some View {
         let toDate = Calendar.current.date(byAdding:.minute, value: time, to:Date())
         // ContentViewに地図を表示
         ZStack(alignment: .top) {
-            mapView(manager: $manager, alert: $alert, roomId: $roomId, player: $player, players: $players, gamerule: $gamerule)
+            mapView(manager: $manager, alert: $alert)
                 .edgesIgnoringSafeArea(.all)
                 .statusBar(hidden: true)
                 .alert(isPresented: $alert) {

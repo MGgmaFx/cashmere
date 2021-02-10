@@ -13,23 +13,13 @@ struct CreateRoomView: View {
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @EnvironmentObject var session: SessionStore
     @EnvironmentObject var gameEventFlag: GameEventFlag
-    @State var room = Room(name: "鬼ごっこルーム")
-    @State var players: [Player] = []
-    @State var gamerule: [String : String] = [:]
-    @State var hour = 0
-    @State var minute = 29
-    @State var killerCaptureRange = 9
-    @State var survivorPositionTransmissionInterval = 2
-    @State var escapeTime = 2
-    @State var time = 59
-    @State var escapeRange = 39
-    @Binding var player: Player
-    @State var roomLatitude = ""
-    @State var roomLongitude = ""
+    @EnvironmentObject var room: Room
+    @State var gameSetting: GameSettingObserve = GameSettingObserve()
+
     var body: some View {
         VStack {
             VStack {
-                GameruleSettingsView(room: $room, hour: $hour, minute: $minute, killerCaptureRange: $killerCaptureRange, survivorPositionTransmissionInterval: $survivorPositionTransmissionInterval, escapeTime: $escapeTime, escapeRange: $escapeRange)
+                GameruleSettingsView(gameSetting: $gameSetting)
             }.padding()
             .padding(.top, 30)
                 
@@ -37,17 +27,23 @@ struct CreateRoomView: View {
             
             Button(action: {
                 model.playerInvitePushed = true
-                time = hour * 60 + (minute + 1)
-                RDDAO.updateGamerule(roomId: room.id, timelimit: time, killerCaptureRange: killerCaptureRange, survivorPositionTransmissionInterval: survivorPositionTransmissionInterval, escapeTime: escapeTime, hour: hour, minute: minute, escapeRange: escapeRange, roomLatitude: roomLatitude, roomLongitude: roomLongitude)
-                RDDAO.getGameRule(roomId: room.id) { (result) in
-                    gamerule = result
+                // ルールモデルの反映
+                ruleInit()
+                RDDAO.updateGamerule(room: room)
+                RDDAO.updatePosition(room: room)
+                RDDAO.getGameRule(room: room) { rule in
+                    if let r = rule {
+                        self.room.rule = r
+                    }
+                    // FIXME: nilの場合は何もしない
                 }
             }) {
                 Text("プレイヤーを招待する")
                     .frame(width: 240, height: 60, alignment: .center)
             }
             .sheet(isPresented: $model.playerInvitePushed) {
-                PlayerInviteView(gamerule: $gamerule, players: $players, room: $room, player: $player, time: time)
+                PlayerInviteView()
+                    .environmentObject(room)
             }
             .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "E94822"))))
             
@@ -62,13 +58,15 @@ struct CreateRoomView: View {
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $gameEventFlag.isEscaping) {
-                EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: (Int(gamerule["escapeTime"] ?? "99")! * 60), to: Date())!)
+                let escapeTime = room.rule.escapeTime
+                let dispTime = Calendar.current.date(byAdding: .second, value: escapeTime * 60, to: Date())!
+                EscapeTimeView(setDate: dispTime)
             })
             
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $gameEventFlag.isGameStarted) {
-                GameView(players: $players, roomId: $room.id, player: $player, gamerule: $gamerule, time: time)
+                GameView()
             })
             
         }
@@ -80,25 +78,23 @@ struct CreateRoomView: View {
         .onAppear{
             roomInit(room: room)
             getLocation()
-            RDDAO.getGameRule(roomId: room.id) { (result) in
-                gamerule = result
-            }
-            RDDAO.getPlayers(roomId: room.id) { (result) in
-                players = result
-                players.sort { $0.id < $1.id }
-                for playerDB in players {
-                    if player.id == playerDB.id {
-                        player.latitude = playerDB.latitude
-                        player.longitude = playerDB.longitude
-                        player.onlineStatus = playerDB.onlineStatus
-                        player.captureState = playerDB.captureState
-                        if player.captureState == "captured" {
+            RDDAO.updatePosition(room: room)
+            RDDAO.getPlayers(room: room) { (players) in
+                room.players = players
+                for player in players {
+                    // HELP: ここは何をしているんだ？
+                    if room.me.id == player.id {
+                        room.me.latitude = player.latitude
+                        room.me.longitude = player.longitude
+                        room.me.onlineStatus = player.onlineStatus
+                        room.me.captureState = player.captureState
+                        if room.me.captureState == .captured {
                             gameEventFlag.isCaptured = true
                         }
                     }
                 }
                 if gameEventFlag.isGameStarted {
-                    checkAllCaught(plyers: players){ (isAllCaught) in
+                    checkAllCaught(plyers: room.players){ (isAllCaught) in
                         if isAllCaught {
                             gameEventFlag.isGameOver = isAllCaught
                         }
@@ -108,40 +104,51 @@ struct CreateRoomView: View {
             
         }
         .onDisappear{
-            roomDel(room: room.id)
+//            roomDel(room: room.id)
         }
         .navigationBarBackButtonHidden(true)
         .onTapGesture {
             UIApplication.shared.closeKeyboard()
         }
     }
-    private func roomInit(room: Room) {
-        player.role = "killer"
-        player.captureState = "tracking"
-        RDDAO.updateRoomStatus(roomId: room.id, state: "wating")
-        RDDAO.addPlayer(roomId: room.id, playerId: player.id, playerName: player.name, captureState: player.captureState ?? "tracking", role: player.role ?? "killer")
-    }
     
+    private func ruleInit() {
+        room.rule.escapeRange = gameSetting.escapeRange
+        room.rule.escapeTime = gameSetting.escapeTime
+        room.rule.killerCaptureRange = gameSetting.killerCaptureRange
+        room.rule.survivorPositionTransmissionInterval = gameSetting.survivorPositionTransmissionInterval
+        let hour = gameSetting.hour
+        let minute = gameSetting.minute
+        room.rule.toTime(hour: hour, minute: minute)
+    }
+    private func roomInit(room: Room) {
+        room.me.role = .killer
+        room.me.captureState = .tracking
+        RDDAO.updateRoomStatus(roomId: room.id, state: .wating)
+        RDDAO.addPlayer(roomId: room.id, player: room.me)
+    }
+
     private func roomDel(room: String) {
-        player.role = ""
-        player.captureState = ""
+//        player.role = ""
+//        player.captureState = ""
         RDDAO.deleteRoom(roomId: room)
     }
-    
+
     private func checkAllCaught(plyers: [Player], completionHandler: @escaping (Bool) -> Void) {
         var isAllCaught = true
-        for player in players {
-            if player.captureState != "captured" && player.role == "survivor" {
+        for player in room.players {
+            if player.captureState != .captured && player.role == .survivor {
                 isAllCaught = false
             }
         }
         completionHandler(isAllCaught)
     }
-    
+
     private func getLocation() {
         requestLocation().getLocation(comp: { roomLocation in
-            roomLatitude = roomLocation["roomLatitude"]!
-            roomLongitude = roomLocation["roomLongitude"]!
+            let roomLatitude = roomLocation["roomLatitude"]!
+            let roomLongitude = roomLocation["roomLongitude"]!
+            room.point = Position(latitude: roomLatitude, longitude: roomLongitude)
         })
     }
     

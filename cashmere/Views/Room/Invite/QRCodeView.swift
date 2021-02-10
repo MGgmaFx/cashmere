@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct QRCodeView: View {
-    @Binding var room:Room
+    @EnvironmentObject var room: Room
     @State var qrImage:UIImage?
     var _QRCodeMaker = QRCodeMaker()
 
     var body: some View {
         VStack {
             Spacer()
-            Image(uiImage: self._QRCodeMaker.make(message: self.room.id)!)
+            Image(uiImage: self._QRCodeMaker.make(message: room.id)!)
             Spacer()
             Text("QRコードを読み込んでください")
                 .foregroundColor(.orange)

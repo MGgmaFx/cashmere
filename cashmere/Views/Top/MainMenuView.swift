@@ -11,27 +11,26 @@ import FirebaseAuth
 struct MainMenuView: View {
     @EnvironmentObject var model: Model
     @EnvironmentObject var session: SessionStore
-    @State var player = Player()
     func getUser () {
           session.listen()
     }
     var body: some View {
             NavigationView {
                 VStack {
-                    NavigationLink(destination: ProfileSettingsView(player: $player), isActive: $model.profileSettingsViewPushed) {
-                    HStack {
-                        Spacer()
-                        
-                            Image(systemName: "gearshape.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 20))
-                                .foregroundColor(.gray)
-                                .onTapGesture {
-                                    model.profileSettingsViewPushed = true
-                                }
-                        }
-                    }
+//                    NavigationLink(destination: ProfileSettingsView(player: $player), isActive: $model.profileSettingsViewPushed) {
+//                    HStack {
+//                        Spacer()
+//                        
+//                            Image(systemName: "gearshape.fill")
+//                                .resizable()
+//                                .frame(width: 30, height: 30)
+//                                .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 20))
+//                                .foregroundColor(.gray)
+//                                .onTapGesture {
+//                                    model.profileSettingsViewPushed = true
+//                                }
+//                        }
+//                    }
                     Image("logo_title")
                         .resizable()
                         .frame(width: 280, height: 70, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -54,7 +53,7 @@ struct MainMenuView: View {
                             .buttonStyle(CustomButtomStyle(color: Color.orange))
                         }
                     } else {
-                        NavigationLink(destination: CreateRoomView(player: $player), isActive: $model.createRoomViewPushed) {
+                        NavigationLink(destination: CreateRoomView(), isActive: $model.createRoomViewPushed) {
                             Button(action: {
                                 model.createRoomViewPushed = true
                             }) {
@@ -62,7 +61,7 @@ struct MainMenuView: View {
                             }
                             .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "E94822"))))
                         }
-                        NavigationLink(destination: JoinRoomView(player: $player), isActive: $model.joinRoomViewPushed) {
+                        NavigationLink(destination: JoinRoomView(), isActive: $model.joinRoomViewPushed) {
                             Button(action: {
                                 model.joinRoomViewPushed = true
                             }) {

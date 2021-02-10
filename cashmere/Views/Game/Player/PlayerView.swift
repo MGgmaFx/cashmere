@@ -14,8 +14,8 @@ struct PlayerView: View {
             Color(UIColor(hex: "212121")).edgesIgnoringSafeArea(.all)
             VStack {
                 List {
-                    ForEach(players, id: \.id) { player in
-                        PlayerListRow(playerName: player.name, captureState: player.captureState ?? "取得中...", role: player.role ?? "取得中...")
+                    ForEach(players) { player in
+                        PlayerListRow(playerName: player.name, captureState: player.captureState, role: player.role)
                             .listRowBackground(Color(UIColor(hex: "212121")))
                     }
                 }
