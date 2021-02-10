@@ -21,6 +21,7 @@ struct PlayerInviteView: View {
             QRCodeView()
                 .padding()
             
+            if room.players.count > 1 {
                 Button(action: {
                     DispatchQueue.main.async {
                         escapseStart()
@@ -44,6 +45,16 @@ struct PlayerInviteView: View {
                         .frame(width: 240, height: 60, alignment: .center)
                 }
                 .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "0BBB18"))))
+            } else {
+                Button( action: {
+                    
+                }) {
+                    Text("ゲーム開始")
+                        .frame(width: 240, height: 60, alignment: .center)
+                }
+                .buttonStyle(CustomButtomStyle(color: Color.gray))
+                .disabled(true)
+            }
         
 
             

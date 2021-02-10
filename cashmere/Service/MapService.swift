@@ -22,8 +22,7 @@ struct mapView : UIViewRepresentable {
     @EnvironmentObject var itemFlag: ItemFlag
     @EnvironmentObject var gameFlag: GameEventFlag
     @EnvironmentObject var room: Room
-    @Binding var manager: CLLocationManager
-    @Binding var alert: Bool
+    @State var manager: CLLocationManager = CLLocationManager()
     typealias UIViewType = MKMapView
     let map = MKMapView()
     // マップのデリゲートを定義
@@ -43,19 +42,7 @@ struct mapView : UIViewRepresentable {
         manager.desiredAccuracy = kCLLocationAccuracyBest
         // 位置情報取得間隔を指定(2m移動したら、位置情報を通知)
         manager.distanceFilter = 2
-        // 下のlocationManagerを呼び出している
-        manager.startUpdatingLocation()
-        return map
-    }
-    
-    func stopUpdatingLocation() {
-        manager.stopUpdatingLocation()
-    }
-    
-    // 更新されたときの処理
-    func updateUIView(_ uiView: MKMapView, context: Context) {
-        // 表示しているマップとデリゲートを紐付け
-        uiView.delegate = mapViewDelegate
+        
         let roomLatitude = Double(room.point?.roomLatitude ?? "0")
         let roomLongitude = Double(room.point?.roomLongitude ?? "0")
         // 中心点を定義(latitudeは緯度、latitudeは経度)
@@ -65,13 +52,29 @@ struct mapView : UIViewRepresentable {
         // マップの表示領域を定義
         let region = MKCoordinateRegion(center: coordinate, span: span)
         // マップに設定
-        uiView.setRegion(region, animated: true)
-        
+        map.setRegion(region, animated: true)
+        // 円の半径を設定
         let radius = Double(room.rule.escapeRange)
         // 円の定義(centerは中心点、radiusは半径)
         let circle = MKCircle(center: coordinate, radius: radius)
         // 円の追加
-        uiView.addOverlay(circle)
+        map.addOverlay(circle)
+        // 下のlocationManagerを呼び出している
+        manager.startUpdatingLocation()
+        return map
+    }
+    
+    func stopUpdatingLocation() {
+        manager.stopUpdatingLocation()
+    }
+    
+    
+    // 更新されたときの処理
+    func updateUIView(_ uiView: MKMapView, context: Context) {
+        // 表示しているマップとデリゲートを紐付け
+        uiView.delegate = mapViewDelegate
+        
+        
     }
 }
 
@@ -91,7 +94,6 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
     
     var parent : mapView
-    // var timer: Timer?
     init(parent1 : mapView) {
         parent = parent1
     }
@@ -183,14 +185,14 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
             if parent.room.me.role == .killer {
                 DispatchQueue.main.async { [self] in
                     print("addAnnotations を呼び出し")
-                    addAnnotations(self.parent.room.players)
+                    addAnnotations(players: parent.room.players)
                 }
             }
         }
     }
     
-    func addAnnotations(_ players: [Player]) {
-        self.parent.map.removeAnnotations(self.parent.map.annotations)
+    func addAnnotations(players: [Player]) {
+        parent.map.removeAnnotations(parent.map.annotations)
         let pin = MKPointAnnotation()
         for player in players {
             if parent.room.me.id != player.id && player.role == .survivor && player.captureState == .escaping {
@@ -216,6 +218,9 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
                 let longitude = player.longitude ?? 0.0
                 killerPin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 self.parent.map.addAnnotation(killerPin)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
+                    self.parent.map.removeAnnotation(killerPin)
+                }
             }
         }
         // self.parent.map.removeAnnotations(self.parent.map.annotations)

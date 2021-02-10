@@ -8,9 +8,9 @@
 import SwiftUI
 struct TimerView : View {
     @EnvironmentObject var gameFlag: GameEventFlag
-    @State var nowD:Date = Date()
+    @State var nowD: Date = Date()
     
-    let setDate:Date
+    @Binding var setDate:Date
    
     var timer: Timer {
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {_ in
@@ -26,8 +26,7 @@ struct TimerView : View {
             })
     }
 
-   func TimerFunc(from date:Date)->Text{
-        var timeColor = Color.white
+   func TimerFunc(from date:Date) -> Text{
         let cal = Calendar(identifier: .japanese)
 
         let timeVal = cal.dateComponents([.day,.hour,.minute,.second], from: nowD,to: setDate)
@@ -35,10 +34,6 @@ struct TimerView : View {
         if timeVal.second == 0 && timeVal.minute == 0 && timeVal.hour == 0 && timeVal.day == 0{
             gameFlag.isTimeOut = true
             gameFlag.isGameOver = true
-        } else if timeVal.day == 0 && timeVal.hour == 0 && Int(timeVal.minute!) >= 15 {
-            timeColor = Color.yellow
-        } else if timeVal.day == 0 && timeVal.hour == 0 {
-            timeColor = Color.red
         }
     
         if timeVal.second! < 0 && timeVal.minute == 0 {
@@ -50,7 +45,7 @@ struct TimerView : View {
         timeVal.hour ?? 00,
         timeVal.minute ?? 00,
         timeVal.second ?? 00))
-            .foregroundColor(timeColor)
+            .foregroundColor(Color.white)
        
     }
 

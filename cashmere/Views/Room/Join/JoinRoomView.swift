@@ -76,6 +76,9 @@ struct JoinRoomView: View {
         case .success(let code):
             room.id = code
             RDDAO.addPlayer(roomId: room.id, player: room.me)
+            RDDAO.getPosition(roomId: room.id) { position in
+                room.point = position
+            }
             RDDAO.getGameRule(room: room) { rule in
                 if let r = rule {
                     self.room.rule = r

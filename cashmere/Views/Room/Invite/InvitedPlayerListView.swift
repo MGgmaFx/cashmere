@@ -22,7 +22,7 @@ struct InvitedPlayerListView: View {
                                 .resizable()
                                 .frame(width: 40, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 .foregroundColor(.blue)
-                            Text(player.id)
+                            Text(player.name)
                                 .foregroundColor(.white)
                         }
                         .padding()
