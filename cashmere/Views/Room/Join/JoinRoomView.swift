@@ -75,37 +75,7 @@ struct JoinRoomView: View {
         switch result {
         case .success(let code):
             room.id = code
-            RDDAO.addPlayer(roomId: room.id, player: room.me)
-            RDDAO.getPosition(roomId: room.id) { position in
-                room.point = position
-            }
-            RDDAO.getGameRule(room: room) { rule in
-                if let r = rule {
-                    self.room.rule = r
-                }
-                // FIXME: nilの場合は何もしない
-            }
-            RDDAO.getPlayers(room: room){ (players) in
-                room.players = players
-                for player in players {
-                    if room.me.id == player.id {
-                        room.me.latitude = player.latitude
-                        room.me.longitude = player.longitude
-                        room.me.captureState = player.captureState
-                        room.me.onlineStatus = player.onlineStatus
-                        if room.me.captureState.rawValue == "captured" {
-                            gameEventFlag.isCaptured = true
-                        }
-                    }
-                }
-                if gameEventFlag.isGameStarted {
-                    checkAllCaught(plyers: room.players){ (isAllCaught) in
-                        if isAllCaught {
-                            gameEventFlag.isGameOver = isAllCaught
-                        }
-                    }
-                }
-            }
+            roomInit()
             RDDAO.gameStartCheck(roomId: room.id){ isEscaping in
                 gameEventFlag.isEscaping = isEscaping
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(room.rule.escapeTime) * 60) {
@@ -115,10 +85,24 @@ struct JoinRoomView: View {
             }
             gameEventFlag.isGameWating = true
             
-            
         case .failure(let error):
             print("Scanning failed")
             print(error)
+        }
+    }
+    
+    fileprivate func roomInit() {
+        RDDAO.addPlayer(roomId: room.id, player: room.me)
+        RDDAO.getPlayers(room: room, completionHandler: { players in
+            room.players = players
+        })
+        RDDAO.getPosition(roomId: room.id) { position in
+            room.point = position
+        }
+        RDDAO.getGameRule(room: room) { rule in
+            if let r = rule {
+                self.room.rule = r
+            }
         }
     }
     
@@ -132,14 +116,5 @@ struct JoinRoomView: View {
         if room.id != "" {
             RDDAO.deletePlayer(roomId: room.id, playerId: room.me.id)
         }
-    }
-    private func checkAllCaught(plyers: [Player], completionHandler: @escaping (Bool) -> Void) {
-        var isAllCaught = true
-        for player in room.players {
-            if player.captureState != .captured && player.role == .survivor {
-                isAllCaught = false
-            }
-        }
-        completionHandler(isAllCaught)
     }
 }

@@ -59,6 +59,7 @@ struct PlayerInviteView: View {
 
             
         }.onAppear(){
+            // ユーザ同期用
             RDDAO.getPlayers(room: room, completionHandler: { players in
                 room.players = players
             })
