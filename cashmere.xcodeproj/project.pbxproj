@@ -11,10 +11,10 @@
 		240BA77A25C2F095001CF995 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240BA77925C2F095001CF995 /* GameOverView.swift */; };
 		2433509B25C04B9A0006866E /* CustomButtomStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433509A25C04B9A0006866E /* CustomButtomStyle.swift */; };
 		243350A025C04BCB0006866E /* GameEventFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433509F25C04BCB0006866E /* GameEventFlag.swift */; };
+		2434335125D40BDF006816CC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2434335025D40BDF006816CC /* GoogleService-Info.plist */; };
 		24493F3625B52960009DB684 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24493F3525B52960009DB684 /* Item.swift */; };
 		2449432C259309D500DB7F04 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2449432B259309D400DB7F04 /* SessionStore.swift */; };
 		244B2DFE25C90ED70071E549 /* UIColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244B2DFD25C90ED70071E549 /* UIColorHex.swift */; };
-		244B2E0325C9122D0071E549 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 244B2E0225C9122D0071E549 /* GoogleService-Info.plist */; };
 		245227E925761A7300B90ED7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227E825761A7300B90ED7 /* AppDelegate.swift */; };
 		245227EB25761A7300B90ED7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227EA25761A7300B90ED7 /* SceneDelegate.swift */; };
 		245227ED25761A7300B90ED7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245227EC25761A7300B90ED7 /* ContentView.swift */; };
@@ -81,10 +81,10 @@
 		240BA77925C2F095001CF995 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		2433509A25C04B9A0006866E /* CustomButtomStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtomStyle.swift; sourceTree = "<group>"; };
 		2433509F25C04BCB0006866E /* GameEventFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEventFlag.swift; sourceTree = "<group>"; };
+		2434335025D40BDF006816CC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		24493F3525B52960009DB684 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		2449432B259309D400DB7F04 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		244B2DFD25C90ED70071E549 /* UIColorHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHex.swift; sourceTree = "<group>"; };
-		244B2E0225C9122D0071E549 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		245227E525761A7300B90ED7 /* cashmere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cashmere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		245227E825761A7300B90ED7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		245227EA25761A7300B90ED7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -209,8 +209,8 @@
 				245229342583483800B90ED7 /* Views */,
 				245227E825761A7300B90ED7 /* AppDelegate.swift */,
 				245227EA25761A7300B90ED7 /* SceneDelegate.swift */,
-				244B2E0225C9122D0071E549 /* GoogleService-Info.plist */,
 				245227EE25761A7700B90ED7 /* Assets.xcassets */,
+				2434335025D40BDF006816CC /* GoogleService-Info.plist */,
 				245227F325761A7700B90ED7 /* LaunchScreen.storyboard */,
 				245227F625761A7700B90ED7 /* Info.plist */,
 				245227F025761A7700B90ED7 /* Preview Content */,
@@ -537,7 +537,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				245227F525761A7700B90ED7 /* LaunchScreen.storyboard in Resources */,
-				244B2E0325C9122D0071E549 /* GoogleService-Info.plist in Resources */,
+				2434335125D40BDF006816CC /* GoogleService-Info.plist in Resources */,
 				245227F225761A7700B90ED7 /* Preview Assets.xcassets in Resources */,
 				245227EF25761A7700B90ED7 /* Assets.xcassets in Resources */,
 			);
@@ -912,7 +912,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"cashmere/Preview Content\"";
-				DEVELOPMENT_TEAM = EDST8U6VYT;
+				DEVELOPMENT_TEAM = 5PRVM435C9;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = cashmere/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
@@ -920,7 +920,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = KoukiShimura.cashmere;
+				PRODUCT_BUNDLE_IDENTIFIER = "KoukiShimura.cashmere-shun";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -937,7 +937,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"cashmere/Preview Content\"";
-				DEVELOPMENT_TEAM = EDST8U6VYT;
+				DEVELOPMENT_TEAM = 5PRVM435C9;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = cashmere/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
@@ -945,7 +945,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = KoukiShimura.cashmere;
+				PRODUCT_BUNDLE_IDENTIFIER = "KoukiShimura.cashmere-shun";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

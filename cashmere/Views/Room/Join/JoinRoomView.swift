@@ -52,7 +52,7 @@ struct JoinRoomView: View {
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $gameEventFlag.isEscaping) {
-                EscapeTimeView(setDate: Calendar.current.date(byAdding: .second, value: room.rule.escapeTime * 60, to: Date())!)
+                EscapeTimeView(startDate: Calendar.current.date(byAdding: .second, value: room.rule.escapeTime * 60, to: Date())!)
             })
             
             VStack {

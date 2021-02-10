@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct EscapeTimeView: View {
-    @State var nowD:Date = Date()
-    let setDate: Date
+    @State var nowDate:Date = Date()
+    // 開始時刻
+    let startDate: Date
     
     var timer: Timer {
+        // スケジューラーを設定
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {_ in
-            self.nowD = Date()
+            // 1秒ごとに時刻を再設定
+            self.nowDate = Date()
         }
     }
     
@@ -22,11 +25,14 @@ struct EscapeTimeView: View {
             Spacer()
             Text("逃走時間").foregroundColor(.red).font(.largeTitle)
             Spacer()
-            TimerFunc(from: setDate)
+            
+            TimerFunc(from: startDate)
                 .font(.title)
                 .onAppear(perform: {
+                    // timerクロージャの設定
                     _ = self.timer
                 })
+            
             Spacer()
             Text("※できるだけ遠くに逃げてください!!").foregroundColor(.white).font(.footnote)
             Spacer()
@@ -35,29 +41,22 @@ struct EscapeTimeView: View {
         .edgesIgnoringSafeArea(.all)
     }
     
-    func TimerFunc(from date:Date)->Text{
-         let cal = Calendar(identifier: .japanese)
-
-         let timeVal = cal.dateComponents([.day,.hour,.minute,.second], from: nowD,to: setDate)
+    func TimerFunc(from date:Date) -> Text{
+        // 現在時刻とゲーム開始時刻の差分を取得
+        let cal = Calendar(identifier: .japanese)
+        let timeVal = cal.dateComponents([.day,.hour,.minute,.second], from: nowDate,to: startDate)
         
         if timeVal.second! < 0 && timeVal.minute == 0 {
             return Text("開始中...")
                 .foregroundColor(.white)
                 .font(.system(size: 70, weight: .regular, design: .default))
         }
-
-         return Text(String(format: "%02d:%02d",
-         timeVal.minute ?? 00,
-         timeVal.second ?? 00))
+        
+        return Text(String(format: "%02d:%02d",
+                           timeVal.minute ?? 00,
+                           timeVal.second ?? 00))
             .foregroundColor(.red)
             .font(.system(size: 100, weight: .regular, design: .default))
         
-     }
-}
-
-struct EscapeTimeViewPreview: PreviewProvider {
-    static var previews: some View {
-        let toDate = Calendar.current.date(byAdding:.minute,value: 3,to:Date())
-        EscapeTimeView(setDate: toDate!)
     }
 }

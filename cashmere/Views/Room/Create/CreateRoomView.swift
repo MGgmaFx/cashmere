@@ -15,9 +15,11 @@ struct CreateRoomView: View {
     @EnvironmentObject var gameEventFlag: GameEventFlag
     @EnvironmentObject var room: Room
     @State var gameSetting: GameSettingObserve = GameSettingObserve()
-
+    
     var body: some View {
         VStack {
+            
+            // ゲームルール設定ビュー(初期表示)
             VStack {
                 GameruleSettingsView(gameSetting: $gameSetting)
             }.padding()
@@ -25,18 +27,9 @@ struct CreateRoomView: View {
                 
             Spacer()
             
+            // 招待ボタン(初期表示)
             Button(action: {
-                model.playerInvitePushed = true
-                // ルールモデルの反映
-                ruleInit()
-                RDDAO.updateGamerule(room: room)
-                RDDAO.updatePosition(room: room)
-                RDDAO.getGameRule(room: room) { rule in
-                    if let r = rule {
-                        self.room.rule = r
-                    }
-                    // FIXME: nilの場合は何もしない
-                }
+                tappedInvitedButton()
             }) {
                 Text("プレイヤーを招待する")
                     .frame(width: 240, height: 60, alignment: .center)
@@ -47,6 +40,7 @@ struct CreateRoomView: View {
             }
             .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "E94822"))))
             
+            // 戻るボタン(初期表示)
             Button(action: {
                 model.createRoomViewPushed = false
             }) {
@@ -55,14 +49,16 @@ struct CreateRoomView: View {
             }
             .buttonStyle(CustomButtomStyle(color: Color(UIColor(hex: "C9E8F1"))))
             
+            // 逃走時間ビュー(フラグ制御)
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $gameEventFlag.isEscaping) {
                 let escapeTime = room.rule.escapeTime
-                let dispTime = Calendar.current.date(byAdding: .second, value: escapeTime * 60, to: Date())!
-                EscapeTimeView(setDate: dispTime)
+                let startDate = getStartTime(time: escapeTime, to: Date())
+                EscapeTimeView(startDate: startDate)
             })
             
+            // ゲームビュー(フラグ制御)
             VStack {
             }
             .background(EmptyView().fullScreenCover(isPresented: $gameEventFlag.isGameStarted) {
@@ -76,35 +72,8 @@ struct CreateRoomView: View {
                 maxHeight: .infinity
         ).background(Color(UIColor(hex: "212121"))).edgesIgnoringSafeArea(.all)
         .onAppear{
+            // ゲーム初期化
             roomInit(room: room)
-            getLocation()
-            RDDAO.updatePosition(room: room)
-            RDDAO.getPlayers(room: room) { (players) in
-                room.players = players
-                for player in players {
-                    // HELP: ここは何をしているんだ？
-                    if room.me.id == player.id {
-                        room.me.latitude = player.latitude
-                        room.me.longitude = player.longitude
-                        room.me.onlineStatus = player.onlineStatus
-                        room.me.captureState = player.captureState
-                        if room.me.captureState == .captured {
-                            gameEventFlag.isCaptured = true
-                        }
-                    }
-                }
-                if gameEventFlag.isGameStarted {
-                    checkAllCaught(plyers: room.players){ (isAllCaught) in
-                        if isAllCaught {
-                            gameEventFlag.isGameOver = isAllCaught
-                        }
-                    }
-                }
-            }
-            
-        }
-        .onDisappear{
-//            roomDel(room: room.id)
         }
         .navigationBarBackButtonHidden(true)
         .onTapGesture {
@@ -112,7 +81,16 @@ struct CreateRoomView: View {
         }
     }
     
+    private func tappedInvitedButton() {
+        model.playerInvitePushed = true
+        // ルールモデルの反映
+        ruleInit()
+        // ルールをDBに登録
+        RDDAO.updateGamerule(room: room)
+    }
+    
     private func ruleInit() {
+        // ルールをモデルに設定
         room.rule.escapeRange = gameSetting.escapeRange
         room.rule.escapeTime = gameSetting.escapeTime
         room.rule.killerCaptureRange = gameSetting.killerCaptureRange
@@ -122,26 +100,20 @@ struct CreateRoomView: View {
         room.rule.toTime(hour: hour, minute: minute)
     }
     private func roomInit(room: Room) {
+        // ホストの役割を設定
         room.me.role = .killer
+        // ホストの状態を設定
         room.me.captureState = .tracking
+        // ルームの位置情報を設定
+        getLocation()
+        // ルームの状態をDBへ登録
         RDDAO.updateRoomStatus(roomId: room.id, state: .wating)
+        // プレイヤーを追加(ホスト)
         RDDAO.addPlayer(roomId: room.id, player: room.me)
     }
 
     private func roomDel(room: String) {
-//        player.role = ""
-//        player.captureState = ""
         RDDAO.deleteRoom(roomId: room)
-    }
-
-    private func checkAllCaught(plyers: [Player], completionHandler: @escaping (Bool) -> Void) {
-        var isAllCaught = true
-        for player in room.players {
-            if player.captureState != .captured && player.role == .survivor {
-                isAllCaught = false
-            }
-        }
-        completionHandler(isAllCaught)
     }
 
     private func getLocation() {
@@ -149,7 +121,15 @@ struct CreateRoomView: View {
             let roomLatitude = roomLocation["roomLatitude"]!
             let roomLongitude = roomLocation["roomLongitude"]!
             room.point = Position(latitude: roomLatitude, longitude: roomLongitude)
+            // ルームの位置情報の登録
+            RDDAO.updatePosition(room: room)
         })
+    }
+    
+    private func getStartTime(time: Int, to:Date) -> Date {
+        let sec = time * 60
+        let time = Calendar.current.date(byAdding: .second, value: sec, to: to)!
+        return time
     }
     
 }

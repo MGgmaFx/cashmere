@@ -12,6 +12,7 @@ struct PlayerInviteView: View {
     @EnvironmentObject var eventFlag: GameEventFlag
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @EnvironmentObject var room: Room
+    
     var body: some View {
         VStack {
             
@@ -22,19 +23,17 @@ struct PlayerInviteView: View {
             
                 Button(action: {
                     DispatchQueue.main.async {
-                        let date = Date()
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "HH:mm:ss"
-                        RDDAO.updateRoomStatus(roomId: room.id, state: .playing)
-                        RDDAO.updatePlayerRole(roomId: room.id, playerId: room.me.id, role: .killer)
-                        RDDAO.updateGameStartTime(roomId: room.id, startTime: dateFormatter.string(from: date))
+                        escapseStart()
                         DispatchQueue.main.asyncAfter(deadline: .now() + Double(room.rule.escapeTime) * 60) {
+                            // 逃走時間後に以下を実行
                             eventFlag.isEscaping = false
                             eventFlag.isGameStarted = true
                         }
                         DispatchQueue.main.async {
+                            // 非同期でプレイヤー招待画面を非表示
                             model.playerInvitePushed = false
                             DispatchQueue.main.async {
+                                // 非同期で逃走時間画面を表示
                                 eventFlag.isEscaping = true
                             }
                         }
@@ -53,5 +52,19 @@ struct PlayerInviteView: View {
                 minHeight: 0,
                 maxHeight: .infinity
         ).background(Color(UIColor(hex: "212121"))).edgesIgnoringSafeArea(.all)
+    }
+    
+    private func escapseStart() {
+        RDDAO.updateRoomStatus(roomId: room.id, state: .playing)
+        let startTime = getTime()
+        RDDAO.updateGameStartTime(roomId: room.id, startTime: startTime)
+    }
+    
+    // 現在時刻を指定したフォーマットの文字列で取得
+    private func getTime() -> String {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        return dateFormatter.string(from: date)
     }
 }

@@ -53,6 +53,38 @@ struct GameView: View {
             } else {
                 pinColor = Color.red
             }
+            // ゲーム判定処理(プレイヤーの位置情報が書き換わるたびにFireabaseからフックされる)
+            RDDAO.getPlayers(room: room) { (players) in
+                room.players = players
+                for player in players {
+                    if room.me.id == player.id {
+                        room.me.latitude = player.latitude
+                        room.me.longitude = player.longitude
+                        room.me.onlineStatus = player.onlineStatus
+                        room.me.captureState = player.captureState
+                        if room.me.captureState == .captured {
+                            gameEventFlag.isCaptured = true
+                        }
+                    }
+                }
+                if gameEventFlag.isGameStarted {
+                    checkAllCaught(plyers: room.players){ (isAllCaught) in
+                        if isAllCaught {
+                            gameEventFlag.isGameOver = isAllCaught
+                        }
+                    }
+                }
+            }
         }
+    }
+    
+    private func checkAllCaught(plyers: [Player], completionHandler: @escaping (Bool) -> Void) {
+        var isAllCaught = true
+        for player in room.players {
+            if player.captureState != .captured && player.role == .survivor {
+                isAllCaught = false
+            }
+        }
+        completionHandler(isAllCaught)
     }
 }

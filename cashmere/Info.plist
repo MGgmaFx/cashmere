@@ -42,9 +42,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>QRコードを読み込むためにカメラを利用します</string>
 	<key>NSLocationUsageDescription</key>
-	<string>&quot;鬼ごっこオンライン&quot;の利用には「Appの使用中は許可」を選択してください</string>
+	<string>"鬼ごっこオンライン"の利用には「Appの使用中は許可」を選択してください</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>&quot;鬼ごっこオンライン&quot;の利用には「常に許可」を選択してください</string>
+	<string>"鬼ごっこオンライン"の利用には「常に許可」を選択してください</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
