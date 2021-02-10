@@ -12,13 +12,14 @@ class RealtimeDatabeseDAO: ObservableObject {
     @Published var ref = Database.database().reference()
     typealias CompGameRule = (_ rule:Rule?) -> Void
     typealias CompGetPlayers = ([Player]) -> Void
+    typealias CompGetPosition = (Position) -> Void
     
     func getPlayers(room: Room, completionHandler: @escaping CompGetPlayers)  {
         let roomId = room.id
         ref.child(roomId).child("players").observe(DataEventType.value, with: { (snapshot) in
             var players: [Player] = []
             let postDict = snapshot.value as? [String : AnyObject] ?? [:]
-            for (id, value) in postDict {
+            for (_, value) in postDict {
                 if let playerRow = value as? [String : String] {
                     let player = Player(src: playerRow)
                     // FIXME: palyerがnilの場合
@@ -73,6 +74,19 @@ class RealtimeDatabeseDAO: ObservableObject {
         ref.child(roomId).child("gamerule").updateChildValues(data)
     }
     
+    func getPosition(roomId: String, completionHandler: @escaping CompGetPosition) {
+        if let _ = Auth.auth().currentUser?.uid {
+            ref.child(roomId).child("position").observe(.value, with: { (snapshot) in
+                // データを取り出し配列に格納しています
+                if let value = snapshot.value as? [String:String] {
+                    let position = Position(src: value)
+                    // FIXME: ruleがnilの場合の制御
+                    completionHandler(position!)
+                }
+            })
+        }
+    }
+    
     func updatePosition(room:Room) {
         let roomId = room.id
         // 位置情報がnilであってはいけない
@@ -81,7 +95,7 @@ class RealtimeDatabeseDAO: ObservableObject {
             data = point.toDictionary()
         }
         
-        ref.child(roomId).child("gamerule").updateChildValues(data)
+        ref.child(roomId).child("position").updateChildValues(data)
     }
     
     func updatePlayerRole(roomId: String, playerId: String, role: Player.Role) {
