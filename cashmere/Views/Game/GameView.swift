@@ -13,11 +13,12 @@ struct GameView: View {
     @EnvironmentObject var RDDAO: RealtimeDatabeseDAO
     @EnvironmentObject var room: Room
     @State var pinColor: Color = Color.blue
+    @State var toDate: Date = Date()
 
     var body: some View {
         VStack {
             TabView {
-                MapView(time: room.rule.time)
+                MapView(toDate: $toDate)
                     .tabItem {
                         Image(systemName: "map")
                         Text("マップ")
@@ -48,6 +49,7 @@ struct GameView: View {
                       dismissButton: .default(Text("了解")))
             }
         }.onAppear {
+            toDate = Calendar.current.date(byAdding:.minute, value: room.rule.time, to:Date())!
             if room.me.role == .survivor {
                 pinColor = Color.blue
             } else {
