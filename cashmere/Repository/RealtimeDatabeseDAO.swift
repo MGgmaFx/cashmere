@@ -129,11 +129,10 @@ class RealtimeDatabeseDAO: ObservableObject {
         }
     }
     
-    func addCaptureFlag(roomId: String, playerId: String) {
-        if let _ = Auth.auth().currentUser?.uid {
-            let data = ["captureState": "captured"]
-            ref.child(roomId).child("players").child(playerId).updateChildValues(data)
-        }
+    func addCaptureFlag(roomId: String, player: Player) {
+        let playerId = player.id
+        let data = player.captureStateToDic()
+        ref.child(roomId).child("players").child(playerId).updateChildValues(data)
     }
     
     func updateCaptureState(roomId: String, playerId: String, state: Player.CaptureStatus) {

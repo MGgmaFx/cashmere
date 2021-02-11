@@ -92,6 +92,7 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
     }
 }
 
+import AudioToolbox
 class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
     
     var parent : mapView
@@ -167,7 +168,10 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
                 print("生存者との距離 " + String(distanceInMeters))
                 if distanceInMeters <= killerCaptureRange {
                     print("生存者の確保")
-                    parent.RDDAO.addCaptureFlag(roomId: parent.room.id, playerId: player.id)
+                    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                    var holder = player
+                    holder.captureState = .captured
+                    parent.RDDAO.addCaptureFlag(roomId: parent.room.id, player: holder)
                 }
             }
         }

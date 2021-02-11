@@ -59,6 +59,10 @@ struct Player: Identifiable {
         self.role = Player.Role(rawValue: src["role"]!)!
     }
     
+    func captureStateToDic() -> [String:String]{
+        return ["captureState": captureState.rawValue]
+    }
+    
     func toDictionary() -> [String:String] {
         return [
                 "id":id,

@@ -38,7 +38,7 @@ struct GameView: View {
             }
             .accentColor(pinColor) // 選択したアイテム色を指定
             .fullScreenCover(isPresented: $gameEventFlag.isGameOver, content: {
-                ResultView()
+                ResultView().environmentObject(room)
             })
             
             VStack {
