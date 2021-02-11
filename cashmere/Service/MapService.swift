@@ -25,6 +25,7 @@ struct mapView : UIViewRepresentable {
     @State var manager: CLLocationManager = CLLocationManager()
     typealias UIViewType = MKMapView
     let map = MKMapView()
+    
     // マップのデリゲートを定義
     let mapViewDelegate = MapViewDelegate()
 
@@ -141,6 +142,18 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         }
         
         /**
+         半径内かどうかの判定
+         */
+        if let location = locations.last {
+            let isInside = isCircleInside(location)
+            if !isInside {
+                print("領域外にいます")
+            } else {
+                print("領域内にいます")
+            }
+        }
+        
+        /**
          確保系処理
          */
         let killerCaptureRange = parent.room.rule.killerCaptureRange
@@ -175,6 +188,14 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
             return
           }
         }
+    }
+    
+    private func isCircleInside(_ location:CLLocation) -> Bool {
+        let latitude = Double(parent.room.point!.roomLatitude)!
+        let longitude = Double(parent.room.point!.roomLongitude)!
+        let center = CLLocation(latitude: latitude, longitude: longitude)
+        let radius = parent.room.rule.escapeRange
+        return Int(location.distance(from: center)) < radius
     }
     
     public func countTimer() {
@@ -225,5 +246,6 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
         }
         // self.parent.map.removeAnnotations(self.parent.map.annotations)
     }
+    
 }
 
