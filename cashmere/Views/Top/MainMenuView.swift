@@ -11,26 +11,27 @@ import FirebaseAuth
 struct MainMenuView: View {
     @EnvironmentObject var model: Model
     @EnvironmentObject var session: SessionStore
+    @EnvironmentObject var room: Room
     func getUser () {
           session.listen()
     }
     var body: some View {
             NavigationView {
                 VStack {
-//                    NavigationLink(destination: ProfileSettingsView(player: $player), isActive: $model.profileSettingsViewPushed) {
-//                    HStack {
-//                        Spacer()
-//                        
-//                            Image(systemName: "gearshape.fill")
-//                                .resizable()
-//                                .frame(width: 30, height: 30)
-//                                .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 20))
-//                                .foregroundColor(.gray)
-//                                .onTapGesture {
-//                                    model.profileSettingsViewPushed = true
-//                                }
-//                        }
-//                    }
+                    NavigationLink(destination: ProfileSettingsView(player: $room.me), isActive: $model.profileSettingsViewPushed) {
+                        HStack {
+                            Spacer()
+                        
+                            Image(systemName: "gearshape.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 20))
+                                .foregroundColor(.gray)
+                                .onTapGesture {
+                                    model.profileSettingsViewPushed = true
+                            }
+                        }.contentShape(RoundedRectangle(cornerRadius: 20))
+                    }
                     Image("logo_title")
                         .resizable()
                         .frame(width: 280, height: 70, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
