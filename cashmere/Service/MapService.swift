@@ -204,6 +204,13 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
     
     public func countTimer() {
         let time = parent.room.rule.survivorPositionTransmissionInterval * 60
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            if self.parent.room.me.role == .killer {
+                DispatchQueue.main.async { [self] in
+                    addAnnotations(players: parent.room.players)
+                }
+            }
+        }
         while !(parent.gameFlag.isGameOver) {
             print("countTimer を呼び出し")
             sleep(UInt32(time))
@@ -211,6 +218,7 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
                 DispatchQueue.main.async { [self] in
                     print("addAnnotations を呼び出し")
                     addAnnotations(players: parent.room.players)
+                    
                 }
             }
         }
@@ -248,7 +256,6 @@ class Coordinator : NSObject,CLLocationManagerDelegate,MKMapViewDelegate {
                 }
             }
         }
-        // self.parent.map.removeAnnotations(self.parent.map.annotations)
     }
     
 }
