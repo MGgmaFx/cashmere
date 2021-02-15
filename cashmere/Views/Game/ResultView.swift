@@ -48,22 +48,22 @@ struct ResultView: View {
     func gameInitialization() -> Void {
         // 上位のビューから順番に閉じないと下位のビューがうまく閉じられないので上位ビューから順次閉じている
         DispatchQueue.main.async {
-            model.createRoomViewPushed = false
+            gameEventFlag.isGameOver = false
+            gameEventFlag.isTimeOut = false
+            gameEventFlag.isCaptured = false
             DispatchQueue.main.async {
                 gameEventFlag.isEscaping = false
                 gameEventFlag.isGameWating = false
-                model.joinRoomViewPushed = false
                 model.isPresentedQRCodeView = false
                 model.profileSettingsViewPushed = false
                 model.isShowingScanner = false
                 model.loginViewPushed = false
-                gameEventFlag.isTimeOut = false
-                model.playerInvitePushed = false
-                gameEventFlag.isCaptured = false
                 DispatchQueue.main.async {
-                    gameEventFlag.isGameOver = false
+                    gameEventFlag.isGameStarted = false
                     DispatchQueue.main.async {
-                        gameEventFlag.isGameStarted = false
+                        model.playerInvitePushed = false
+                        model.joinRoomViewPushed = false
+                        model.createRoomViewPushed = false
                     }
                 }
             }
