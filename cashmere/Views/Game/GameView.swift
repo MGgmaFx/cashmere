@@ -41,13 +41,17 @@ struct GameView: View {
                 ResultView().environmentObject(room)
             })
             
-            VStack {
+            if !(gameEventFlag.isGameOver) {
+                VStack {
+                }
+                .alert(isPresented: $gameEventFlag.isCaptured) {
+                    Alert(title: Text("通知"),
+                          message: Text("鬼に確保されました！"),
+                          dismissButton: .default(Text("了解")))
+                }
             }
-            .alert(isPresented: $gameEventFlag.isCaptured) {
-                Alert(title: Text("通知"),
-                      message: Text("鬼に確保されました！"),
-                      dismissButton: .default(Text("了解")))
-            }
+            
+            
         }.onAppear {
             toDate = Calendar.current.date(byAdding:.minute, value: room.rule.time, to:Date())!
             if room.me.role == .survivor {
